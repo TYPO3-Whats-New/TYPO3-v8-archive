@@ -1,0 +1,260 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8 LTS - What's New - Chapter "TypoScript" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		3a9852ea-e2360d9d-1ff5eec1-a7de3f9f
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+	\begin{center}\large{\textit{New configuration options, new features, unlimited possibilities}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a7d30bb0-c3eeb0dc-efa59a5c-fae9a471
+% LTXE-SLIDE-TITLE:		#39597: Multiple locale names for TypoScript config.locale_all
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Multiple Locale Names for TypoScript \texttt{config.locale\_all}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\small\ttfamily}
+
+	\begin{itemize}
+
+		\item TypoScript option \texttt{config.locale\_all} now allows to
+			set locale fallbacks as a comma-separated list, as the underlying
+			PHP function \texttt{setlocale()} does as well:
+
+			\begin{lstlisting}
+				config.locale_all = de_AT@euro, de_AT, de_DE, deu_deu
+			\end{lstlisting}
+
+			See \url{http://php.net/setlocale}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		cd70399f-ccfb78e5-15d95ae4-c96d579f
+% LTXE-SLIDE-TITLE:		#18586: Configurable width & height for editpanel in feedit
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Configurable Width and Height for Editpanel in \texttt{EXT:feedit}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\small\ttfamily}
+
+	\begin{itemize}
+
+		\item Now it is possible to change the width and height of the popup, which is used in the
+			edit panel of \texttt{EXT:feedit} by using User TSconfig:
+			\begin{lstlisting}
+				options.feedit.popupHeight = 700
+				options.feedit.popupWidth = 900
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b287e11b-2386594e-3ad7e012-cc1cdef2
+% LTXE-SLIDE-TITLE:		#17309: Access FlexForm values
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Access FlexForm Values}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item It is now possible to access properties of a FlexForm field:
+
+		\begin{lstlisting}
+			lib.flexformContent = CONTENT
+			lib.flexformContent {
+			  table = tt_content
+			  select {
+			    pidInList = this
+			  }
+
+			  renderObj = COA
+			  renderObj {
+			    10 = TEXT
+			    10 {
+			      data = flexform: pi_flexform:settings.categories
+			    }
+			  }
+			}
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		aee7c947-a271d451-cb640e43-101a5543
+% LTXE-SLIDE-TITLE:		#78549: Override New Page Creation Wizard via page TSconfig
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{New Page Creation Wizard}
+
+	\begin{itemize}
+		\item In previous versions of TYPO3 CMS, it was possible to override the "New Page Creation Wizard"
+			via custom scripts:\newline
+			\small
+				\texttt{mod.web\_list.newPageWiz.overrideWithExtension = myextension}
+			\normalsize
+		\item The new way of handling entry-points and custom scripts is now built via modules/routes
+			and the option listed above has been removed
+		\item The following new TSconfig option can be used instead:
+			\small
+				\texttt{mod.newPageWizard.override = my\_custom\_module}
+			\normalsize
+
+		\item Instead of setting the option to a certain extension key, a custom module or
+			route needs to be specified
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c56cb2e8-f50d7eed-e93dcb9e-ab7be017
+% LTXE-SLIDE-TITLE:		#73626: Number of search results is configurable now
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Number of Search Results}
+
+	\begin{itemize}
+		\item Maximum number of search results can be configured in TypoScript now:\newline
+			\texttt{plugin.tx\_indexedsearch.settings.blind.numberOfResults}
+		\item This setting stores a list of values
+		\item If number of search results is passed in the request and matches one of the values
+			configured, this number is used
+		\item If number of search results is not passed in the request or does not match any of
+			the values configured, the first value of the list is used
+		\item To keep backward compatibility, the default values are:\newline
+			\texttt{10}, \texttt{25}, \texttt{50} and \texttt{100}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d9b9e73b-db575400-8276f4dd-810f4f4e
+% LTXE-SLIDE-TITLE:		#78672: Fluid data processor for menus (1)
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Fluid Data Processor for Menus (1)}
+
+	\begin{itemize}
+		\item Menu processor utilizes \texttt{HMENU} to generate a JSON-encoded menu string
+			that is be decoded again and assigned to \texttt{FLUIDTEMPLATE}
+		\item Additional DataProcessing is supported and applied to each record
+		\item Supported options: \texttt{as}, \texttt{levels}, \texttt{expandAll}, \texttt{includeSpacer},
+			\texttt{titleField}
+			(see \href{https://docs.typo3.org/typo3cms/TyposcriptReference/ContentObjects/Hmenu/Index.html}{TyposcriptReference} for more options)
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		03e756a0-07740056-a2009898-d6159f4b
+% LTXE-SLIDE-TITLE:		#78672: Fluid data processor for menus (2)
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Fluid Data Processor for Menus (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Example TypoScript configuration:
+
+			\begin{lstlisting}
+				10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+				10 {
+				  special = list
+				  special.value.field = pages
+				  levels = 7
+				  as = menu
+				  expandAll = 1
+				  includeSpacer = 1
+				  titleField = nav_title // title
+				  dataProcessing {
+				    10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+				    10 {
+				      references.fieldName = media
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f523cc8b-11af7890-81973e17-40dc35bf
+% LTXE-SLIDE-TITLE:		#79622 - Section Frame for CSS Styled Content Replaced with Frame Class
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Section Frame for CSS Styled Content Replaced with Frame Class}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item The functionality provided by \texttt{Section Frame} has been streamlined with Fluid Styled Content and is now available as \texttt{Frame Class}.
+		\item For this, the TypoScript keys now use the right part from the CSS class \texttt{csc-frame-} instead of numbers.
+		\item Before:
+
+			\begin{lstlisting}
+				tt_content.stdWrap.innerWrap.cObject.key.field = section_frame
+				tt_content.stdWrap.innerWrap.cObject.5 =< tt_content.stdWrap.innerWrap.cObject.default
+				tt_content.stdWrap.innerWrap.cObject.5.20.10.value = csc-frame csc-frame-ruler-before
+			\end{lstlisting}
+
+		\item After:
+
+			\begin{lstlisting}
+				tt_content.stdWrap.innerWrap.cObject.key.field = frame_class
+				tt_content.stdWrap.innerWrap.cObject.ruler-before =< tt_content.stdWrap.innerWrap.cObject.default
+				tt_content.stdWrap.innerWrap.cObject.ruler-before.20.10.value = csc-frame csc-frame-ruler-before
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

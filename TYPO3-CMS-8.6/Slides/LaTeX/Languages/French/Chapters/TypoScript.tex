@@ -1,0 +1,62 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.6 - What's New - Chapter "TypoScript" (French Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	French
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		3a9852ea-e2360d9d-1ff5eec1-a7de3f9f
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{Chapitre 2~:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		960f85c0-28f5bd27-a360efff-9bec695f
+% LTXE-SLIDE-ORIGIN:	f523cc8b-11af7890-81973e17-40dc35bf English
+% LTXE-SLIDE-TITLE:		!Breaking: #79622 - Section Frame for CSS Styled Content replaced with Frame Class
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Cadre de section de CSS Styled Content remplacé par classe du cadre}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item La fonctionnalité fournie par \texttt{Cadre de section (Section Frame)}
+			est mise en commun avec Fluid Styled Content et disponible sous \texttt{Classe du cadre
+			(Frame Class)}.
+		\item La clé TypoScript utilise la partie droite de la classe CSS \texttt{csc-frame-}
+			au lieu de nombres.
+		\item Avant~:
+
+			\begin{lstlisting}
+				tt_content.stdWrap.innerWrap.cObject.key.field = section_frame
+				tt_content.stdWrap.innerWrap.cObject.5 =< tt_content.stdWrap.innerWrap.cObject.default
+				tt_content.stdWrap.innerWrap.cObject.5.20.10.value = csc-frame csc-frame-ruler-before
+			\end{lstlisting}
+
+		\item Après~:
+
+			\begin{lstlisting}
+				tt_content.stdWrap.innerWrap.cObject.key.field = frame_class
+				tt_content.stdWrap.innerWrap.cObject.ruler-before =< tt_content.stdWrap.innerWrap.cObject.default
+				tt_content.stdWrap.innerWrap.cObject.ruler-before.20.10.value = csc-frame csc-frame-ruler-before
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

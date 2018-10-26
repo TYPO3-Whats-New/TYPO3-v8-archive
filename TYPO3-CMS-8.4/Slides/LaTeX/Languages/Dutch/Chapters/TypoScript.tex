@@ -1,0 +1,110 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.4 - What's New - Chapter "TypoScript" (Dutch Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		3a9852ea-e2360d9d-1ff5eec1-a7de3f9f
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{Hoofdstuk 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		99f3842a-9de8b2e7-d4863a55-bb149d40
+% LTXE-SLIDE-ORIGIN:	ef0aacb4-ab905cfb-43240134-014bdb32 English
+% LTXE-SLIDE-TITLE:		#77592 and #76748
+% LTXE-SLIDE-REFERENCE:	#77592: Dropped TCA option showIfRTE in type=check
+% LTXE-SLIDE-REFERENCE:	#76748: Configure the availability of the elementbrowser
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{TCA-optie \texttt{showIfRTE}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item De TCA-instelling \texttt{showIfRTE} voor \texttt{type=check} is voor alle velden
+			uit de TCA verwijderd
+		\item De beschikbaarheid van de elementverkenner is nu op gebruikersniveau in te stellen\newline
+			\smaller
+				Om de knop met TCA uit te schakelen:
+			\normalsize
+
+			\begin{lstlisting}
+				[table_name]['columns'][field_name]['config']['appearance']['elementBrowserEnabled'] = false;
+			\end{lstlisting}
+
+			\smaller
+				Om de knop met PageTS uit te schakelen:
+			\normalsize
+
+			\begin{lstlisting}
+				TCEFORM.table_name.field_name.config.appearance.elementBrowserEnabled = 0
+			\end{lstlisting}
+
+			\smaller
+				Om de knop met UserTS uit te schakelen:
+			\normalsize
+
+			\begin{lstlisting}
+				page.TCEFORM.table_name.field_name.config.appearance.elementBrowserEnabled = 0
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		52f3c4f6-e0f0d5ea-d34563ed-a8f8bdeb
+% LTXE-SLIDE-ORIGIN:	b287e11b-2386594e-3ad7e012-cc1cdef2 English
+% LTXE-SLIDE-TITLE:		#17309: Access FlexForm values
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Toegang tot FlexForm-waarden}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Het is nu mogelijk om eigenschappen van een FlexForm-veld op te vragen
+
+		\begin{lstlisting}
+			lib.flexformContent = CONTENT
+			lib.flexformContent {
+			  table = tt_content
+			  select {
+			    pidInList = this
+			  }
+
+			  renderObj = COA
+			  renderObj {
+			    10 = TEXT
+			    10 {
+			      data = flexform: pi_flexform:settings.categories
+			    }
+			  }
+			}
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

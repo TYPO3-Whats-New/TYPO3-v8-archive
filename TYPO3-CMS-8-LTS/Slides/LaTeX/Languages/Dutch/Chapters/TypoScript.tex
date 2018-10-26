@@ -1,0 +1,268 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8 LTS - What's New - Chapter "TypoScript" (Dutch Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		3a9852ea-e2360d9d-1ff5eec1-a7de3f9f
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+	\begin{center}\large{\textit{Nieuwe configuratieopties, nieuwe functies, onbegrensde mogelijkheden}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6e557da9-68146b5a-6e72a0e8-a8f6bc17
+% LTXE-SLIDE-ORIGIN:	a7d30bb0-c3eeb0dc-efa59a5c-fae9a471 English
+% LTXE-SLIDE-TITLE:		#39597: Multiple locale names for TypoScript config.locale_all
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Meerdere Locale-namen voor TypoScript \texttt{config.locale\_all}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\small\ttfamily}
+
+	\begin{itemize}
+
+		\item TypoScript optie \texttt{config.locale\_all} kan nu een set mogelijke
+			locales krijgen als komma-gescheiden lijst, net zoals de PHP functie
+			\texttt{setlocale()} ondersteunt:
+
+			\begin{lstlisting}
+				config.locale_all = de_AT@euro, de_AT, de_DE, deu_deu
+			\end{lstlisting}
+
+			Zie \url{http://php.net/setlocale}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		36d9ef83-31f2053e-3f116b89-234ca719
+% LTXE-SLIDE-ORIGIN:	cd70399f-ccfb78e5-15d95ae4-c96d579f English
+% LTXE-SLIDE-TITLE:		#18586: Configurable width & height for editpanel in feedit
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Configureerbare breedte en hoogte van het Editpanel in \texttt{EXT:feedit}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\small\ttfamily}
+
+	\begin{itemize}
+
+		\item Het is nu mogelijk om de breedte en hoogte van de popup die gebruikt wordt in het Editpanel van \texttt{EXT:feedit}
+		    te wijzigen door gebruik te maken van User TSconfig:
+			\begin{lstlisting}
+				options.feedit.popupHeight = 700
+				options.feedit.popupWidth = 900
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0172ba6c-7279a89b-082e6492-9cad0b93
+% LTXE-SLIDE-ORIGIN:	b287e11b-2386594e-3ad7e012-cc1cdef2 English
+% LTXE-SLIDE-TITLE:		#17309: Access FlexForm values
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Toegang tot FlexForm-waarden}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Het is nu mogelijk om eigenschappen van een FlexForm-veld op te vragen
+
+		\begin{lstlisting}
+			lib.flexformContent = CONTENT
+			lib.flexformContent {
+			  table = tt_content
+			  select {
+			    pidInList = this
+			  }
+
+			  renderObj = COA
+			  renderObj {
+			    10 = TEXT
+			    10 {
+			      data = flexform: pi_flexform:settings.categories
+			    }
+			  }
+			}
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c3f75c69-d6fa8884-a77e18b9-b80b5828
+% LTXE-SLIDE-ORIGIN:	aee7c947-a271d451-cb640e43-101a5543 English
+% LTXE-SLIDE-TITLE:		#78549: Override New Page Creation Wizard via page TSconfig
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Nieuwe assistent pagina aanmaken}
+
+	\begin{itemize}
+		\item In vorige versies van TYPO3 CMS was het mogelijk om de "Assistent nieuwe pagina aanmaken"
+		 	te overschrijven met eigen scripts:\newline
+			\small
+				\texttt{mod.web\_list.newPageWiz.overrideWithExtension = myextension}
+			\normalsize
+		\item De nieuwe manier van het afhandelen van ingangen en eigen scripts is gebouwd met modules/routes
+		 	en de bovenstaande optie is verwijderd
+		\item De volgende TSconfig-optie kan in plaats hiervan gebruikt worden:
+			\small
+				\texttt{mod.newPageWizard.override = my\_custom\_module}
+			\normalsize
+
+		\item In plaats van het instellen van een extensie-key moet er nu een module of
+		 	route gespecificeerd worden
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1fe4e756-c2023dbe-b99d245c-32fffa28
+% LTXE-SLIDE-ORIGIN:	c56cb2e8-f50d7eed-e93dcb9e-ab7be017 English
+% LTXE-SLIDE-TITLE:		#73626: Number of search results is configurable now
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Aantal zoekresultaten}
+
+	\begin{itemize}
+		\item Het maximale aantal zoekresultaten kan in TypoScript ingesteld worden:\newline
+			\texttt{plugin.tx\_indexedsearch.settings.blind.numberOfResults}
+		\item Deze instelling slaat een lijst met waardes op
+		\item Als het aantal resultaten wordt vermeld in het request en overeenkomt met een van
+			de ingestelde waarden dan wordt het gebruikt
+		\item Als het niet wordt meegestuurd of niet overeenkomt met de ingestelde waarden dan
+		 	wordt de eerste van de lijst gebruikt
+		\item Om compatibel te zijn met vorige versies is de standaard:\newline
+			\texttt{10}, \texttt{25}, \texttt{50} and \texttt{100}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		62981d89-c849c214-5aebc9b1-63880904
+% LTXE-SLIDE-ORIGIN:	d9b9e73b-db575400-8276f4dd-810f4f4e English
+% LTXE-SLIDE-TITLE:		#78672: Fluid data processor for menus (1)
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Fluid Data Processor voor menu's (1)}
+
+	\begin{itemize}
+		\item Menu processor gebruikt \texttt{HMENU} om de JSON-gecodeerde menu-tekenreeks te maken
+			die gedecodeerd wordt en toegewezen aan \texttt{FLUIDTEMPLATE}
+		\item Extra DataProcessing wordt ondersteund en op elk record toegepast
+		\item Ondersteunde opties: \texttt{as}, \texttt{levels}, \texttt{expandAll}, \texttt{includeSpacer},
+			\texttt{titleField}
+			(zie \href{https://docs.typo3.org/typo3cms/TyposcriptReference/ContentObjects/Hmenu/Index.html}{TyposcriptReference} voor meer opties)
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3d9aab4d-ffdcd16d-7f0f2b5a-39b49709
+% LTXE-SLIDE-ORIGIN:	03e756a0-07740056-a2009898-d6159f4b English
+% LTXE-SLIDE-TITLE:		#78672: Fluid data processor for menus (2)
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Fluid Data Processor voor menu's (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Voorbeeld TypoScript-configuratie:
+
+			\begin{lstlisting}
+				10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+				10 {
+				  special = list
+				  special.value.field = pages
+				  levels = 7
+				  as = menu
+				  expandAll = 1
+				  includeSpacer = 1
+				  titleField = nav_title // title
+				  dataProcessing {
+				    10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+				    10 {
+				      references.fieldName = media
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0f68cd3f-18cc962b-5b309d16-b98ec783
+% LTXE-SLIDE-ORIGIN:	f523cc8b-11af7890-81973e17-40dc35bf English
+% LTXE-SLIDE-TITLE:		#79622 - Section Frame for CSS Styled Content Replaced with Frame Class
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Sectieframe voor CSS Styled Content vervangen door Frame Class}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item De functionaliteit van de \texttt{Section Frame} is verbeterd met Fluid Styled Content en is nu beschikbaar als \texttt{Frame Class}.
+		\item De TypoScript sleutels gebruiken nu het juiste deel van de CSS-klasse \texttt{csc-frame-} in plaats van getallen
+		\item Voor:
+
+			\begin{lstlisting}
+				tt_content.stdWrap.innerWrap.cObject.key.field = section_frame
+				tt_content.stdWrap.innerWrap.cObject.5 =< tt_content.stdWrap.innerWrap.cObject.default
+				tt_content.stdWrap.innerWrap.cObject.5.20.10.value = csc-frame csc-frame-ruler-before
+			\end{lstlisting}
+
+		\item Na:
+
+			\begin{lstlisting}
+				tt_content.stdWrap.innerWrap.cObject.key.field = frame_class
+				tt_content.stdWrap.innerWrap.cObject.ruler-before =< tt_content.stdWrap.innerWrap.cObject.default
+				tt_content.stdWrap.innerWrap.cObject.ruler-before.20.10.value = csc-frame csc-frame-ruler-before
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

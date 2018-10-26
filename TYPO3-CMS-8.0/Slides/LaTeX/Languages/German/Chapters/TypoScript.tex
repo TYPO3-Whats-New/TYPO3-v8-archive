@@ -1,0 +1,182 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.6 - What's New - Chapter "TypoScript" (English Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		b8fd0ec6-eeb4e126-fcdd7604-74ef6c57
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{Kapitel 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0956a9a6-bb0ea776-0327261b-7722ac16
+% LTXE-SLIDE-TITLE:		Make new content element wizard tab sort order configurable
+% LTXE-SLIDE-REFERENCE:	!Feature-71876-MakeNewContentElementWizardTabSortOrderConfigurable.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Sortierung der Tabs im "New content element wizard"}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Es ist nun möglich die Sortierung der Tabs im "New content elementwizard"  zu verändern, indem die Optionen \texttt{before} und \texttt{after} im Page TSconfig gesetzt werden:
+
+			\begin{lstlisting}
+				mod.wizards.newContentElement.wizardItems.special.before = common
+				mod.wizards.newContentElement.wizardItems.forms.after = common,special
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		330b8895-6cecc482-88177047-8d65c88b
+% LTXE-SLIDE-TITLE:		HTMLparser.stripEmptyTags.keepTags
+% LTXE-SLIDE-REFERENCE:	!Feature-72045-KeepTagsInHtmlParserWhenStrippingEmptyTags.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\texttt{HTMLparser.stripEmptyTags.keepTags}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Es wurde eine neue Option für die \texttt{HTMLparser.stripEmptyTags} Konfiguration hinzugefügt, welche es ermöglicht, die Tags anzugeben, die behalten werden sollen
+		\item Vorher war es nur möglich, anzugeben, welche Tags entfernt werden sollen
+		\item Das folgende Beispiel entfernt alle leeren Tags, \textbf{außer} \texttt{tr} und \texttt{td} Tags:
+
+			\begin{lstlisting}
+				HTMLparser.stripEmptyTags = 1
+				HTMLparser.stripEmptyTags.keepTags = tr,td
+			\end{lstlisting}
+
+	\end{itemize}
+
+	\underline{Wichtig:} wenn diese Einstellung verwendet wird, hat die Konfiguration \texttt{stripEmptyTags.tags} keinen Effekt mehr. Man kann nur eine Option zur selben Zeit verwenden.
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ec7822d8-5f3eeeb3-06a2c047-723568f7
+% LTXE-SLIDE-TITLE:		EXT:form - integration of predefined forms (1)
+% LTXE-SLIDE-REFERENCE:	!Feature-72309-EXTform-AllowIntegrationOfPredefinedForms.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\texttt{EXT:form} - Integration von vordefinierten Formularen (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Das Content-Element von \texttt{EXT:form} erlaubt nun die Integration von vordefinierten Formularen
+
+		\item Der Integrator kann Formulare definieren (z.B. innerhalb eines Site Packages), indem der Schlüssel \texttt{plugin.tx\_form.predefinedForms} verwendet wird
+
+		\item Der Redakteur kann das neue Content-Element \texttt{mailform} auf einer Seite platzieren und dort aus einer Liste vordefinierter Formulare wählen
+
+		\item Integratoren können eigene Formulare über TypoScript erstellen, wodurch mehr Optionen zur Verfügung stehen, als es im Form-Wizard möglich wäre (z.B. durch die Verwendung von \texttt{stdWrap})
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		04706a2c-eeb35f3e-22d8ec78-68f77235
+% LTXE-SLIDE-TITLE:		EXT:form - integration of predefined forms (2)
+% LTXE-SLIDE-REFERENCE:	!Feature-72309-EXTform-AllowIntegrationOfPredefinedForms.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\texttt{EXT:form} - Integration von vordefinierten Formularen (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Es gibt für Redakteure keine Notwendigkeit mehr, den Form-Wizard zu verwenden - diese können aus vordefinierten Formularen wählen, welche Layout-technisch optimiert sind
+
+		\item Formulare können überall wiederverwendet werden
+
+		\item Formulare können außerhalb der Datenbank gespeichert und somit versioniert werden
+
+		\item Damit man die Formulare im Backend auswählen kann, müssen diese über PageTS registriert werden:
+
+		\begin{lstlisting}
+			TCEFORM.tt_content.tx_form_predefinedform.addItems.contactForm =
+			  LLL:EXT:my_theme/Resources/Private/Language/locallang.xlf:contactForm
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5f3eeeb3-06a2c047-723568f7-ec7822d8
+% LTXE-SLIDE-ORIGIN:	3076f305-06ba38cb-646d578c-b617df02 German
+% LTXE-SLIDE-TITLE:		EXT:form - integration of predefined forms (3)
+% LTXE-SLIDE-REFERENCE:	!Feature-72309-EXTform-AllowIntegrationOfPredefinedForms.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\texttt{EXT:form}: Integration von vordefinierten Formularen (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Beispiel-Formular:
+
+		\begin{lstlisting}
+			plugin.tx_form.predefinedForms.contactForm = FORM
+			plugin.tx_form.predefinedForms.contactForm {
+			  enctype = multipart/form-data
+			  method = post
+			  prefix = contact
+			  confirmation = 1
+			  postProcessor {
+			    1 = mail
+			    1 {
+			      recipientEmail = test@example.com
+			      senderEmail = test@example.com
+			      subject {
+			        value = Contact form
+			        lang.de = Kontakt Formular
+			      }
+			    }
+			  }
+			  10 = TEXTLINE
+			  10 {
+			    name = name
+			...
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

@@ -1,0 +1,183 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.1 - What's New - Chapter "Deprecated Functions" (English Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		def329d5-0951d4b3-4fe7ac18-3de42cfc
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+
+\section{Deprecated/Removed Functions}
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+
+	\begin{center}\huge{Chapter 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Deprecated/Removed Functions}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b2d0b718-480fe058-88dbc6fa-9ac14739
+% LTXE-SLIDE-ORIGIN:	dfff0a4a-601e8cb2-abb7af47-f9861736 English
+% LTXE-SLIDE-TITLE:		Breaking-70056-CurlAndHttpRequestRemoved (1)
+% LTXE-SLIDE-REFERENCE:	!Breaking-70056-CurlAndHttpRequestRemoved.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Http-related options and HttpRequest class removed (1)}
+
+	\begin{itemize}
+
+		\item The following PHP classes have been \textbf{removed}:
+
+			\begin{itemize}
+				\item \small\texttt{
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Http\textbackslash
+					HttpRequest}\normalsize
+				\item \small\texttt{
+					TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Http\textbackslash
+					Observer\textbackslash
+					Download}\normalsize
+			\end{itemize}
+
+		\item The following options have been \textbf{renamed}:
+
+			\begin{itemize}
+
+				\item
+					\small
+						old:\tabto{1cm}\texttt{\$TYPO3\_CONF\_VARS[HTTP][userAgent]}\newline
+						new:\tabto{1cm}\texttt{\$TYPO3\_CONF\_VARS[HTTP][headers][User-Agent]}
+
+				\item
+					\small
+						old:\tabto{1cm}\texttt{\$TYPO3\_CONF\_VARS[HTTP][protocol\_version]}\newline
+						new:\tabto{1cm}\texttt{\$TYPO3\_CONF\_VARS[HTTP][version]}
+
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f35fe123-970c6eb3-50936b48-e3d6ecee
+% LTXE-SLIDE-ORIGIN:	ed21f1c2-5d947af5-9d35c427-05dfcf48 English
+% LTXE-SLIDE-TITLE:		Breaking-70056-CurlAndHttpRequestRemoved (2)
+% LTXE-SLIDE-REFERENCE:	!Breaking-70056-CurlAndHttpRequestRemoved.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Http-related options and HttpRequest class removed (2)}
+
+	\begin{itemize}
+
+		\item All proxy-related options are unified within\newline
+			\small\texttt{\$TYPO3\_CONF\_VARS[HTTP][proxy]}\normalsize
+
+		\item All redirect-related options
+			(\small
+				\texttt{HTTP/follow\_redirects},
+				\texttt{HTTP/max\_redirects},
+				\texttt{HTTP/strict\_redirects}\normalsize)
+			are unified within
+			\small
+				\texttt{\$TYPO3\_CONF\_VARS[HTTP][allow\_redirects]}
+			\normalsize
+
+		\item All options related to SSL private keys
+			(\small
+				\texttt{HTTP/ssl\_local\_cert},
+				\texttt{HTTP/ssl\_passphrase}\normalsize)
+			are merged into
+			\small
+				\texttt{\$TYPO3\_CONF\_VARS[HTTP][ssl\_key]}
+			\normalsize
+
+		\item All options related to verify SSL peers are merged into
+			\small
+				\texttt{\$TYPO3\_CONF\_VARS[HTTP][verify]}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7c959317-2c8077dc-99aafb65-753cd459
+% LTXE-SLIDE-ORIGIN:	48dee322-02064149-03801ded-adbd1d79 English
+% LTXE-SLIDE-TITLE:		Breaking-70056-CurlAndHttpRequestRemoved (3)
+% LTXE-SLIDE-REFERENCE:	!Breaking-70056-CurlAndHttpRequestRemoved.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Http-related options and HttpRequest class removed (3)}
+
+	\begin{itemize}
+
+		\item The following configuration options have been \textbf{removed}:
+			\begin{lstlisting}
+				$TYPO3_CONF_VARS[SYS][curlProxyNTLM]
+				$TYPO3_CONF_VARS[SYS][curlProxyServer]
+				$TYPO3_CONF_VARS[SYS][curlProxyTunnel]
+				$TYPO3_CONF_VARS[SYS][curlProxyUserPass]
+				$TYPO3_CONF_VARS[SYS][curlTimeout]
+				$TYPO3_CONF_VARS[HTTP][adapter]
+				$TYPO3_CONF_VARS[HTTP][protocol_version]
+				$TYPO3_CONF_VARS[HTTP][follow_redirects]
+				$TYPO3_CONF_VARS[HTTP][max_redirects]
+				$TYPO3_CONF_VARS[HTTP][strict_redirects]
+				$TYPO3_CONF_VARS[HTTP][proxy_host]
+				$TYPO3_CONF_VARS[HTTP][proxy_port]
+				$TYPO3_CONF_VARS[HTTP][proxy_user]
+				$TYPO3_CONF_VARS[HTTP][proxy_password]
+				$TYPO3_CONF_VARS[HTTP][proxy_auth_scheme]
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6f2626ce-4c67158f-e3f3d11f-d24c9352
+% LTXE-SLIDE-ORIGIN:	82266568-4bc56c9e-4127ba0c-353918fc English
+% LTXE-SLIDE-TITLE:		Breaking-70056-CurlAndHttpRequestRemoved (4)
+% LTXE-SLIDE-REFERENCE:	!Breaking-70056-CurlAndHttpRequestRemoved.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Http-related options and HttpRequest class removed (4)}
+
+	\begin{itemize}
+
+		\item The following configuration options have been \textbf{removed}:
+			\begin{lstlisting}
+				$TYPO3_CONF_VARS[HTTP][ssl_verify_peer]
+				$TYPO3_CONF_VARS[HTTP][ssl_verify_host]
+				$TYPO3_CONF_VARS[HTTP][ssl_cafile]
+				$TYPO3_CONF_VARS[HTTP][ssl_capath]
+				$TYPO3_CONF_VARS[HTTP][ssl_local_cert]
+				$TYPO3_CONF_VARS[HTTP][ssl_passphrase]
+				$TYPO3_CONF_VARS[HTTP][userAgent]
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

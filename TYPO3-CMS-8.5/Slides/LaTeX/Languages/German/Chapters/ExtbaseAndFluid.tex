@@ -1,0 +1,176 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.5 - What's New - Chapter "Extbase & Fluid" (German Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		846d40ce-66fdc2ec-750dcf95-33ce93e0
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{Kapitel 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		506eeccc-87f8f148-a064b4e2-121d876f
+% LTXE-SLIDE-ORIGIN:	c5986329-fb36f473-a5430d2e-6ba49fb1 English
+% LTXE-SLIDE-TITLE:		#78116: Extbase support for Doctrine's native DBAL Statement and QueryBuilder
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Doctrine DBAL}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Die Möglichkeit direkt SQL-Queries abzusetzen, unterstützt nun auch QueryBuilder-Objekte und Instanzen von 
+			\texttt{\textbackslash
+			Doctrine\textbackslash
+			DBAL\textbackslash
+			Statement} als "Prepared Statements"
+		\item Das folgende Beispiel zeigt die Anwendung über eine Repository und mittels einem nativem Doctrine DBAL Statement:
+
+			\begin{lstlisting}
+				$connection = $this->objectManager->get(ConnectionPool::class)->getConnectionForTable('mytable');
+				$statement = $this->objectManager->get(
+				  \Doctrine\DBAL\Statement::class,
+				  'SELECT * FROM mytable WHERE uid=? OR title=?',
+				  $connection
+				);
+
+				$query = $this->createQuery();
+				$query->statement($statement, [$uid, $title]);
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		76b41536-ec795de9-6197748f-5d429230
+% LTXE-SLIDE-ORIGIN:	8d31d436-4397d4fd-aa0eed2e-df798aa3 English
+% LTXE-SLIDE-TITLE:		#78002: Enforce cHash argument for Extbase actions
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\texttt{cHash} Argument}
+
+	\begin{itemize}
+		\item URLS zu Extbase-Actions benötigen nun per default einen gültigen\texttt{cHash}\newline
+			(für gechachte und ungecachte Actions)
+		\item Dieses Verhalten kann über den Typoscript \texttt{feature} Switch abgeschaltet werden:
+			\texttt{requireCHashArgumentForActionArguments}
+	\end{itemize}
+
+\end{frame}
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		80792903-9dd8a7ed-355eca78-479cea5e
+% LTXE-SLIDE-ORIGIN:	50143a1e-53a17c8c-83ffe7ea-5e88cba0 English
+% LTXE-SLIDE-TITLE:		#29399: OptionViewHelper and OptgroupViewHelper
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Inhalt für ViewHelper \texttt{f:form.select}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Es wurden zwei neue ViewHelper eingeführt, welche die manuelle Definition aller Optionen und Optionen-Gruppen für den \texttt{f:form.select} ViewHelper als Tag-Inhalt zulässt
+
+			\begin{itemize}
+				\item \texttt{OptionViewHelper}
+				\item \texttt{OptgroupViewHelper}
+			\end{itemize}
+
+		\item Beispiel:
+
+			\begin{lstlisting}
+				<f:form.select name="myproperty">
+				  <f:form.select.option value="1">Option one</f:form.select.option>
+				  <f:form.select.option value="2">Option two</f:form.select.option>
+				  <f:form.select.optgroup>
+				    <f:form.select.option value="3">Grouped option one</f:form.select.option>
+				    <f:form.select.option value="4">Grouped option twi</f:form.select.option>
+				  </f:form.select.optgroup>
+				</f:form.select>
+			\end{lstlisting}
+
+		\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		45ba8a94-0ddf9140-b871dc35-f0040ec2
+% LTXE-SLIDE-ORIGIN:	d36b9935-fc7d9e60-742a3f42-ef15e856 English
+% LTXE-SLIDE-TITLE:		#78415: Global Fluid ViewHelper Namespace
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Globaler Fluid ViewHelper Namespace}
+
+	\begin{itemize}
+		\item Der globale Fluid ViewHelper Namespace sind nun konfigurierbar:\newline
+			\smaller
+				\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['SYS']['fluid']['namespaces']}
+			\normalsize
+		\item Dies erlaubt die Manipulation der Namespaces auf der Ebene der Seitenkonfiguration
+		\item Vorteile:
+
+			\begin{itemize}
+				\item Third-Party ViewHelper Pakete können nun den globalen Fluid Namespace \texttt{f:} manipulieren
+				\item Third-Party ViewHelper Pakete können nun neue globale Namespaces registrieren
+				\item Template-Entwickler können solche globale Namespace in allen Fluid Template (kontextunabhängig) verwenden, ohne diese vorher zu importieren.
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f3f97fb5-c9c96120-9b45756f-74d08679
+% LTXE-SLIDE-ORIGIN:	e16e8cfd-26f35f09-23b473a2-442ff1e2 English
+% LTXE-SLIDE-TITLE:		#78842: FLUIDTEMPLATE can mimic an actual Extbase web request
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\texttt{FLUIDTEMPLATE} kann Extbase Web Requests nachahmen}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\small\ttfamily}
+
+	\begin{itemize}
+		\item Das \texttt{FLUIDTEMPLATE} Content-Element kann nun einen Extbase Web Request nachahmen.
+		\item Damit kann man z.B. auf übermittelte Daten zugreifen:
+
+			\begin{lstlisting}
+				$view->getRenderingContext()
+				  ->getControllerContext()
+				  ->getRequest()
+				  ->getArguments();
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+
+% ------------------------------------------------------------------------------

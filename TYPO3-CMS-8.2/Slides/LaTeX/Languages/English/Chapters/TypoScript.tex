@@ -1,0 +1,82 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.2 - What's New - Chapter "TypoScript" (English Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		4c33fc9c-f89434c5-a7b6238d-851057cd
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{Chapter 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		331bddc9-39173400-45bf043c-ee04ad88
+% LTXE-SLIDE-TITLE:		Feature: #27471 - Allow asterisk for hideTables
+% LTXE-SLIDE-REFERENCE:	!Feature-27471-AllowAsteriskForHideTables.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Allow Asterisk for hideTables}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item It is now possible to hide all tables in the list view via
+			PageTS-Config
+
+		\item In case integrators want to show a specific table only, they
+			can hide all tables and unhide only the specific one:
+
+			\begin{lstlisting}
+				mod.web_list {
+				  hideTables = *
+				  table.tx_cal_event.hideTable = 0
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a7d30bb0-c3eeb0dc-efa59a5c-fae9a471
+% LTXE-SLIDE-TITLE:		Feature: #39597 - Multiple Locale Names for TypoScript config.locale_all
+% LTXE-SLIDE-REFERENCE:	!Feature-39597-MultipleLocaleNamesForTypoScriptConfiglocale_all.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Multiple Locale Names for TypoScript \texttt{config.locale\_all}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\small\ttfamily}
+
+	\begin{itemize}
+
+		\item TypoScript option \texttt{config.locale\_all} now allows to
+			set locale fallbacks as a comma-separated list, as the underlying
+			PHP function \texttt{setlocale()} does as well:
+
+			\begin{lstlisting}
+				config.locale_all = de_AT@euro, de_AT, de_DE, deu_deu
+			\end{lstlisting}
+
+			See \url{http://php.net/setlocale}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

@@ -1,0 +1,136 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.3 - What's New - Chapter "Extbase & Fluid" (Serbian Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Serbian
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		846d40ce-66fdc2ec-750dcf95-33ce93e0
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase i Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+
+	\begin{center}\huge{Poglavlje 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase i Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		edadbc54-5255d09c-77f75e6a-25220274
+% LTXE-SLIDE-ORIGIN:	06a9e027-1c0e09af-d41d1c4c-c0f07273 English
+% LTXE-SLIDE-TITLE:		Feature: #76531 - Add IconForRecordViewHelper
+% LTXE-SLIDE-REFERENCE:	Feature-76531-AddIconForRecordViewHelper.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Dodat IconForRecordViewHelper}
+
+	% decrease font size for code listin
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Dodat je novi ViewHelper za renderanje ikonica za zapise
+
+			\begin{lstlisting}
+				<core:iconForRecord table="sys_template" row="{templateRecord}" ></core:iconForRecord>
+
+				// output:
+				<span class="t3js-icon icon icon-size-small icon-state-default icon-mimetypes-x-content-template"
+				  data-identifier="mimetypes-x-content-template">
+				  <span class="icon-markup">
+				    <img src="/typo3/sysext/core/Resources/Public/Icons/T3Icons/mimetypes/mimetypes-x-content-template.svg" width="16" height="16">
+				  </span>
+				</span>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7ea9a114-e2c561a0-262d2007-91f5f32b
+% LTXE-SLIDE-ORIGIN:	c88b95e6-9808a38a-747272d5-19346080 English
+% LTXE-SLIDE-TITLE:		Feature #76107: Add Fluid Interceptor Registration (1)
+% LTXE-SLIDE-REFERENCE:	Feature-76107-AddFluidInterceptorRegistration.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Dodat Fluid Interceptor Registration (1)}
+
+	% decrease font size for code listin
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Interceptor-i u \textit{Fluid Standalone} dodati su kako bi mogli da izmene prikaz sablona
+
+		\item Fluid API vec dozvoljava registrovanje prilagodjenih interceptor-a.
+			Sada je moguce definisati prilagodjene interceptor-e koristeci sledecu opciju:
+
+			\small
+				\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['fluid']['interceptors']}
+			\normalsize
+
+		\item Interceptor-i registrovani ovde su dodati u Fluid parser konfiguraciju
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1ffa4580-ccce3c8e-770e1e5a-a4f6afb8
+% LTXE-SLIDE-ORIGIN:	bec08e51-3b4dccca-f2060fd8-35d46d4b English
+% LTXE-SLIDE-TITLE:		Feature #76107: Add Fluid Interceptor Registration (2)
+% LTXE-SLIDE-REFERENCE:	Feature-76107-AddFluidInterceptorRegistration.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Extbase i Fluid}
+	\framesubtitle{Dodat Fluid Interceptor Registration (2)}
+
+	% decrease font size for code listin
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Registrovanje sopstvenog interceptor-a u fluid parser konfiguraciju
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['interceptors']
+			      [\TYPO3\CMS\Fluid\Core\Parser\Interceptor\DebugInterceptor::class] =
+				  \TYPO3\CMS\Fluid\Core\Parser\Interceptor\DebugInterceptor::class;
+			\end{lstlisting}
+
+		\item Kod klase::
+
+			\begin{lstlisting}
+				use TYPO3Fluid\Fluid\Core\Parser\InterceptorInterface;
+				use TYPO3Fluid\Fluid\Core\Parser\ParsingState;
+				use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\NodeInterface;
+
+				class DebugInterceptor implements InterceptorInterface
+				{
+				  public function process(NodeInterface $node, $interceptorPosition, ParsingState $parsingState)
+				  {
+				    return $node;
+				  }
+
+				  public function getInterceptionPoints()
+				  {
+				    return [];
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

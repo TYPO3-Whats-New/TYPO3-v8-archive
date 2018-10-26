@@ -1,0 +1,218 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.6 - What's New - Chapter "TypoScript" (Greek Version)
+%
+% @author	Angeliki Plati <ag.plati@gmail.com>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Greek
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		b8fd0ec6-eeb4e126-fcdd7604-74ef6c57
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{\greektext Κεφάλαιο 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		8fd298cb-9ba8b3e8-a1b38e9e-e837d493
+% LTXE-SLIDE-ORIGIN:	0956a9a6-bb0ea776-0327261b-7722ac16 English
+% LTXE-SLIDE-TITLE:		Make new content element wizard tab sort order configurable
+% LTXE-SLIDE-REFERENCE:	!Feature-71876-MakeNewContentElementWizardTabSortOrderConfigurable.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\greektext Ταξινόμηση των καρτελών στον \latintext wizard \greektext νέων στοιχείων περιεχομένου}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item \greektext Είναι δυνατή η διαμόρφωση της σειράς των καρτελών στον \latintext wizard
+		\greektext νέων στοιχείων περιεχομένου θέτοντας τις τιμές \latintext\texttt{before} \greektext και
+		\latintext \texttt{after} \greektext στο \latintext Page TSconfig:
+
+			\latintext\begin{lstlisting}
+				mod.wizards.newContentElement.wizardItems.special.before = common
+				mod.wizards.newContentElement.wizardItems.forms.after = common,special
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4a386967-4b1b92a8-564ef39c-5cf056f5
+% LTXE-SLIDE-ORIGIN:	330b8895-6cecc482-88177047-8d65c88b English
+% LTXE-SLIDE-TITLE:		HTMLparser.stripEmptyTags.keepTags
+% LTXE-SLIDE-REFERENCE:	!Feature-72045-KeepTagsInHtmlParserWhenStrippingEmptyTags.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\texttt{HTMLparser.stripEmptyTags.keepTags}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Έχει προστεθεί νέα επιλογή για τη διαμόρφωση \latintext \texttt{HTMLparser.stripEmptyTags},
+			\greektext η οποία επιτρέπει τη διατήρηση διαμορφωμένων \latintext tags
+		\item \greektext Πριν από αυτή την αλλαγή, μόνο μία λίστα από \latintext tags \greektext μπορούσε να
+		παρασχεθεί, η οποία έπρεπε να αφαιρεθεί
+		\item \greektext Το ακόλουθο παράδειγμα αφαιρεί όλα τα κενά \latintext tags \greektext\textbf{εκτός} των \latintext\texttt{tr}
+		\greektext και \latintext \texttt{td}:
+
+			\latintext\begin{lstlisting}
+				HTMLparser.stripEmptyTags = 1
+				HTMLparser.stripEmptyTags.keepTags = tr,td
+			\end{lstlisting}
+
+	\end{itemize}
+
+	\greektext\underline{Σημαντικό:} εάν χρησιμοποιείται αυτή η ρύθμιση, η διαμόρφωση \latintext \texttt{stripEmptyTags.tags}
+		\greektext δεν έχει πλέον καμία επίδραση. Μπορείτε να χρησιμοποιήσετε μία επιλογή κάθε φορά.
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5a15224f-8a42c59f-179ff92a-f1871c9c
+% LTXE-SLIDE-ORIGIN:	ec7822d8-5f3eeeb3-06a2c047-723568f7 English
+% LTXE-SLIDE-TITLE:		EXT:form - integration of predefined forms (1)
+% LTXE-SLIDE-REFERENCE:	!Feature-72309-EXTform-AllowIntegrationOfPredefinedForms.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\texttt{EXT:form} - \greektext ενσωμάτωση των προκαθορισμένων φορμών (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Το στοιχείο περιεχομένου της \latintext \texttt{EXT:form} \greektext επιτρέπει τώρα
+		την ενσωμάτωση προκαθορισμένων φορμών.
+
+		\item \greektext Ένας \latintext integrator \greektext μπορεί να καθορίσει φόρμες (π.χ. μέσα σε ένα πακέτο σελίδας)
+		 χρησιμοποιώντας το \latintext \texttt{plugin.tx\_form.predefinedForms}
+
+		\item \greektext Ένας \latintext editor \greektext μπορεί τώρα να προσθέσει ένα νέο στοιχείο περιεχομένου \latintext \texttt{mailform}
+		\greektext σε μία σελίδα και να διαλέξει μία φόρμα από μία λίστα με προκαθορισμένα στοιχεία
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\texttt{EXT:form} - \greektext ενσωμάτωση των προκαθορισμένων φορμών (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Οι \latintext integrators \greektext μπορούν τώρα να δημιουργήσουν τις δικές τους φόρμες με
+		 \latintext TypoScript, \greektext η οποία παρέχει πολύ περισσότερες επιλογές από το να το κάνουν μέσω του \latintext
+		  form wizard \greektext(π.χ. οι \latintext integrators \greektext μπορούν να χρησιμοποιήσουν την λειτουργία \latintext
+		  \texttt{stdWrap}, \greektext η οποία δεν είναι διαθέσιμη με τη χρήση του \latintext
+			form wizard \greektext (για λόγους ασφαλείας)
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b794bceb-9aacc3fb-da93a131-a661f89d
+% LTXE-SLIDE-ORIGIN:	04706a2c-eeb35f3e-22d8ec78-68f77235 English
+% LTXE-SLIDE-TITLE:		EXT:form - integration of predefined forms (3)
+% LTXE-SLIDE-REFERENCE:	!Feature-72309-EXTform-AllowIntegrationOfPredefinedForms.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\texttt{EXT:form} - \greektext ενσωμάτωση των προκαθορισμένων φορμών (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Οι \latintext editors \greektext δε χρειάζεται να χρησιμοποιούν πλέον τον \latintext form wizard.
+			\greektext Οι \latintext editors \greektext μπορούν να διαλέξουν τις προκαθορισμένες φόρμες οι οποίες
+			 διαθέτουν βελτιστοποιημένα \latintext layouts.
+
+		\item \greektext Οι φόρμες μπορούν να επαναχρησιμοποιηθούν οπουδήποτε
+
+		\item \greektext Οι φόρμες μπορούν να αποθηκευτούν έξω από τη βάση δεδομένων και να γίνουν \latintext versioned
+
+		\item \greektext Για να είναι δυνατή η επιλογή μίας προκαθορισμένης φόρμας στο \latintext backend,
+			\greektext η φόρμα αυτή πρέπει να έχει καταχωρηθεί χρησιμοποιώντας το \latintext PageTS:
+
+		\latintext\begin{lstlisting}
+			TCEFORM.tt_content.tx_form_predefinedform.addItems.contactForm =
+			  LLL:EXT:my_theme/Resources/Private/Language/locallang.xlf:contactForm
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		12e8a81c-2600a4da-3554ca6d-59a3b363
+% LTXE-SLIDE-ORIGIN:	5f3eeeb3-06a2c047-723568f7-ec7822d8 English
+% LTXE-SLIDE-ORIGIN:	3076f305-06ba38cb-646d578c-b617df02 German
+% LTXE-SLIDE-TITLE:		EXT:form - integration of predefined forms (4)
+% LTXE-SLIDE-REFERENCE:	!Feature-72309-EXTform-AllowIntegrationOfPredefinedForms.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{\texttt{EXT:form} - \greektext ενσωμάτωση των προκαθορισμένων φορμών (4)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Παράδειγμα φόρμας:
+
+		\latintext\begin{lstlisting}
+			plugin.tx_form.predefinedForms.contactForm = FORM
+			plugin.tx_form.predefinedForms.contactForm {
+			  enctype = multipart/form-data
+			  method = post
+			  prefix = contact
+			  confirmation = 1
+			  postProcessor {
+			    1 = mail
+			    1 {
+			      recipientEmail = test@example.com
+			      senderEmail = test@example.com
+			      subject {
+			        value = Contact form
+			        lang.de = Kontakt Formular
+			      }
+			    }
+			  }
+			  10 = TEXTLINE
+			  10 {
+			    name = name
+			...
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

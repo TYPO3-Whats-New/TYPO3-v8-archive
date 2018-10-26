@@ -1,0 +1,109 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.4 - What's New - Chapter "TypoScript" (Italian Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		3a9852ea-e2360d9d-1ff5eec1-a7de3f9f
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{Capitolo 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e8cf8f2e-3d77ad12-d46ec402-ff75c834
+% LTXE-SLIDE-ORIGIN:	ef0aacb4-ab905cfb-43240134-014bdb32 English
+% LTXE-SLIDE-TITLE:		#77592 and #76748
+% LTXE-SLIDE-REFERENCE:	#77592: Dropped TCA option showIfRTE in type=check
+% LTXE-SLIDE-REFERENCE:	#76748: Configure the availability of the elementbrowser
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Opzione TCA \texttt{showIfRTE}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item L'opzione TCA \texttt{showIfRTE} per \texttt{type=check} è stata rimossa dal TCA di tutti i campi
+		\item La disponibilità dell'Element Browser può essere configurata sulla base del singolo utente\newline
+			\smaller
+				Per disabilitare il bottone puoi usare le impostazioni TCA:
+			\normalsize
+
+			\begin{lstlisting}
+				[table_name]['columns'][field_name]['config']['appearance']['elementBrowserEnabled'] = false;
+			\end{lstlisting}
+
+			\smaller
+				Per disabilitare il bottone puoi usare le impostazioni pageTs:
+			\normalsize
+
+			\begin{lstlisting}
+				TCEFORM.table_name.field_name.config.appearance.elementBrowserEnabled = 0
+			\end{lstlisting}
+
+			\smaller
+				Per disabilitare il bottone puoi usare le impostazioni userTs:
+			\normalsize
+
+			\begin{lstlisting}
+				page.TCEFORM.table_name.field_name.config.appearance.elementBrowserEnabled = 0
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		76210e97-e7680df1-0032b468-2bf86812
+% LTXE-SLIDE-ORIGIN:	b287e11b-2386594e-3ad7e012-cc1cdef2 English
+% LTXE-SLIDE-TITLE:		#17309: Access FlexForm values
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Accesso variabili FlexForm}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Adesso è possibile accedere alle variabili dei campi di un FlexForm:
+
+		\begin{lstlisting}
+			lib.flexformContent = CONTENT
+			lib.flexformContent {
+			  table = tt_content
+			  select {
+			    pidInList = this
+			  }
+
+			  renderObj = COA
+			  renderObj {
+			    10 = TEXT
+			    10 {
+			      data = flexform: pi_flexform:settings.categories
+			    }
+			  }
+			}
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

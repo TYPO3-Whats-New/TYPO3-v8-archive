@@ -1,0 +1,109 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.4 - What's New - Chapter "TypoScript" (German Version)
+%
+% @author	Michael Schams and Patrick Lobacher
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	German
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		3a9852ea-e2360d9d-1ff5eec1-a7de3f9f
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{Kapitel 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		cf9a9bd8-c47a736f-ab8e0f2a-0018cfb7
+% LTXE-SLIDE-ORIGIN:	ef0aacb4-ab905cfb-43240134-014bdb32 English
+% LTXE-SLIDE-TITLE:		#77592 and #76748
+% LTXE-SLIDE-REFERENCE:	#77592: Dropped TCA option showIfRTE in type=check
+% LTXE-SLIDE-REFERENCE:	#76748: Configure the availability of the elementbrowser
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{TCA Option \texttt{showIfRTE}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Die TCA-Einstellung \texttt{showIfRTE} für \texttt{type=check} wurden von allen TCAs aller Felder entfernt.
+		\item Die Verfügbarkeit des Element-Browsers ist nun auf User-Basis konfiguriertbar\newline
+			\smaller
+				Um den Button zu deaktivieren:
+			\normalsize
+
+			\begin{lstlisting}
+				[table_name]['columns'][field_name]['config']['appearance']['elementBrowserEnabled'] = false;
+			\end{lstlisting}
+
+			\smaller
+				Um den Button per PageTS-Setting zu deaktivieren:
+			\normalsize
+
+			\begin{lstlisting}
+				TCEFORM.table_name.field_name.config.appearance.elementBrowserEnabled = 0
+			\end{lstlisting}
+
+			\smaller
+				Um den Button per UserTS-Setting zu deaktivieren:
+			\normalsize
+
+			\begin{lstlisting}
+				page.TCEFORM.table_name.field_name.config.appearance.elementBrowserEnabled = 0
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1f618454-6db726b1-39d73635-f545526b
+% LTXE-SLIDE-ORIGIN:	b287e11b-2386594e-3ad7e012-cc1cdef2 English
+% LTXE-SLIDE-TITLE:		#17309: Access FlexForm values
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Zugriff auf FlexForm-Werte}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Es ist nun möglich auf die Eigenschaften eine  FlexForm-Feldes zuzugreifen:
+
+		\begin{lstlisting}
+			lib.flexformContent = CONTENT
+			lib.flexformContent {
+			  table = tt_content
+			  select {
+			    pidInList = this
+			  }
+
+			  renderObj = COA
+			  renderObj {
+			    10 = TEXT
+			    10 {
+			      data = flexform: pi_flexform:settings.categories
+			    }
+			  }
+			}
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

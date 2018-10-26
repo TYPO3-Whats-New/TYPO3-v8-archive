@@ -1,0 +1,224 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.6 - What's New - Chapter "Introduction" (German Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		7fdf26cc-362160ab-d6c8b905-19722b20
+% LTXE-CHAPTER-NAME:	Introduction
+% ------------------------------------------------------------------------------
+
+\section{Introduction}
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+
+	\begin{center}\huge{Introduction}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{The Facts}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		957c660a-2d97bb3a-1548ff60-e184805c
+% LTXE-SLIDE-ORIGIN:	ea30ee1a-0bc39e0a-bcaf8d4b-fccc3d18 English
+% LTXE-SLIDE-TITLE:		TYPO3 CMS 8.6 - The Facts
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{TYPO3 CMS 8.6 - The Facts}
+
+	\begin{itemize}
+		\item Release date: 14 February 2017
+		\item Release type: Sprint Release
+		\item Slogan: "Polishing"
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.95\linewidth]{Introduction/typo3cms86-banner.jpg}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1030089c-fa049bde-b64bf776-66252b02
+% LTXE-SLIDE-ORIGIN:	edf38742-589c1a34-ae855361-e0284741 English
+% LTXE-SLIDE-TITLE:		System Requirements
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{System Requirements}
+
+	\begin{itemize}
+		\item PHP:\tabto{2.2cm}version 7
+		\item MySQL:\tabto{2.2cm}version 5.5 to 5.7
+		\item Disk space:\tabto{2.2cm}min 200 MB
+		\item PHP settings:
+
+			\begin{itemize}
+				\item \texttt{memory\_limit} >= 128M
+				\item \texttt{max\_execution\_time} >= 240s
+				\item \texttt{max\_input\_vars} >= 1500
+				\item compilation option \texttt{-}\texttt{-disable-ipv6} must \underline{not} be used
+			\end{itemize}
+
+		\item The backend requires Microsoft Internet Explorer 11 or later,
+			Microsoft Edge, Google Chrome, Firefox, Safari or any other modern,
+			compatible browser
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		8657a711-583b5f33-cdaf7fdb-fee33bf3
+% LTXE-SLIDE-ORIGIN:	8cb2705f-d045b3fa-b2ca4f81-52d16aef English
+% LTXE-SLIDE-TITLE:		Development And Release Timeline
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{Development and Release Timeline}
+
+	\begin{figure}
+		\includegraphics[width=1\linewidth]{Introduction/ReleaseAgenda.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		80e1a3d3-a255f8ae-39ae298f-23966639
+% LTXE-SLIDE-ORIGIN:	dae3f732-e4550c37-dc304056-f090affc English
+% LTXE-SLIDE-TITLE:		TYPO3 CMS Roadmap
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{TYPO3 CMS Roadmap}
+
+	Release dates and their primary focus:
+
+	\begin{itemize}
+
+		\item v8.0 \tabto{1.1cm}22/Mar/2016\tabto{3.4cm}Adding last minute things
+		\item v8.1 \tabto{1.1cm}03/May/2016\tabto{3.4cm}Cloud Integration
+		\item v8.2 \tabto{1.1cm}05/Jul/2016\tabto{3.4cm}Doctrine Prerequisites
+		\item v8.3 \tabto{1.1cm}30/Aug/2016\tabto{3.4cm}Rich Text Editor
+		\item v8.4 \tabto{1.1cm}18/Oct/2016\tabto{3.4cm}Doctrine Migration + Upgrades
+		\item v8.5 \tabto{1.1cm}20/Dec/2016\tabto{3.4cm}New RTE + Integrator Support
+		\item
+			\begingroup
+				\color{typo3orange}
+					v8.6 \tabto{1.1cm}14/Feb/2017\tabto{3.4cm}Polishing
+			\endgroup
+		\item v8.7 \tabto{1.1cm}04/Apr/2017\tabto{3.4cm}LTS Preparation
+
+	\end{itemize}
+
+	\smaller
+		\url{https://typo3.org/typo3-cms/roadmap/}\newline
+		\url{https://typo3.org/news/article/kicking-off-typo3-v8-development/}
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		23cafae0-162a5512-44486188-924833f3
+% LTXE-SLIDE-ORIGIN:	4a382358-6fd84263-041bc029-bd50bb1e English
+% LTXE-SLIDE-TITLE:		Installation
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{Installation}
+
+	\begin{itemize}
+		\item Official \textit{classic} installation procedure under Linux/Mac OS X\newline
+			(DocumentRoot for example \texttt{/var/www/site/htdocs}):
+		\begin{lstlisting}
+			$ cd /var/www/site
+			$ wget --content-disposition get.typo3.org/8.6
+			$ tar xzf typo3_src-8.6.0.tar.gz
+			$ cd htdocs
+			$ ln -s ../typo3_src-8.6.0 typo3_src
+			$ ln -s typo3_src/index.php
+			$ ln -s typo3_src/typo3
+			$ touch FIRST_INSTALL
+		\end{lstlisting}
+
+		\item Symbolic links under Microsoft Windows:
+
+			\begin{itemize}
+				\item Use \texttt{junction} under Windows XP/2000
+				\item Use \texttt{mklink} under Windows Vista and Windows 7
+			\end{itemize}
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b0c638d8-48ed8caf-1d64ae37-96714365
+% LTXE-SLIDE-ORIGIN:	db02b644-4eae727a-2eff0fa0-9cbd7fd3 English
+% LTXE-SLIDE-TITLE:		Upgrade to TYPO3 CMS 7
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{Upgrade to TYPO3 CMS 8.x}
+
+	\begin{itemize}
+		\item Upgrades only possible from TYPO3 CMS 7.6 LTS
+		\item TYPO3 CMS < 7.6 LTS should be updated to TYPO3 CMS 7.6 LTS first
+	\end{itemize}
+
+	\begin{itemize}
+
+		\item Upgrade instructions:\newline
+			\smaller\url{http://wiki.typo3.org/Upgrade#Upgrading_to_8.6}\normalsize
+		\item Official TYPO3 guide "TYPO3 Installation and Upgrading":
+			\smaller\url{http://docs.typo3.org/typo3cms/InstallationGuide}\normalsize
+		\item General approach:
+			\begin{itemize}
+				\item Check minimum system requirements \small(PHP, MySQL, etc.)
+				\item Review \textbf{deprecation\_*.log} in old TYPO3 instance
+				\item Update all extensions to the latest version
+				\item Deploy new sources and run Install Tool -> Upgrade Wizard
+				\item Review startup module for backend users (optionally)
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4e939f1b-eefee39f-a55a4ce9-e666ddaa
+% LTXE-SLIDE-ORIGIN:	d9a72263-ac0c63dd-1754b138-99b8491c English
+% LTXE-SLIDE-TITLE:		PHP Version 7
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introduction}
+	\framesubtitle{PHP Version 7}
+
+	\begin{itemize}
+
+		\item PHP 7.0 is the minimum requirement for TYPO3 CMS 8.x
+		\item TYPO3 will support subsequent PHP 7 releases as they come out
+		\item This version raise gives a significant performance boost to the overall system
+
+		\item Not only backend editors will notice a more fluent interface, but the
+			new all-time record for a full cached page call in the frontend is below
+			7 milliseconds now, which is approximately 40\% faster compared to running
+			the very same website with PHP version 5.5
+
+		\item We also started using new features from this PHP version, for instance
+			the cryptographically secure pseudo-random generators are in active use already
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

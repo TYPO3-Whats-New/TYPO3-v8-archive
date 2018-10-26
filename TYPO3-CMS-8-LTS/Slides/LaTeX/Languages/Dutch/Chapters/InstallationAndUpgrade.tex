@@ -1,0 +1,122 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8 LTS - What's New - Chapter "Installation and Upgrade" (Dutch Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		6dc8a329-7fd5f485-7c9c0ef0-dd2c6549
+% LTXE-CHAPTER-NAME:	Installation and Upgrade
+% ------------------------------------------------------------------------------
+
+\section{Installatie en Upgrade}
+\begin{frame}[fragile]
+	\frametitle{Installatie en Upgrade}
+
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Installatie en Upgrade}}\end{center}
+	\begin{center}\large{\textit{Het is tijd om TYPO3 v8 LTS te bekijken}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b4159807-5b0cd4b4-0c80c2f7-e9fc4b78
+% LTXE-SLIDE-ORIGIN:	2924aa0e-f575ecd8-c637f4c2-6b39b1c9 English
+% LTXE-SLIDE-TITLE:		Installation
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Installatie en Upgrade}
+	\framesubtitle{Klassieke installatiemethode}
+
+	\begin{itemize}
+		\item Officiële \textit{klassieke} installatieprocedure op Linux/Mac OS X\newline
+			(DocumentRoot bijvoorbeeld \texttt{/var/www/site/htdocs}):
+		\begin{lstlisting}
+			$ cd /var/www/site
+			$ wget --content-disposition get.typo3.org/8.6
+			$ tar xzf typo3_src-8.6.0.tar.gz
+			$ cd htdocs
+			$ ln -s ../typo3_src-8.6.0 typo3_src
+			$ ln -s typo3_src/index.php
+			$ ln -s typo3_src/typo3
+			$ touch FIRST_INSTALL
+		\end{lstlisting}
+
+		\item Symbolische koppelingen op Microsoft Windows:
+
+			\begin{itemize}
+				\item Gebruik \texttt{junction} op Windows XP/2000
+				\item Gebruik \texttt{mklink} op Windows Vista en Windows 7
+			\end{itemize}
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		649c91f7-62823d56-94913e61-35316ec2
+% LTXE-SLIDE-ORIGIN:	ed06d060-dc1f7c61-00bacc1f-6a2ccd9f English
+% LTXE-SLIDE-TITLE:		Installation using composer
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Installatie en Upgrade}
+	\framesubtitle{Installatie met \texttt{composer}}
+
+	\begin{itemize}
+		\item Installatie met \textit{composer} op Linux/Mac OS X
+
+			\begin{lstlisting}
+				$ cd /var/www/site/
+				$ composer create-project typo3/cms-base-distribution
+			\end{lstlisting}
+
+		\item Of anders kan een maatwerk \texttt{composer.json} bestand gemaakt worden en dan:
+
+			\begin{lstlisting}
+				$ composer install
+			\end{lstlisting}
+
+			Een voorbeeld \texttt{composer.json} is te downloaden van:\newline
+			\small
+				\href{https://git.typo3.org/TYPO3CMS/Distributions/Base.git/blob/HEAD:/composer.json}{git.typo3.org/TYPO3CMS/Distributions/Base.git/blob/HEAD:/composer.json}
+			\normalsize
+
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e5493b58-296fcb32-517311fc-ff3f7803
+% LTXE-SLIDE-ORIGIN:	061ecffe-6aadad2d-6e64a67a-3c50a5cf English
+% LTXE-SLIDE-TITLE:		Upgrade to TYPO3 CMS 7
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Installatie en Upgrade}
+	\framesubtitle{Upgrade naar TYPO3 CMS 8.x}
+
+	\begin{itemize}
+		\item Upgrades alleen mogelijk vanaf TYPO3 CMS 7.6 LTS
+		\item TYPO3 CMS < 7.6 LTS moet eerst naar TYPO3 CMS 7.6 LTS bijgewerkt worden
+	\end{itemize}
+
+	\begin{itemize}
+
+		\item Instructies voor het upgraden:\newline
+			\smaller\url{http://wiki.typo3.org/Upgrade#Upgrading_to_8.6}\normalsize
+		\item Officiële TYPO3-handleiding "TYPO3 Installation and Upgrading":
+			\smaller\url{http://docs.typo3.org/typo3cms/InstallationGuide}\normalsize
+		\item Algemene aanpak:
+			\begin{itemize}
+				\item Controleer minimale systeemeisen \small(PHP, MySQL, etc.)
+				\item Controleer \textbf{deprecation\_*.log} in de oude TYPO3-installatie
+				\item Werk alle extensies bij naar de nieuwste versie
+				\item Plaats nieuwe broncode en start Installatie-module \textrightarrow Upgrade Wizard
+				\item Controleer de startmodule voor backend gebruikers (optioneel)
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

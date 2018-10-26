@@ -1,0 +1,189 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.7 - What's New - Chapter "Fonctions dépréciées" (French Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	French
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		3f842373-9262b8d3-f9c8de76-cf29ce17
+% LTXE-CHAPTER-NAME:	Fonctions dépréciées
+% ------------------------------------------------------------------------------
+
+\section{Fonctions dépréciées et retirées}
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+
+	\begin{center}\huge{Chapitre 4~:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Fonctions dépréciées et retirées}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		95b03a27-f2c94e14-521eb1e4-b3567bea
+% LTXE-SLIDE-ORIGIN:	78be0720-06911e38-6b76d0d4-be185105 English
+% LTXE-SLIDE-TITLE:		Breaking: #80149 - Remove $GLOBALS['TYPO3_CONF_VARS']['FE']['pageOverlayFields']
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Retrait de \texttt{pageOverlayFields}}
+
+	\begin{itemize}
+		\item La configuration \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['FE']['pageOverlayFields']}
+			est retirée de la configuration par défaut ainsi que de la gestion de la surcharge dans
+			PageRepository et RootlineUtility.
+
+		\item Cette option était utilisée pour déterminer les champs de surcharge dans la table
+			\texttt{pages\_language\_overlay} à un moment de l'exécution où l'ensemble du TCA
+			n'était pas disponible dans son entièreté.
+
+		\item Depuis que la fonctionnalité \texttt{allowLanguageSynchronization} est intégrée dans
+			TYPO3 v8 LTS, \texttt{l10n\_mode} est déjà disponible et le TCA est déjà chargé, l'option
+			\texttt{pageOverlayFields} est superflue.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2ca3ae12-f7117f1a-5f20242b-2d1483b0
+% LTXE-SLIDE-ORIGIN:	0a7f37d8-5b017502-874eb53f-5172b6a8 English
+% LTXE-SLIDE-TITLE:		Deprecation: #80047 - Deprecate jQuery and extJS for BE viewhelpers
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{jQuery et extJS dépréciés pour les ViewHelpers BE}
+
+	\begin{itemize}
+		\item Les ViewHelpers liés au BE \texttt{<f:be.container>} et \texttt{<f:be.pageRenderer>}
+			possèdent des propriétés pour activer ExtJS et jQuery avec diverses options. L'usage de
+			ExtJS est déprécié et jQuery toujours chargé. En conséquence, les attributs suivants
+			sont marqués dépréciés.
+	\end{itemize}
+
+	\begin{columns}[T]
+		\begin{column}{0.5\textwidth}
+			\begin{itemize}
+				\item \texttt{<f:be.container>}
+					\begin{itemize}
+						\item \texttt{enableClickMenu}
+						\item \texttt{loadExtJs}
+						\item \texttt{loadExtJsTheme}
+						\item \texttt{enableExtJsDebug}
+						\item \texttt{loadJQuery}
+						\item \texttt{jQueryNamespace}
+					\end{itemize}
+			\end{itemize}
+		\end{column}
+
+		\begin{column}{0.5\textwidth}
+			\begin{itemize}
+				\item \texttt{<f:be.pageRenderer>}
+					\begin{itemize}
+						\item \texttt{loadExtJs}
+						\item \texttt{loadExtJsTheme}
+						\item \texttt{enableExtJsDebug}
+						\item \texttt{loadJQuery}
+						\item \texttt{jQueryNamespace}
+					\end{itemize}
+			\end{itemize}
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f9956266-1da8c053-c6141ad5-31eb6084
+% LTXE-SLIDE-ORIGIN:	a23f0a28-3468b0bc-9ccbb972-3522cba3 English
+% LTXE-SLIDE-TITLE:		Deprecation: #79122 - Deprecate method getRecordsByField
+% ------------------------------------------------------------------------------
+% Deprecation: #79770 - Deprecate inline localizationMode
+% Deprecation: #80000 - InlineOverrideChildTca
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Divers (1/3)}
+
+	\begin{itemize}
+
+		\item La méthode
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Backend\textbackslash
+				Utility\textbackslash
+				BackendUtility::\newline getRecordsByField()}
+			est marquée dépréciée et ne doit plus être utilisée.
+
+		\item La propriété \texttt{localizationMode} de l'éditeur des relations de type inline est dépréciée.
+
+		\item Ces propriétés \texttt{TCA} du \texttt{type=inline} sont dépréciées et ont été remplacées par la
+			propriété plus générique \texttt{overrideChildTca}~: \texttt{foreign\_types},
+			\texttt{foreign\_selector\_fieldTcaOverride}, \texttt{foreign\_record\_defaults}
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		cf70954b-c89220f4-5185e93a-1ac607c2
+% LTXE-SLIDE-ORIGIN:	a23f0a28-3464b0bc-9ccbe972-3522db9a English
+% LTXE-SLIDE-TITLE:		Deprecation: #80048 - Mark ExtJS related API calls as deprecated
+% ------------------------------------------------------------------------------
+% Deprecation: #80317 - Deprecate BackendUtility::getRecordRaw()
+% Deprecation: #80451 - Deprecate GeneralUtility::csvValues
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Divers (2/3)}
+
+	\begin{itemize}
+
+		\item L'usage de ExtJS est marqué déprécié. Ainsi les méthodes suivantes de
+			\texttt{ExtensionManagementUtility} sont marquées dépréciées~:
+			\texttt{addExtJSModule}, \texttt{registerExtDirectComponent}
+
+		\item La méthode \texttt{BackendUtility::getRecordRaw()} est marquée dépréciée et ne doit plus être utilisée.
+
+		\item La méthode \texttt{GeneralUtility::csvValues()} est marquée dépréciée.
+			Utilisez la nouvelle méthode \texttt{CsvUtility::csvValues()}
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bf26ba6e-7fdb62c3-6f44fb22-37ac3d65
+% LTXE-SLIDE-ORIGIN:	33dd1e51-1ff0f21d-f73aff6f-1720b6ab English
+% LTXE-SLIDE-TITLE:		Deprecation: #80468 - Command Line Interface: cliKeys and cli_dispatch.phpsh
+% ------------------------------------------------------------------------------
+% Deprecation: #80527 - Marker-related methods in ContentObjectRenderer
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Divers (3/3)}
+
+	\begin{itemize}
+		\item La fonctionnalité permettant d'inscrire un script de ligne de commande en PHP
+			\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['SC\_OPTIONS']\newline['GLOBAL']['cliKeys']['my\_extension']}
+			est marquée dépréciée.
+			De même, le point d'entrée \texttt{typo3/cli\_dispatch.phpsh} ainsi que les classes \texttt{Application}
+			et \texttt{CliRequestHandler} correspondantes sont marqués dépréciés.
+
+		\item Les méthodes suivantes de la classe PHP \texttt{ContentObjectRenderer} sont marquées dépréciées~:
+			\texttt{getSubpart()}, \texttt{substituteSubpartArray()},
+			\texttt{substituteMarker...} et \texttt{fillInMarkerArray()}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

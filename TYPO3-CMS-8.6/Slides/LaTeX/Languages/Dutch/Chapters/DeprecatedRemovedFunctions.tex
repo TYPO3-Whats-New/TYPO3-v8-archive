@@ -1,0 +1,353 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.6 - What's New - Chapter "Deprecated Functions" (Dutch Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		3f842373-9262b8d3-f9c8de76-cf29ce17
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+
+\section{Verouderde/verwijderde functies}
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+
+	\begin{center}\huge{Hoofdstuk 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Verouderde/verwijderde functies}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6082015f-7f3edf46-fc14d53e-3114f100
+% LTXE-SLIDE-ORIGIN:	f6dccaab-1b20a7cb-3b708187-74c96db9 English
+% LTXE-SLIDE-TITLE:		!Breaking: #78988 - Remove optional Fluid TypoScript template
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Optionele Fluid TypoScript-sjabloon verwijderd}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Het bestand voor statische opname "Fluid: (Optioneel) standaard ajax configuratie (fluid)" is
+			bedoeld als voorbeeld van Fluid Widgets in FE. Het is verouderd en daardoor verwijderd.
+		\item Neem in plaats hiervan het benodigde bestand handmatig op in het TypoScript-sjabloon:
+
+			\begin{lstlisting}
+				page.includeJSLibs {
+				  jquery = https://code.jquery.com/jquery-3.1.1.slim.min.js
+				  jquery.external = 1
+				  jquery.integrity = sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=
+				  jqueryUi = https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
+				  jqueryUi.external = 1
+				  jqueryUi.integrity = sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=
+				}
+
+				page.includeCSSLibs {
+				  jqueryUI = https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css
+				  jqueryUi.external = 1
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6b072cc1-b9dd3f9d-289fcee2-cec72962
+% LTXE-SLIDE-ORIGIN:	2f81893a-60617439-c59f6e53-1c79a41f English
+% LTXE-SLIDE-TITLE:		!Breaking: #79109 - Lowlevel VersionsCommand parameters changed
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Basale VersionsCommand parameters gewijzigd (1/2)}
+
+	\begin{itemize}
+		\item Het bestaande CLI commando in \texttt{EXT:lowlevel} voor het tonen en opschonen van versies (van
+			\texttt{EXT:version} / \texttt{EXT:workspaces}) is gemigreerd naar een Symfony Console commando.
+
+		\item Het commando was beschikbaar via \texttt{./typo3/cli\_dispatch.phpsh lowlevel\_cleaner versions}
+			en nu via \texttt{./typo3/sysext/core/bin/typo3 cleanup:versions}. De volgende CLI opties zijn
+			beschikbaar:
+
+			\begin{itemize}
+				\item \texttt{-v} en \texttt{-vv} tonen detailinformatie voor de betrokken records
+				\item \texttt{-}\texttt{-pid=23} of \texttt{-p=23} om alleen versies van pagina met ID 23 (anders wordt "0" gebruikt)
+			\end{itemize}
+
+	\end{itemize}
+
+	\small\textit{Verder op volgende pagina}\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1f2e4522-668b3401-2eccb7b8-f10f5609
+% LTXE-SLIDE-ORIGIN:	2104e84b-c80621c1-0774f43b-33d86b6b English
+% LTXE-SLIDE-TITLE:		!Breaking: #79109 - Lowlevel VersionsCommand parameters changed
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Basale VersionsCommand parameters gewijzigd (2/2)}
+
+	\small\textit{Vervolg}\normalsize
+
+	\begin{itemize}
+		\item ...
+			\begin{itemize}
+				\item \texttt{-}\texttt{-depth=4} of \texttt{-d=4} om recursief op te schonen tot een bepaalde diepte
+				\item \texttt{-}\texttt{-dry-run} om alleen de records die gewijzigd/verwijderd zouden worden te tonen
+				\item \texttt{-}\texttt{-action=naamvanactie} om records met versies op te schonen,
+					de mogelijke acties:
+					\begin{itemize}
+						\item \texttt{versions\_in\_live}: Versies van records in de live werkruimte verwijderen
+						\item \texttt{published\_versions}: Versies van gepubliceerde records verwijderen
+						\item \texttt{invalid\_workspace}: Records in een niet-bestaande werkruimte verplaatsen naar live
+						\item \texttt{unused\_placeholders}: Plaatshouders die niet meer gebruikt worden verwijderen
+					\end{itemize}
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2868ce84-4a4d897d-a9f865b8-507b17d1
+% LTXE-SLIDE-ORIGIN:	35714a8f-ad99f4e7-ccda0780-c0aa44aa English
+% LTXE-SLIDE-TITLE:		Default Layouts for Fluid Styled Content Changed
+% LTXE-SLIDE-REFERENCE:	!Breaking: #79622 - Default layouts for Fluid Styled Content changed
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Wijziging standaard layouts voor Fluid Styled Content}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item De layouts voor inhoudselementen voor Fluid Styled Content zijn nu flexibeler en kunnen
+			eenvoudiger onderhouden worden.
+
+		\item De layouts \texttt{ContentFooter}, \texttt{HeaderFooter} en \texttt{HeaderContentFooter}
+			zijn verwijderd en vervangen door een enkele \texttt{Default} layout die flexibeler is.
+
+			\begin{lstlisting}
+				$GLOBALS['TCA']['tt_content']['columns']['CType']['config']['default'] = 'textmedia';
+				$GLOBALS['TCA']['tt_content']['columns']['CType']['config']['default'] = 'header';
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9793cba2-6d39198e-bae77e7e-33527309
+% LTXE-SLIDE-ORIGIN:	0e36fc45-799c2e27-3f058488-8173f554 English
+% LTXE-SLIDE-TITLE:		TypoScript Standard Header (1/2)
+% LTXE-SLIDE-REFERENCE:	!Breaking: #79622 - TypoScript Standard Header has been removed from Fluid Styled Content
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{TypoScript standaard header (1/2)}
+
+	\begin{itemize}
+		\item De renderdefinitie van de TypoScript standaard header \texttt{lib.stdHeader} is aangebracht in
+			CSS Styled Content voor gebruik in diverse inhoudselementen om onderhoud te versimpelen.
+
+		\item Voor Fluid Styled Content is een workaround gemaakt voor compatibiliteit met CMS 7 om migratie
+		 	te versimpelen. Echter, alleen de kop wordt gerenderd en alle frames ontbreken. Additionele opties
+		 	zijn nodig om gestroomlijnde uitvoer te genereren als de layout van het inhoudselement niet correct
+		 	is geïmplementeerd.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		514a5251-19ffe794-818c2c70-fa2d35f3
+% LTXE-SLIDE-ORIGIN:	ca67c35f-cf7489b1-dd2ae6a2-f3557c53 English
+% LTXE-SLIDE-TITLE:		TypoScript Standard Header (2/2)
+% LTXE-SLIDE-REFERENCE:	!Breaking: #79622 - TypoScript Standard Header has been removed from Fluid Styled Content
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{TypoScript standaard header (2/2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item huidige uitvoer:
+
+			\begin{lstlisting}
+				tt_content.simple_content = COA
+				tt_content.simple_content {
+				  10 < lib.stdHeader
+				  20 = TEXT
+				  20.field = bodytext
+				}
+
+				<header>
+				  <h1>Nunc vel libero dignissim</h1>
+				</header>
+				<p>
+				  ...
+				</p>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		904cd5ae-4f7e9bd7-626770ac-1adae712
+% LTXE-SLIDE-ORIGIN:	64df6081-eb1f0a13-7f8292d3-9c69a293 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (1/4)
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Divers (1/4)}
+
+	% !Breaking: #78477 - Remove method FlashMessage->getMessageAsMarkup()
+	% !Breaking: #79100 - ext:felogin: Remove default CSS
+	% !Breaking: #79201 - EXT:form: Split TypoScript Includes
+	% !Breaking: #79242 - Remove l10n_mode noCopy
+	% !Breaking: #79243 - Remove l10n_mode mergeIfNotBlank
+	% !Breaking: #79243 - Remove sys_language_softMergeIfNotBlank
+
+	\begin{itemize}
+		\item De volgende functie is verwijderd:\newline
+			\small\texttt{FlashMessage->getMessageAsMarkup()}\normalsize
+		\item \texttt{EXT:felogin} voegt niet meer standaard CSS toe omdat het de
+			frontend kapot kan maken bij gebruik van CSS-frameworks.
+		\item De TypoScript van \texttt{EXT:form} specifiek voor de frontend wordt niet meer
+		 	automatisch geladen en moet handmatig toegevoegd worden met statische includes.
+			Hiermee kan een TYPO3 integrator eenvoudiger besluiten waar de TypoScript wordt ingeladen.
+		\item De optie \texttt{noCopy} is verwijderd zonder vervanging uit de lijst mogelijke waarden
+			voor de TCA-kolomeigenschap \texttt{l10n\_mode}.
+		\item De optie \texttt{mergeIfNotBlank} is verwijderd zonder vervanging uit de lijst mogelijke
+			waarden voor de TCA-kolomeigenschap \texttt{l10n\_mode}.
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4ef2470d-49ba3ba4-238d2c9a-7ddba019
+% LTXE-SLIDE-ORIGIN:	9b7c4a92-17f663e5-b890e0b9-1b039f82 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (2/4)
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Divers (2/4)}
+
+	% !Breaking: #79302 - Moved pages.url_scheme to compatibility7 extension
+	% !Breaking: #79364 - Move page module function `QuickEdit` to compatibility7
+	% !Breaking: #79622 - CSS Styled Content and TypoScript
+
+	\begin{itemize}
+		\item De TypoScript optie \texttt{config.sys\_language\_softMergeIfNotBlank}
+			is verwijderd zonder vervanging. Dit is het gevolg van het verwijderen van de
+			TCA optie \texttt{mergeIfNotBlank} uit de lijst mogelijke waarden voor \texttt{l10n\_mode}.
+
+		\item De functionaliteit van het databaseveld \texttt{pages.url\_scheme} is verplaatst
+			naar de extensie compatibility7. Met het veld kan het protocol HTTP of HTTPS door
+			een redacteur geforceerd worden in de paginaeigenschappen van een specifiek pagina.
+			Echter, het is tegenwoordig gewoon om (als een SSL-certificaat beschikbaar is) HTTPS te
+			gebruiken voor een hele website of eventueel voor een specifiek onderdeel (inclusief
+			onderliggende pagina's) dit te forceren.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		217722b1-70cb9bba-4fa411bc-bcc0a373
+% LTXE-SLIDE-ORIGIN:	6b0c8695-0ad6167d-2eda453e-5b16dd49 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (3/4)
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #77934 - Deprecate tt_content field select_key
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #78477 - Refactoring of FlashMessage rendering
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #79316 - Deprecate ArrayUtility::inArray()
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #79622 - Deprecation of CSS Styled Content
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Divers (3/4)}
+
+	\begin{itemize}
+		\item De functie \texttt{QuickEdit} in de module pagina is verplaatst naar
+			\texttt{EXT:compatibility7} en zal niet verder ontwikkeld worden.\newline
+			Zie \href{https://typo3.org/extensions/repository}{TYPO3 Extension Repository (TER)}.
+
+		\item Om CSS Styled Content en Fluid Styled Content te stroomlijnen zijn diverse opties
+		 	van CSS Styled Content verwijderd zonder vervanging:
+			\texttt{TCA image\_compression}, \texttt{TCA image\_effects}, \texttt{TCA image\_noRows},
+			\texttt{TypoScript IMAGE noRows}, \texttt{TypoScript IMAGE noCols},
+			\texttt{TypoScript IMAGE noRowsStdWrap}, \texttt{TypoScript IMGTEXT captionAlign}
+
+		\item Het veld \texttt{select\_key} van de tabel \texttt{tt\_content} wordt niet gebruikt
+			door de core en is verwijderd.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1d7d2d58-c3dc09ca-1cf73b87-eb1746ca
+% LTXE-SLIDE-ORIGIN:	3fe05cb6-a2648210-5486e0fa-93f0f02a English
+% LTXE-SLIDE-TITLE:		Miscellaneous (4/4)
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #77934 - Deprecate tt_content field select_key
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #78477 - Refactoring of FlashMessage rendering
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #79316 - Deprecate ArrayUtility::inArray()
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #79622 - Deprecation of CSS Styled Content
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Verouderde/verwijderde functies}
+	\framesubtitle{Divers (4/4)}
+
+	\begin{itemize}
+
+		\item De volgende methodes en eigenschappen binnen \texttt{FlashMessage::class}
+			zijn aangemerkt als verouderd:
+
+			\begin{itemize}
+				\item \texttt{FlashMessage->classes}
+				\item \texttt{FlashMessage->icons}
+				\item \texttt{FlashMessage->getClass()}
+				\item \texttt{FlashMessage->getIconName()}
+			\end{itemize}
+
+		\item Methode \texttt{ArrayUtility::inArray()} is aangemerkt als verouderd
+
+		\item CSS Styled Content is nu verouderd\newline
+			\small(zal verwijderd worden in TYPO3 CMS versie 9)\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

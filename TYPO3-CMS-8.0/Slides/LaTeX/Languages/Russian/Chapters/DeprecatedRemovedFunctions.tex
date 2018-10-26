@@ -1,0 +1,62 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.6 - What's New - Chapter "Deprecated Functions" (English Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		10e028d3-5834c92b-a0fe4127-b0fdad95
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+
+\section{Deprecated/Removed Functions}
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+
+	\begin{center}\huge{Chapter 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Deprecated/Removed Functions}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		fea7226e-ae6c3c20-15d2ab03-37f971f3
+% LTXE-SLIDE-ORIGIN:	d4c8c340-33163839-2ae654ee-9c6834da English
+% LTXE-SLIDE-TITLE:		Miscellaneous (#72337, #75150 and #73794)
+% LTXE-SLIDE-REFERENCE:	!Feature-72337-CharsetConversionAutodetection.rst
+% LTXE-SLIDE-REFERENCE:	!Breaking-75150-RemovedTypoScriptOptionIncludeJSlibs.rst
+% LTXE-SLIDE-REFERENCE:	!Breaking-73794-RenderCharsetOptionRemoved.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Miscellaneous}
+
+	\begin{itemize}
+
+		\item The following configuration options have been removed:
+
+			\begin{itemize}
+				\item \texttt{\$TYPO3\_CONF\_VARS['SYS']['t3lib\_cs\_utils']}
+				\item \texttt{\$TYPO3\_CONF\_VARS['SYS']['t3lib\_cs\_convMethod']}
+			\end{itemize}
+
+			\small
+				(functionality is now auto-detected and \texttt{mbstring} is
+				used by default if available)
+			\normalsize
+
+		\item The deprecated TypoScript property \texttt{page.includeJSlibs} has
+			been removed. Use the TypoScript property \texttt{page.includeJSLibs}
+			(capital "L") instead
+
+		\item The TypoScript option \texttt{config.renderCharset}, which was used
+			as character set for internal conversion within a frontend request,
+			has been removed
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

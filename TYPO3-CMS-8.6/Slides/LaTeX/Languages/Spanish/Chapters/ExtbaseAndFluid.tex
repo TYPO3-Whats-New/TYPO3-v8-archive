@@ -1,0 +1,280 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.6 - What's New - Chapter "Extbase & Fluid" (Spanish Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		846d40ce-66fdc2ec-750dcf95-33ce93e0
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{Chapter 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1034ee54-9f7c41d7-c129c16a-e33a17bb
+% LTXE-SLIDE-ORIGIN:	a9a5442b-0f7ff21f-9e8812b1-9531a9c1 English
+% LTXE-SLIDE-TITLE:		Widget Identifier Extended
+% LTXE-SLIDE-REFERENCE:	!Feature: #47006 - Extend the widget identifier with custom string
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Widget Identifier Extended}
+
+	\begin{itemize}
+		\item The parameter \texttt{customWidgetId} has been introduced for fluid widgets.
+			This string is used in the widget identifier in addition to the \texttt{nextWidgetNumber}.
+
+		\item The widget identifier is used to create the GET parameter names.
+
+		\item A good value for the \texttt{customWidgetId} is \texttt{{contentObjectData.uid}} to ensure no collisions happen.
+
+		\item Allows to use the same fluid widget more than once on one page in different content elements.
+
+			\begin{lstlisting}
+				<f:widget.paginate customWidgetId="{contentObjectData.uid}" ...>
+				</f:widget.paginate>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f528a1b0-ba417434-193603fa-0017dd07
+% LTXE-SLIDE-ORIGIN:	cbc1b52f-68132620-c5f08dbb-14723e1f English
+% LTXE-SLIDE-TITLE:		FlashMessageViewHelper
+% LTXE-SLIDE-REFERENCE:	!Breaking: #78477 - FlashMessageViewHelper no longer inherits from TagBasedViewHelper
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{FlashMessageViewHelper}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item The \texttt{FlashMessageViewHelper} has been refactored and no longer inherits
+			from the \texttt{TagBasedViewHelper}
+
+		\item Remove the tag specific attributes and style the default output.
+			If you need custom output use the possibility to render FlashMessages yourself, for example:
+
+			\begin{lstlisting}
+				<f:flashMessages as="flashMessages">
+				  <dl class="messages">
+				    <f:for each="{flashMessages}" as="flashMessage">
+				      <dt>CODE!! {flashMessage.code}</dt>
+				      <dd>MESSAGE:: {flashMessage.message}</dd>
+				    </f:for>
+				  </dl>
+				</f:flashMessages>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c33547b5-b70354db-4cf3ff7a-04979929
+% LTXE-SLIDE-ORIGIN:	91358547-99cab1b1-208f0f24-a5737bee English
+% LTXE-SLIDE-TITLE:		Removal of Fluid Styled Content Menu ViewHelpers (1/3)
+% LTXE-SLIDE-REFERENCE:	!Breaking: #79622 - Removal of Fluid Styled Content Menu ViewHelpers
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Removal of Fluid Styled Content Menu ViewHelpers (1/3)}
+
+	\begin{itemize}
+		\item Fetching data directly in the view is not recommended and
+			the temporary solution of menu ViewHelpers has been replaced by
+			its successor, the menu processor that is based on HMENU.
+
+		\item Menu ViewHelpers have been moved to the \texttt{compatibility7}
+			extension, and are replaced in the core menu content elements.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a2948599-18ea6581-3184ebd0-38092587
+% LTXE-SLIDE-ORIGIN:	8515a53c-1e60545a-7e99c75e-2638a0b1 English
+% LTXE-SLIDE-TITLE:		Removal of Fluid Styled Content Menu ViewHelpers (2/3)
+% LTXE-SLIDE-REFERENCE:	!Breaking: #79622 - Removal of Fluid Styled Content Menu ViewHelpers
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Removal of Fluid Styled Content Menu ViewHelpers (2/3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Before:
+
+			\begin{lstlisting}
+				tt_content.menu_subpages.dataProcessing {
+				  10 = TYPO3\CMS\Frontend\DataProcessing\SplitProcessor
+				  10 {
+				    if.isTrue.field = pages
+				    fieldName = pages
+				    delimiter = ,
+				    removeEmptyEntries = 1
+				    filterIntegers = 1
+				    filterUnique = 1
+				    as = pageUids
+				  }
+				}
+
+				<ce:menu.directory pageUids="{pageUids}" as="pages" levelAs="level">
+				  <f:for each="{pages}" as="page">
+				    ...
+				  </f:for>
+				</ce.menu.directory>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9dff01cd-4523d839-40e3e493-6f8fc599
+% LTXE-SLIDE-ORIGIN:	53461585-875b27dd-f00c174b-9b459763 English
+% LTXE-SLIDE-TITLE:		Removal of Fluid Styled Content Menu ViewHelpers (3/3)
+% LTXE-SLIDE-REFERENCE:	!Breaking: #79622 - Removal of Fluid Styled Content Menu ViewHelpers
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Removal of Fluid Styled Content Menu ViewHelpers (3/3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item After:
+
+			\begin{lstlisting}
+				tt_content.menu_subpages.dataProcessing {
+				  10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+				  10.special = directory
+				  10.special.value.field = pages
+				}
+
+				<f:for each="{menu}" as="page">
+				  ...
+				</f:for>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		efbd8fd1-97e0a8e3-c8bbfa9e-ff4e1bec
+% LTXE-SLIDE-ORIGIN:	0bdb89f8-d302c7ef-2037711d-a3706e69 English
+% LTXE-SLIDE-TITLE:		Fluid ViewHelper <f:variable>
+% LTXE-SLIDE-REFERENCE:	!Feature: #79402 - New Fluid ViewHelper f:variable added
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{New Fluid ViewHelper \texttt{f:variable}}
+
+	\begin{itemize}
+
+		\item A new ViewHelper \texttt{f:variable} has been added in Fluid 2.2.0,
+			which is now minimum required dependency for TYPO3 CMS
+
+		\item The ViewHelper allows variables to be assigned in the template:
+
+			\begin{lstlisting}
+				<f:variable name="myvariable">My variable's content</f:variable>
+				<f:variable name="myvariable" value="My variable's content"></f:variable>
+				{f:variable(name: 'myvariable', value: 'My variable\'s content')}
+				{myoriginalvariable -> f:variable(name: 'mynewvariable')}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6058a223-324aec52-895cc386-ebc1696e
+% LTXE-SLIDE-ORIGIN:	c459d3a9-e6fb03fe-cc79880c-d86a18d1 English
+% LTXE-SLIDE-TITLE:		New Default Layout for Fluid Styled Content (1/2)
+% LTXE-SLIDE-REFERENCE:	!Feature: #79622 - New default layout for Fluid Styled Content
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{New Default Layout for Fluid Styled Content (1/2)}
+
+	\begin{itemize}
+		\item Previously, there have been three layouts you could
+			choose from when you were defining your own custom content
+			elements or overriding an existing template.
+
+		\item To provide a better maintainability and ease of use of overrides
+			we are reducing these to a single layout that is named \texttt{Default}
+			with all sections optional and fallbacks if the section is not set. Also
+			we are introducing the "DropIn" concept.
+
+		\item The \texttt{Default} layout consists of five predefined sections
+			that can be utilized to shape the output for your content rendering.
+			In most cases you will not have to care about other section than
+			\texttt{Main}. The sections will be rendered in that exact ordering:
+			\texttt{Before}, \texttt{Header}, \texttt{Main}, \texttt{Footer}, \texttt{After}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		eecf714b-543b9bae-a6e544db-ab8b1215
+% LTXE-SLIDE-ORIGIN:	da3b6df5-a15241de-c724dfb6-765885d4 English
+% LTXE-SLIDE-TITLE:		New Default Layout for Fluid Styled Content (2/2)
+% LTXE-SLIDE-REFERENCE:	!Feature: #79622 - New default layout for Fluid Styled Content
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{New Default Layout for Fluid Styled Content (2/2)}
+
+	\begin{itemize}
+		\item The sections \texttt{Before} and \texttt{After} are so called "DropIn" sections
+		\item DropIns have been introduced to be able to place additional functionality to all content
+			elements without overriding layouts or templates
+		\item DropIns are basically placeholders/empty partials that are meant to be overridden if necessary
+		\item DropIn Locations:
+			\begin{itemize}
+				\item \texttt{Resources/Private/Partials/DropIn/Before/All.html}
+				\item \texttt{Resources/Private/Partials/DropIn/After/All.html}
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

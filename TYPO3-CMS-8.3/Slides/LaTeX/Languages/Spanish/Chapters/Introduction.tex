@@ -1,0 +1,237 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.3 - What's New - Chapter "Introduction" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		7fdf26cc-362160ab-d6c8b905-19722b20
+% LTXE-CHAPTER-NAME:	Introduction
+% ------------------------------------------------------------------------------
+
+\section{Introducción}
+\begin{frame}[fragile]
+	\frametitle{Introducción}
+
+	\begin{center}\huge{Introducción}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Los Hechos}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1cb0ce1d-11c5a7bc-d293649d-1ffc765e
+% LTXE-SLIDE-ORIGIN:	ca3596df-e5f14953-556d9c5f-a8a689fe English
+% LTXE-SLIDE-TITLE:		TYPO3 CMS 8.2 and 8.3 - The Facts
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introducción}
+	\framesubtitle{TYPO3 CMS 8.2 y 8.3 - Los Hechos}
+
+	\textbf{TYPO3 CMS 8.2}
+	\begin{itemize}
+		\item Fecha de lanzamiento: 05 Julio 2016
+		\item Tipo de lanzamiento: Lanzamiento Sprint
+		\item Eslogan: Actualizaciones
+	\end{itemize}
+
+	\vspace{0.6cm}
+
+	\textbf{TYPO3 CMS 8.3}
+	\begin{itemize}
+		\item Fecha de lanzamiento: 30 Agosto 2016
+		\item Tipo de lanzamiento: Lanzamiento Sprint
+		\item Eslogan: Edición del Frontend sobre Steroids
+	\end{itemize}
+
+%	\begin{figure}
+%		\includegraphics[width=0.95\linewidth]{Introduction/typo3cms83-banner.jpg}
+%	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6c251074-0c5d5b56-acccd03a-efa2b574
+% LTXE-SLIDE-ORIGIN:	1be10378-6e990dd6-2cca609a-c778c43c English
+% LTXE-SLIDE-TITLE:		System Requirements
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introducción}
+	\framesubtitle{Requerimientos del Sistema}
+
+	\begin{itemize}
+		\item PHP:\tabto{2.2cm}versión 7
+		\item MySQL:\tabto{2.2cm}versión 5.5 a 5.7
+		\item Espacio de disco:\tabto{2.2cm}mín 200 MB
+		\item Ajustes PHP:
+
+			\begin{itemize}
+				\item \texttt{memory\_limit} >= 128M
+				\item \texttt{max\_execution\_time} >= 240s
+				\item \texttt{max\_input\_vars} >= 1500
+				\item opción de compilación \texttt{-}\texttt{-disable-ipv6} \underline{no} debe usarse
+			\end{itemize}
+
+		\item El backend requiere Microsoft Internet Explorer 11 o posterior,
+			Microsoft Edge, Google Chrome, Firefox, Safari o cualquier otro navegador
+			moderno y compatible
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7c0c5ff6-81288693-f9b4fae4-b8339d22
+% LTXE-SLIDE-ORIGIN:	ed8e8933-d90001c7-f7548bd3-80e549cb English
+% LTXE-SLIDE-TITLE:		Development And Release Timeline
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introducción}
+	\framesubtitle{Línea de tiempo de Desarrollo y Lanzamiento}
+
+	\begin{figure}
+		\includegraphics[width=1\linewidth]{Introduction/ReleaseAgenda.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bdc2c4a0-59d680aa-64f81a00-fe9ff211
+% LTXE-SLIDE-ORIGIN:	01225efb-e9fdbaff-726e5fed-5b7f0003 English
+% LTXE-SLIDE-TITLE:		TYPO3 CMS Roadmap
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introducción}
+	\framesubtitle{Línea de lanzamiento de TYPO3 CMS}
+
+	Fechas de lanzamiento y sus enfoques principales:
+
+	\begin{itemize}
+
+		\item v8.0 \tabto{1.1cm}22/Mar/2016\tabto{3.4cm}Añadiendo cosas de última hora
+		\item v8.1 \tabto{1.1cm}03/May/2016\tabto{3.4cm}Integración con la Nube
+		\item
+			\begingroup
+				\color{typo3orange}
+					v8.2 \tabto{1.1cm}05/Jul/2016\tabto{3.4cm}Actualizaciones
+			\endgroup
+		\item
+			\begingroup
+				\color{typo3orange}
+					v8.3 \tabto{1.1cm}30/Aug/2016\tabto{3.4cm}Edición del Frontend  sobre Steroids
+			\endgroup
+		\item v8.4 \tabto{1.1cm}18/Oct/2016\tabto{3.4cm}\textit{por determinar}
+		\item v8.5 \tabto{1.1cm}20/Dec/2016\tabto{3.4cm}Soporte de Integrador
+		\item v8.6 \tabto{1.1cm}14/Feb/2017\tabto{3.4cm}\textit{por determinar}
+		\item v8.7 \tabto{1.1cm}04/Apr/2017\tabto{3.4cm}Preparación LTS
+
+	\end{itemize}
+
+	\smaller
+		\url{https://typo3.org/typo3-cms/roadmap/}\newline
+		\url{https://typo3.org/news/article/kicking-off-typo3-v8-development/}
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		52a597c2-ceae4979-188a6791-88a9e031
+% LTXE-SLIDE-ORIGIN:	793cc944-52bccf17-ba7c4c9c-661e8993 English
+% LTXE-SLIDE-TITLE:		Installation
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introducción}
+	\framesubtitle{Instalación}
+
+	\begin{itemize}
+		\item Procedimiento de instalación oficial bajo Linux/Mac OS X\newline
+			(DocumentRoot por ejemplo \texttt{/var/www/site/htdocs}):
+		\begin{lstlisting}
+			$ cd /var/www/site
+			$ wget --content-disposition get.typo3.org/8.3
+			$ tar xzf typo3_src-8.3.0.tar.gz
+			$ cd htdocs
+			$ ln -s ../typo3_src-8.3.0 typo3_src
+			$ ln -s typo3_src/index.php
+			$ ln -s typo3_src/typo3
+			$ touch FIRST_INSTALL
+		\end{lstlisting}
+
+		\item Enlaces simbólicos bajo Microsoft Windows:
+
+			\begin{itemize}
+				\item Use \texttt{junction} en Windows XP/2000
+				\item Use \texttt{mklink} en Windows Vista y Windows 7
+			\end{itemize}
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3a1b44bd-654f2377-7e96751c-13693f1b
+% LTXE-SLIDE-ORIGIN:	4c0c3586-154241f9-4c859652-03bcc92e English
+% LTXE-SLIDE-TITLE:		Upgrade to TYPO3 CMS 7
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introducción}
+	\framesubtitle{Actualización a TYPO3 CMS 8.x}
+
+	\begin{itemize}
+		\item Actualizaciones sólo posibles desde TYPO3 CMS 7.6 LTS
+		\item TYPO3 CMS < 7.6 LTS debe ser actualizado a TYPO3 CMS 7.6 LTS primero
+	\end{itemize}
+
+	\begin{itemize}
+
+		\item Instrucciones de actualización:\newline
+			\smaller\url{http://wiki.typo3.org/Upgrade#Upgrading_to_8.3}\normalsize
+		\item Guía oficial de TYPO3 "Instalación de TYPO3 y Actualización":
+			\smaller\url{http://docs.typo3.org/typo3cms/InstallationGuide}\normalsize
+		\item Enfoque general:
+			\begin{itemize}
+				\item Comprobar requisitos mínimos del sistema \small(PHP, MySQL, etc.)
+				\item Revisar \textbf{deprecation\_*.log} en instancia antigua de TYPO3
+				\item Actualizar todas las extensiones a la última versión
+                \item Desplegar fuentes nuevas y ejecutar Herramienta de Instalación -> Asistente de Actualización
+                \item Revisar el módulo de inicio para usuarios backend (opcionalmente)
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ccf9e939-a0e024e0-88c5b5ad-fecb620b
+% LTXE-SLIDE-ORIGIN:	36c478bf-991c3c9c-1b55ed59-ee1ad72e English
+% LTXE-SLIDE-TITLE:		PHP Version 7
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Introducción}
+	\framesubtitle{PHP Versión 7}
+
+	\begin{itemize}
+
+		\item PHP 7.0 es el requisito mínimo para TYPO3 CMS 8.x
+		\item TYPO3 soportará lanzamientos posteriores de PHP 7 cuando aparezcan
+		\item Este aumento de versión proporciona un aumento significativo de rendimiento de todo el sistema
+
+		\item No sólo los editores del backend notarán una interfaz más fluida, sino que el
+			tiempo al completo para una llamada de página cacheada en el frontend no supera los
+			7 milisegundos ahora, que es aproximadamente un 40\% más rápido si lo comparamos a ejecutar
+			la misma página web con PHP versión 5.5
+
+		\item También comenzamos a usar nuevas características de esta versión de PHP, por ejemplo
+			los generadores seguros criptográficamente pseudo-aleatorios están ya en uso activo
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

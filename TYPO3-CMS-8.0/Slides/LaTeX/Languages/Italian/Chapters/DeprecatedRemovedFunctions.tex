@@ -1,0 +1,62 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.6 - What's New - Chapter "Deprecated Functions" (English Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		10e028d3-5834c92b-a0fe4127-b0fdad95
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+
+\section{Funzionalità deprecate/rimosse}
+\begin{frame}[fragile]
+	\frametitle{Funzionalità deprecate/rimosse}
+
+	\begin{center}\huge{Capito 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Funzionalità deprecate/rimosse}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		211377f0-d1fee394-65627997-2d439a1f
+% LTXE-SLIDE-ORIGIN:	d4c8c340-33163839-2ae654ee-9c6834da English
+% LTXE-SLIDE-TITLE:		Miscellaneous (#72337, #75150 and #73794)
+% LTXE-SLIDE-REFERENCE:	!Feature-72337-CharsetConversionAutodetection.rst
+% LTXE-SLIDE-REFERENCE:	!Breaking-75150-RemovedTypoScriptOptionIncludeJSlibs.rst
+% LTXE-SLIDE-REFERENCE:	!Breaking-73794-RenderCharsetOptionRemoved.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Funzionalità deprecate/rimosse}
+	\framesubtitle{Varie}
+
+	\begin{itemize}
+
+		\item Le seguenti opzioni di configurazione sono state rimosse:
+
+			\begin{itemize}
+				\item \texttt{\$TYPO3\_CONF\_VARS['SYS']['t3lib\_cs\_utils']}
+				\item \texttt{\$TYPO3\_CONF\_VARS['SYS']['t3lib\_cs\_convMethod']}
+			\end{itemize}
+
+			\small
+				(la funzionalità è ora rilevata automaticamente e \texttt{mbstring} è
+				usata di default se disponibile)
+			\normalsize
+
+		\item La proprietà TypoScript deprecata \texttt{page.includeJSlibs} è
+			stata rimossa. Utilizzare la proprietà TypoScript \texttt{page.includeJSLibs}
+			("L" maiuscola) al suo posto
+
+		\item L'opzione TypoScript \texttt{config.renderCharset}, che era usata
+			come set di caratteri di conversione interna ad una richiesta di frontend,
+			è stata rimossa
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

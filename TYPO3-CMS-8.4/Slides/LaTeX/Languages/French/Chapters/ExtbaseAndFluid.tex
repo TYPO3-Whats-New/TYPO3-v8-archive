@@ -1,0 +1,118 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.4 - What's New - Chapter "Extbase & Fluid" (French Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	French
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		846d40ce-66fdc2ec-750dcf95-33ce93e0
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{Chapitre 4~:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		be65ee06-367d2208-3e82cfe9-2f299f05
+% LTXE-SLIDE-ORIGIN:	1ae5bb97-11d5b876-c9a11472-7a187619 English
+% LTXE-SLIDE-TITLE:		Extbase's persistence uses Doctrine DBAL's QueryBuilder now
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Doctrine DBAL}
+
+	\begin{itemize}
+
+		\item La persistence Extbase utilise le QueryBuilder de Doctrine DBAL
+		\item Ceci permet l'usage des \textbf{requêtes préparées} pour toutes les requêtes Extbase
+		\item La compatibilité reste maintenue
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b4216e42-6151fb19-de0d1818-2fd279f2
+% LTXE-SLIDE-ORIGIN:	71749dc0-def142b7-4d032fcc-9407cb52 English
+% LTXE-SLIDE-TITLE:		ObjectAccess cleaned up
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Nettoyage de ObjectAccess (1)}
+
+	\begin{itemize}
+
+		\item Diverses améliorations de la classe \texttt{ObjectAccess}, résultant en gain de performance
+		\item Les changements suivants sont implémentés~:
+
+			\begin{itemize}
+				\item Plus de méthode native à PHP utilisés lorsque raisonnable
+				\item Moins d'appels de méthodes lorsque raisonnable
+				\item Retrait des variables passées par référence
+				\item Plus de cas retournent \texttt{null} plutôt que de lever une exception
+				\item Décisions plus rapides et méthodes d'accès en premières
+				\item …
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		27a9aefe-078f23db-b16e5d57-4d200dbb
+% LTXE-SLIDE-ORIGIN:	ad50a8f9-f6f9568a-a127d688-ac96c0fd English
+% LTXE-SLIDE-TITLE:		ObjectAccess cleaned up
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Nettoyage de ObjectAccess (2)}
+
+	\begin{itemize}
+
+		\item Les changements suivants sont implémentés (\textit{suite})~:
+
+			\begin{itemize}
+				\item …
+				\item Les accès par réflection sont isolés aux cas limite ainsi qu'à l'activation de l'indicateur «~forcer l'accès direct~»
+				\item Sacrifice de la capacité de lire des objets autres que ceux persistés dans ObjectStorage ou ses sous-classes
+				\item Changement du verdict de \texttt{false} à \texttt{true} lors du test d'existence d'une propriété ajoutée dynamiquement sur un objet
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e39c36fb-8ecd3a29-0d60ec5c-bd542b53
+% LTXE-SLIDE-ORIGIN:	80a1d725-9c010064-9366cafb-0417ea5a English
+% LTXE-SLIDE-TITLE:		#77547: Behaviour of RecordCollectionRepository::findByUid() changed
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{RecordCollectionRepository::findByUid()}
+
+	\begin{itemize}
+		\item Le comportement de \texttt{RecordCollectionRepository::findByUid()} est changé
+		\item Lorsque TYPO3 est en mode FE, la méthode respecte les \textit{enable fields} configurés
+		\item Au lieu de retourner un objet qui devrait être désactivé, la méthode retourne \texttt{null}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

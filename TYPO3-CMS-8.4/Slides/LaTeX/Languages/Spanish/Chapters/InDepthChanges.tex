@@ -1,0 +1,283 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.4 - What's New - Chapter "In-Depth Changes" (Spanish Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		5ebcecbe-66abfa57-cf38bc00-aa637965
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+
+\section{Cambios en Profundidad}
+\begin{frame}[fragile]
+	\frametitle{Cambios en Profundidad}
+
+	\begin{center}\huge{Capítulo 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Cambios en Profundidad}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5058073f-24e6b4d7-f542bb1e-a69c1779
+% LTXE-SLIDE-ORIGIN:	bde270e6-ffef8544-ea472ed5-89ba8c3d English
+% LTXE-SLIDE-TITLE:		#52877: Remove ExtJS Viewport
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Cambios en Profundidad}
+	\framesubtitle{Eliminación de ExtJS}
+
+	\begin{itemize}
+		\item Componente \texttt{TYPO3.Viewport} de ExtJS ha sido eliminado
+		\item \texttt{Ext.layout} y \texttt{Ext.Viewport} ya no se usan en el backend
+		\item La funcionalidad ha sido reimplementado con una solución JavaScript, jQuery y CSS nativa
+		\item Se han eliminado los componentes \texttt{TYPO3.Window} y \texttt{TYPO3.Dialog} para notificaciones
+		\item Partes/tareas restantes para la eliminación completa de ExtJS:
+
+		\begin{itemize}
+			\item Árbol de la página
+			\item Función de arrastrar y soltar en la extensión form
+			\item Funcionalidad ExtDirect
+		\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b26880c6-e4294730-d80ec754-2aac27b6
+% LTXE-SLIDE-ORIGIN:	11a9285f-18bdbfac-88ece0c7-b3f2276a English
+% LTXE-SLIDE-TITLE:		Doctrine DBAL
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Cambios en Profundidad}
+	\framesubtitle{Doctrine DBAL}
+
+	\begin{itemize}
+		\item Se ha avanzado en la migración de todas las llamadas de bases de datos del núcleo de TYPO3 a Doctrine DBAL
+		\item La persistencia de Extbase también se basa completamente en QueryBuilder de Doctrine DBAL
+		\item \texttt{EXT:dbal} y \texttt{EXT:adodb} han sido eliminados del núcleo de TYPO3\newline
+			\smaller
+				Si extensiones de terceros utilizan la API antigua \texttt{TYPO3\_DB} para consultar tablas de base de datos que no son de MySQL, estas dos extensiones se pueden instalar desde el TER.
+			\normalsize
+
+		\item La funcionalidad abreviada \texttt{TYPO3\_DB} ha sido eliminada para la mayoría de las clases PHP del núcleo de TYPO3\newline
+			\smaller
+				(usar \texttt{\$GLOBALS[TYPO3\_DB]} sigue siendo posible pero no recomendado)
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		55526aa4-9d48df88-1a1a7224-d4dc282e
+% LTXE-SLIDE-ORIGIN:	bb5c02d9-8dddd379-e73500a9-9534588b English
+% LTXE-SLIDE-TITLE:		#77900: TYPO3 CMS supports TypeScript (1)
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Cambios en Profundidad}
+	\framesubtitle{Soporte TypeScript (1)}
+
+	\begin{itemize}
+		\item \textbf{TypeScript} se ha introducido en el núcleo de TYPO3 para la gestión interna de JavaScript
+		\item TypeScript es un lenguaje de programación libre y de código abierto desarrollado y mantenido por Microsoft
+		\item Es un superconjunto de JavaScript, que puede compilar JavaScript
+		\item Más detalles en: \url{https://www.typescriptlang.org}
+		\item Una tarea grunt compila cada fichero TypeScript (.ts) en un fichero JavaScript(.js) y produce un módulo AMD
+	\end{itemize}
+
+	\small
+		Nota: todos los módulos AMD actualmente en TYPO3 CMS deben ser portados a TypeScript para garantizar el funcionamiento de JavaScript en el futuro.
+		El objetivo es migrar todos los módulos AMD a TypeScript antes de que se lance CMS 8 LTS.
+	\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c741e346-9a9bb05a-338e4e17-f0acfe26
+% LTXE-SLIDE-ORIGIN:	d467c514-583b44e5-03e4927f-38ba0ad1 English
+% LTXE-SLIDE-TITLE:		#77900: TYPO3 CMS supports TypeScript (2)
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Cambios en Profundidad}
+	\framesubtitle{Soporte TypeScript (2)}
+
+	\begin{itemize}
+		\item Las reglas más importantes para TypeScript se definen en un conjunto de reglas que son verificadas en parte por TypeScript Linter:
+
+			\begin{itemize}
+				\item Siempre defina tipos y tipos de retorno, incluso si TypeScript proporciona un tipo predeterminado
+				\item Ámbito de las variables: prefiere \texttt{let} en lugar de \texttt{var}
+				\item Propiedades opcionales en interfaces no están permitidas en el núcleo
+				\item Una interfaz nunca extenderá una clase
+				\item Iteraciones: use \texttt{for(i of list)} en lugar de \texttt{for(i in list)}
+				\item Use la palabra clave \texttt{implements}, incluso si TypeScript no la requiere
+				\item Cualquier clase o interfaz debe estar declarado con "export" para asegurar la reutilización o exportación de una instancia del objeto para código existente que no puede ser actualizado ahora.
+			\end{itemize}
+
+			\small(no todas las reglas pueden ser chequeadas por el Linter todavía)\normalsize
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b081cb3e-74f34515-09ae6704-5cea7728
+% LTXE-SLIDE-ORIGIN:	2e0d0d9e-44771297-efe747f4-89c8b960 English
+% LTXE-SLIDE-TITLE:		#38496: Shortcuts take all URL parameters into account
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Cambios en Profundidad}
+	\framesubtitle{Parámetros de URL en Accesos Directos}
+
+	\begin{itemize}
+		\item Ahora los accesos directos tienen en cuenta todos los parámetros de la URL.
+		\item Por ejemplo:
+
+			\begin{itemize}
+				\item La página con UID 2 es un acceso directo a la página con UID 1
+				\item Configuración de TypoScript: \texttt{config.linkVars = L}
+			\end{itemize}
+
+		\item \underline{Viejo} comportamiento:\newline
+			\smaller
+				\tabto{0.5cm}\texttt{http://example.com?id=2\&L=1\&customparam=X}\newline
+				redirecciona a:\newline
+				\tabto{0.5cm}\texttt{http://example.com?id=1\&L=1}
+			\normalsize
+
+		\item \underline{Nuevo} comportamiento:\newline
+			\smaller
+				\tabto{0.5cm}\texttt{http://example.com?id=2\&L=1\&customparam=X}\newline
+				redirecciona a:\newline
+				\tabto{0.5cm}\texttt{http://example.com?id=1\&L=1\&customparam=X}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0985df59-d6fbbbd7-9f0177a3-c9a992b6
+% LTXE-SLIDE-ORIGIN:	3b3fcb91-081940b0-2ec33de4-ef56f577 English
+% LTXE-SLIDE-TITLE:		#75031 and #75032: Fluidification of TypoScriptTemplate...ModuleFunctionController
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Cambios en Profundidad}
+	\framesubtitle{Fluidificación}
+
+	\begin{itemize}
+		\item Código HTML se ha migrado del código PHP a una plantilla Fluid
+		\item Métodos afectados:\newline
+
+			\smaller\texttt{TypoScriptTemplateInformationModuleFunctionController\newline
+				->tableRow()}\normalsize\newline
+			\smaller\texttt{TypoScriptTemplateConstantEditorModuleFunctionController\newline
+				->displayExample()}\normalsize
+
+		\item Llamar a estos métodos da como resultado un error fatal ahora
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e55e1ff2-02d78f6e-080e5e24-8b5446d7
+% LTXE-SLIDE-ORIGIN:	5f2bab62-fc48a5b2-0f70e9b0-834e47ce English
+% LTXE-SLIDE-TITLE:		PageRenderer and ResourceCompressor support EXT: syntax
+% LTXE-SLIDE-REFERENCE:	#77589: EXT: syntax in PageRenderer and Compressor
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Cambios en Profundidad}
+	\framesubtitle{PageRenderer y Compressor}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+
+		\item Las clases PHP PageRenderer y ResourceCompressor ahora soportan la sintaxis
+			\texttt{EXT:} para hacer referencias a los ficheros JS y CSS dentro de los directorios
+			de extensiones.\newline
+			\textbf{Previamente:}
+
+			\begin{lstlisting}
+				$this->pageRenderer->addJsFile(
+				  ExtensionManagementUtility::extRelPath('myextension') .
+				  'Resources/Public/JavaScript/example.js'
+				);
+			\end{lstlisting}
+
+			\textbf{Ahora posible:}
+
+			\begin{lstlisting}
+				$this->pageRenderer->addJsFile(
+				  'EXT:myextension/Resources/Public/JavaScript/example.js'
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e163787b-9005a728-442bc8cf-a08f559d
+% LTXE-SLIDE-ORIGIN:	081940b0-ef56f577-3b3fcb91-0b008194 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (1) (#77700, #77750, #77814 and #78222)
+% LTXE-SLIDE-REFERENCE:	#77700: EXT:indexed_search_mysql merged into EXT:indexed_search
+% LTXE-SLIDE-REFERENCE:	#77750: Return value of ContentObjectRenderer::exec_Query changed
+% LTXE-SLIDE-REFERENCE:	#77814: Remove feature subsearch from indexed search
+% LTXE-SLIDE-REFERENCE:	#78222: Extension autoload information is now in typo3conf/autoload
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Cambios en Profundidad}
+	\framesubtitle{Miscelánea}
+
+	\begin{itemize}
+
+		\item EXT:indexed\_search\_mysql se fusiona con EXT:indexed\_search
+
+		\item La característica "subsearch" se ha eliminado de EXT:indexed\_search\_mysql\newline
+			\smaller
+				(la opción de TypoScript \texttt{plugin.tx\_indexedsearch.clearSearchBox} también ha sido eliminada)
+			\normalsize
+
+		\item Tipo de retorno de \texttt{ContentObjectRenderer::exec\_Query()} ha sido cambiado\newline
+			\smaller
+				(ahora el valor de retorno siempre es
+					\texttt{\textbackslash
+						Doctrine\textbackslash
+						DBAL\textbackslash
+						Driver\textbackslash
+						Statement})
+			\normalsize
+
+		\item Para dejar claro que la información de autoload no es una caché, 
+		los ficheros se han movido de \texttt{typo3temp/} a \texttt{typo3conf/}\newline
+			\smaller
+				Nota: Las implementaciones de TYPO3 que no se aprovechan de Composer,
+				posiblemente necesitan algunos ajustes para tener en cuenta la nueva ubicación.
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

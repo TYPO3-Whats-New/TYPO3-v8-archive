@@ -1,0 +1,480 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.6 - What's New - Chapter "In-Depth Changes" (English Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		7229f1b9-b481e9bc-09c46183-a86b6a7e
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+
+\section{Änderungen im System}
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+
+	\begin{center}\huge{Kapitel 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Änderungen im System}}\end{center}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b9b259e4-9d35ace7-edff1014-7390d1d1
+% LTXE-SLIDE-TITLE:		Support PECL-memcached in MemcachedBackend
+% LTXE-SLIDE-REFERENCE:	!Feature-69794-SupportPecl-memcachedInMemcachedBackend.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Unterstützung von PECL-memcached im MemcachedBackend}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Es wurde eine Unterstützung für das PECL Modul "memcached" zum MemcachedBackend des Caching-Frameworks hinzugefügt
+
+		\item Wenn beide ("memcache" und "memcached") installiert sind, wird "memcache"
+			verwendet, um einen Breaking Change zu vermeiden
+
+		\item Als Integrator kann man die Option \texttt{peclModule} setzen, um das bevorzugte PECL-Modul auszuwählen:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['my_memcached'] = [
+				  'frontend' => \TYPO3\CMS\Core\Cache\Frontend\VariableFrontend::class
+				  'backend' => \TYPO3\CMS\Core\Cache\Backend\MemcachedBackend::class,
+				  'options' => [
+				    'peclModule' => 'memcached',
+				    'servers' => [
+				      'localhost',
+				      'server2:port'
+				    ]
+				  ]
+				];
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ef8c124e-f902453a-d48770b9-4cf86545
+% LTXE-SLIDE-TITLE:		Native support for Symfony Console (1)
+% LTXE-SLIDE-REFERENCE:	!Feature-73042-IntroduceNativeSupportForSymfonyConsole.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Native Unterstützung der Symfony-Konsole (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item TYPO3 unterstützt nun out-of-the-box die Symfony-Konsole in dem es ein CLI-Skript in \texttt{typo3/sysext/core/bin/typo3} zur Verfügung stellt. Auf Instanzen, die mittels Composer installiert wurden, wird das Binary in das \texttt{bin}-Verzeichnis verlinkt, z.B. \texttt{bin/typo3}.
+
+		\item Das neue Binary unterstützt die existierenden CLI-Kommandos als Fallback, wenn kein entsprechender Symfony Konsolen-Befehl gefunden wurde
+
+		\item Um einen Befehl zu registrieren, der via \texttt{typo3} CLI aufgerufen werden soll, muss man eine entsprechende Datei \texttt{Configuration/Commands.php} innerhalb der eigenen Extension anlegen
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		28b018bb-21804fa1-c578f0ff-fc16cbb1
+% LTXE-SLIDE-TITLE:		Native support for Symfony Console (2)
+% LTXE-SLIDE-REFERENCE:	!Feature-73042-IntroduceNativeSupportForSymfonyConsole.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Native Unterstützung der Symfony-Konsole (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Sobald man ein Kommando regirstriert, muss man zwingend die Eigenschaft \texttt{class} angeben.
+			Optional kann der Parameter \texttt{user} angegeben werden, mit dem angegeben wird, als welcher User das Kommando im Backend ausgeführt wird
+
+		\item Eine beispielhafte Datei \texttt{Configuration/Commands.php} könnte so aussehen:
+
+			\begin{lstlisting}
+				return [
+				  'backend:lock' => [
+				    'class' => \TYPO3\CMS\Backend\Command\LockBackendCommand::class
+				  ],
+				  'referenceindex:update' => [
+				    'class' => \TYPO3\CMS\Backend\Command\ReferenceIndexUpdateCommand::class,
+				    'user' => '_cli_lowlevel'
+				  ]
+				];
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		fc16cbb1-21804fa1-c578f0ff-28b018bb
+% LTXE-SLIDE-TITLE:		Native support for Symfony Console (3)
+% LTXE-SLIDE-REFERENCE:	!Feature-73042-IntroduceNativeSupportForSymfonyConsole.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Native Unterstützung der Symfony-Konsole (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Ein exemplarischer Aufruf könnte wie folgt lauten:
+			\begin{lstlisting}
+				bin/typo3 backend:lock http://example.com/maintenance.html
+			\end{lstlisting}
+
+		\item Bei Nicht-Composer Installationen:
+			\begin{lstlisting}
+				typo3/sysext/core/bin/typo3 backend:lock http://example.com/maintenance.html
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1626edc6-8d93ff84-f64178bf-8e7650df
+% LTXE-SLIDE-TITLE:		Cryptographically secure pseudorandom number generator
+% LTXE-SLIDE-REFERENCE:	!Feature-73050-AddACSPRNGAPI.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Kryptografisch sicherer Pseudo-Zufallszahlen-Generator}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Es wurde ein neuer kryptografisch sicherer Pseudo-Zufallszahlen-Generator (CSPRNG) in den Core integriert.\newline
+			Dieser verwendet die neue CSPRNG-Funktion in PHP 7.
+
+		\item Die API hierzu befindet sich in der Klasse
+			\texttt{\textbackslash
+				TYPO3\textbackslash
+				CMS\textbackslash
+				Core\textbackslash
+				Crypto\textbackslash
+				Random}
+
+		\item Beispiel:
+
+			\begin{lstlisting}
+				use \TYPO3\CMS\Core\Crypto\Random;
+				use \TYPO3\CMS\Core\Utility\GeneralUtility;
+
+				// Retrieving random bytes
+				$someRandomString = GeneralUtility::makeInstance(Random::class)->generateRandomBytes(64);
+
+				// Rolling the dice..
+				$tossedValue = GeneralUtility::makeInstance(Random::class)->generateRandomInteger(1, 6);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f098bb23-81eee73f-d9eb0d80-50bbe58b
+% LTXE-SLIDE-TITLE:		Wizard component (1)
+% LTXE-SLIDE-REFERENCE:	!Feature-73429-WizardComponentHasBeenAdded.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Wizard Komponente (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Es wurde eine neue Wizard Komponente (Assistent) zugefügt. Dieser Assistent kann für User-unterstützte Interaktionen verwendet werden
+
+		\item Das RequireJS-Module kann durch die Inklusion von \texttt{TYPO3/CMS/Backend/Wizard} verwendet werde
+
+		\item Der Assistent unterstützt bislang nur direkte Actions\newline
+			(und keine Verbindungen untereinander)
+
+		\item Die Wizard-Komponente besitzt die folgenden öffentlichen Methoden:
+
+			\begin{lstlisting}
+				addSlide(identifier, title, content, severity, callback)
+				addFinalProcessingSlide(callback)
+				set(key, value)
+				show()
+				dismiss()
+				getComponent()
+				lockNextStep()
+				unlockNextStep()
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f098bb23-81eee73f-d9eb0d80-50bbe58b
+% LTXE-SLIDE-TITLE:		Wizard component (2)
+% LTXE-SLIDE-REFERENCE:	!Feature-73429-WizardComponentHasBeenAdded.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Wizard Komponente (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Der Event \texttt{wizard-visible} wird abgefeuert, wenn das Rendering des Wizards fertig gestellt wurde
+
+		\item Wizards können über das Abfeuern des \texttt{wizard-dismiss} Events geschlossen werden
+
+		\item Wizards feuern den \texttt{wizard-dismissed} Event, wenn diese geschlossen wurden
+
+		\item Eigene Listener können über \texttt{Wizard.getComponent()} integriert werden
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5f0d3565-8b6ad76b-44ec4d62-247401f7
+% LTXE-SLIDE-TITLE:		Generated asset files moved
+% LTXE-SLIDE-REFERENCE:	!Important-72580-PubliclyAccessibleGeneratedAssetFilesMovedToTypo3tempassets.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Generierte Asset-Dateien wurden verschoben}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Die Ordner-Struktur innerhalb von \texttt{typo3temp} wurde verändert, um Assets zu separieren, die von temporär erzeugten Dateien öffentlichen Zugriff benötigen (so benötigt z.B. zum Zwecke des Cachings oder Locking lediglich der Server Zugriff auf deren Dateien)
+
+		\item Diese Assets werden nun nicht mehr in den folgenden Ordnern gespeichert:\newline
+			\texttt{\_processed\_}, \texttt{compressor}, \texttt{GB}, \texttt{temp},
+			\texttt{Language}, \texttt{pics}\newline
+			sondern in Zukunft in den nachfolgenden:
+
+			\begin{itemize}
+				\item \texttt{typo3temp/assets/js/}
+				\item \texttt{typo3temp/assets/css/},
+				\item \texttt{typo3temp/assets/compressed/}
+				\item \texttt{typo3temp/assets/images/}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a4d7bec0-6c19d8b2-6a6be951-5d5aa0c0
+% LTXE-SLIDE-TITLE:		ImageMagick/GraphicsMagick changes (1)
+% LTXE-SLIDE-REFERENCE:	!Breaking-43085-RenamedGraphicsProcessorSettings.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{ImageMagick/GraphicsMagick Änderungen (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Die Settings für den Graphic-Prozessor (Image- oder GraphicsMagick) wurden umbenannt
+			(Datei: \texttt{LocalConfiguration.php}).\newline
+			ALT:\tabto{1.0cm} \texttt{im\_}\newline
+			NEU:\tabto{1.0cm} \texttt{processor\_}
+
+		\item Negative Benennung - wie \texttt{noScaleUp} - wurden in positive Entsprechungen geändert
+
+		\item Zusätzlich wurden Referenzen zu spezifischen Versionen von ImageMagick/GraphicsMagick entfernt
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d48d2af2-66b218a6-4a54e402-097ad85e
+% LTXE-SLIDE-TITLE:		ImageMagick/GraphicsMagick changes (2)
+% LTXE-SLIDE-REFERENCE:	!Breaking-43085-RenamedGraphicsProcessorSettings.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{ImageMagick/GraphicsMagick Änderungen (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Die nicht benutzte Konfigurationsoption \texttt{image\_processing} wurde ohne Ersatz entfernt
+
+		\item Die Prozessor-spezifische Konfigurationsoption \texttt{colorspace} wurde mit einem  \textit{Namespace} unterhalb der \texttt{processor\_} Hierarchie eingeordnet
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		74e4b871-9f2ded00-f54bc3c1-85d22167
+% LTXE-SLIDE-TITLE:		Hooks and Signals (1): post-processing of the preview URL
+% LTXE-SLIDE-REFERENCE:	!Feature-54887-Post-processingOfThePreviewUrl.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Hooks und Signals (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Ein zusätzlicher Hook wurde zur Methode \texttt{BackendUtility::viewOnClick()}
+			zugefügt, um die Preview-URL zu verarbeiten
+
+		\item Die Registrierung einer Hook-Klasse implementiert eine Methode \texttt{postProcess}:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_befunc.php']['viewOnClickClass'][] =
+				  \VENDOR\MyExt\Hooks\BackendUtilityHook::class;
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9c150d50-ee3ba19b-120ef653-e714135c
+% LTXE-SLIDE-TITLE:		Hooks and Signals (2): hook to override a record overlay
+% LTXE-SLIDE-REFERENCE:	!Feature-72505-IntroduceHookToOverrideARecordOverlay.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Hooks und Signals (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Vor TYPO3 CMS 7.6, war es möglich, ein Record-Overlay innerhalb von \texttt{Web -> List} zu überschreiben. Ein neuer Hook in TYPO3 CMS 8.0 stellt die alte Funktionalität wieder zur Verfügung
+
+		\item Der Hook wird mit der folgenden Signatur aufgerufen:
+			\begin{lstlisting}
+				/**
+				 * @param string $table
+				 * @param array $row
+				 * @param array $status
+				 * @param string $iconName
+				 * @return string the new (or given) $iconName
+				 */
+				function postOverlayPriorityLookup($table, array $row, array $status, $iconName) { ... }
+			\end{lstlisting}
+
+		\item Die Registrierung einer Hook-Klasse implementiert eine Methode \texttt{postOverlayPriorityLookup}:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'][IconFactory::class]['overrideIconOverlay'][] =
+				  \VENDOR\MyExt\Hooks\IconFactoryHook::class;
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		37ba9f7c-fb51932d-cca9a99f-6bb7a961
+% LTXE-SLIDE-TITLE:		Hooks and Signals (3): preProcessStorage signal
+% LTXE-SLIDE-REFERENCE:	!Feature-72904-AddPreProcessStorageSignalToResourceFactory.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Hooks und Signals (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Es wurde ein neues Signal implementiert, welches vor der Initialisierung eines Resource Storage ausgesendet wird
+
+		\item Die Registrierung der Klasse erfolgt in der Datei \texttt{ext\_localconf.php}:
+
+			\begin{lstlisting}
+				$dispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+				  \TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
+				$dispatcher->connect(
+				  \TYPO3\CMS\Core\Resource\ResourceFactory::class,
+				  ResourceFactoryInterface::SIGNAL_PreProcessStorage,
+				  \MY\ExtKey\Slots\ResourceFactorySlot::class,
+				  'preProcessStorage'
+				);
+			\end{lstlisting}
+
+		\item Die Methode wird mit den folgenden Argumenten aufgerufen:
+
+			\begin{itemize}
+				\item int \texttt{\$uid} - UID des Datensatzes
+				\item array \texttt{\$recordData} - alle Daten als Array
+				\item string \texttt{\$fileIdentifier} - Datei-Identifier
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2c656d9e-38b9be7a-d590cb6e-21eccd4d
+% LTXE-SLIDE-TITLE:		Password hashing algorithm: PBKDF2
+% LTXE-SLIDE-REFERENCE:	!Feature-28230-AddSupportForPBKDF2ToSaltedpasswords.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{Password Hashing Algorithmus: PBKDF2}
+
+	\begin{itemize}
+
+		\item Es wurde ein neuer Password Hashing Algorithmus "PBKDF2" zur System-Extension "saltedpasswords" hinzugefügt
+
+		\item PBKDF2 steht für: Password-Based Key Derivation Function 2
+
+		\item Der Algorithmus wurde entworfen, um Brute Force Passwort-Cracken deutlich zu erschweren
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

@@ -1,0 +1,247 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.1 - What's New - Chapter "In-Depth Changes" (English Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		e2881b46-7caaff58-912a10b9-7d517f6e
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+
+\section{In-Depth Changes}
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+
+	\begin{center}\huge{Kapitel 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{In-Depth Changes}}\end{center}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2dc345dc-9c015d5e-4594ecd2-6092896b
+% LTXE-SLIDE-ORIGIN:	861205b5-d3f4a55e-69279ab1-e18dcb15 English
+% LTXE-SLIDE-TITLE:		Feature: #75454 - PHP Library Doctrine DBAL (1)
+% LTXE-SLIDE-REFERENCE:	Feature-75454-DoctrineDBALForDatabaseConnections.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Änderungen im System}
+	\framesubtitle{PHP-Bibliothek "Doctrine DBAL" (1)}
+
+	\begin{itemize}
+
+		\item Es wurde die PHP-Bibliothek
+			"\href{http://www.doctrine-project.org}{Doctrine DBAL}"
+			als Composer Abhängigkeit hinzugefügt, um eine leistungsfähige Datenbank-Abstraktionsschicht
+			innerhalb von TYPO3 zur Verfügung zu stellen. Doctrine besitzt viele leistungsfähig Features
+			wie Datenbank-Abstaktion, Schema-Introspection und Schema-Management
+
+		\item Es wurde zudem eine TYPO3-spezifische PHP-Klasse
+			\smaller
+				\texttt{TYPO3\textbackslash
+					CMS\textbackslash
+					Core\textbackslash
+					Database\textbackslash
+					ConnectionPool}\normalsize\newline
+			als Manager der Datenbank-Verbindung zugefügt
+
+		\item Alle Verbindungen, die per
+			\smaller
+				\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['DB']['Connections']}
+			\normalsize\newline
+			konfiguriert wurden, sind über den Manager erreichbar - damit können auch mehrere Datenbanken
+			gleichzeitig angesprochen werden
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		97a2f761-66e83a78-5993138a-278df7a2
+% LTXE-SLIDE-ORIGIN:	988bc43f-175df2eb-d7158156-f8f36703 English
+% LTXE-SLIDE-TITLE:		Feature: #75454 - PHP Library Doctrine DBAL (2)
+% LTXE-SLIDE-REFERENCE:	Feature-75454-DoctrineDBALForDatabaseConnections.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{PHP-Bibliothek "Doctrine DBAL" (2)}
+
+	\begin{itemize}
+
+		\item Durch Verwendung der Optionen der Datenbank Abstraktion und den Query-Builders sind die SQL Statements out-of-the-box kompatibel mit verschiedensten RBMS.
+
+		\item Die Optionen unter \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['DB']} wurden entfernt und/eingeführt wurden
+
+		\item Die \texttt{Connection} Klasse stellt bequeme
+			\texttt{insert}, \texttt{select}, \texttt{update}, \texttt{delete} und
+			\texttt{truncate} Statements zur Verfügung
+
+		\item Für \texttt{select}, \texttt{update} und \texttt{delete} gibt es bislang nur einfache Vergleiche  (wie \texttt{WHERE "aField" = 'aValue'}).
+			Für komplexere Statements muss man den \texttt{QueryBuilder} verwenden.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bdb8c402-b6f86d88-c7471ab1-37412bca
+% LTXE-SLIDE-ORIGIN:	4e6e640e-d37fcca8-bd0ca330-a70baaab English
+% LTXE-SLIDE-TITLE:		Feature: #75454 - PHP Library Doctrine DBAL (3)
+% LTXE-SLIDE-REFERENCE:	!Feature-75454-DoctrineDBALForDatabaseConnections.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{PHP-Bibliothek "Doctrine DBAL" (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Die \texttt{ConnectionPool} Klasse kann wie folgt verwendet werden:
+			\begin{lstlisting}
+				// Get a connection which can be used for muliple operations
+				/** @var \TYPO3\CMS\Core\Database\Connecction $conn */
+				$conn = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('aTable');
+				$affectedRows = $conn->insert(
+				  'aTable',
+				  $fields, // Associative array of column/value pairs, automatically quoted & escaped
+				);
+
+				// Get a QueryBuilder, which should only be used a single time
+				$query = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('aTable);
+				$query->select('*')
+				  ->from('aTable)
+				  ->where($query->expr()->eq('aField', $query->createNamedParameter($aValue)))
+				  ->andWhere(
+					$query->expr()->lte(
+					  'anotherField',
+					  $query->createNamedParameter($anotherValue)
+					)
+				  )
+				$rows = $query->execute()->fetchAll();
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ed7dd0d3-8c72f0d8-84d7bac2-ce765529
+% LTXE-SLIDE-ORIGIN:	443c416c-63c0f980-719e38f1-1d117e50 English
+% LTXE-SLIDE-TITLE:		Feature: #69439 - Enhance SQL query reduction in page tree in workspaces
+% LTXE-SLIDE-REFERENCE:	!Feature-69439-EnhanceSQLQueryReductionInPageTreeInWorkspaces.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Neue Hooks im Workspacemodul}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Der Prozess, um festzustellen, ob eine Seite Versionen im Workspace besitzt, wurde nun mit Hooks zur Erweiterung ausgestattet
+
+		\item Dadurch können beliebige Versionen mit Hooks erweitert werden
+
+		\item Der Hook kann beispielsweise wie folgt angesprochen werden:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']...
+				  ...['TYPO3\\CMS\\Workspaces\\Service\\WorkspaceService']['hasPageRecordVersions'];
+
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']...
+				  ...['TYPO3\\CMS\\Workspaces\\Service\\WorkspaceService']['fetchPagesWithVersionsInTable']
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		11c697d5-a821be8b-1756e6fd-cd7e8dd3
+% LTXE-SLIDE-ORIGIN:	630de169-c2699a8a-ee44dde5-cf39c2ca English
+% LTXE-SLIDE-TITLE:		Feature: #70056 - PHP Library "Guzzle" (1)
+% LTXE-SLIDE-REFERENCE:	!Feature-70056-GuzzleForHttpRequests.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{PHP-Bibliothek "Guzzle" (1)}
+
+	\begin{itemize}
+
+		\item Die PHP-Bibliothek
+			"\href{http://docs.guzzlephp.org}{Guzzle}"
+			wurde per Composer-Abhängigkeit zugefügt, um als umfangreiche Lösung für HTTP-Requests (basierend auf PSR-7 zu dienen
+
+		\item Guzzle erkannt automatisch ob es im System Adapter dafür gibt (z.B. cURL oder Stream Wrapper) und wählt die beste Lösung für das System aus
+
+		\item Es wurde zumde eine TYPO3-spezifische PHP Klasse mit dem Namen 
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Core\textbackslash
+				Http\textbackslash
+				RequestFactory}\newline
+			zugefügt um einen simplifizierten Wrapper für Guzzle-Clients zu haben.
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		eaa33a39-947734cc-c78b2436-4c075870
+% LTXE-SLIDE-ORIGIN:	db2b31c1-47321ffe-3ed51ebc-5dd524a4 English
+% LTXE-SLIDE-TITLE:		Feature: #70056 - PHP Library "Guzzle" (2)
+% LTXE-SLIDE-REFERENCE:	!Feature-70056-GuzzleForHttpRequests.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{PHP-Bibliothek "Guzzle" (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Die \texttt{RequestFactory} Klasse kann wie folgt verwendet werden:
+
+			\begin{lstlisting}
+				// Initiate RequestFactory
+
+				/** @var \TYPO3\CMS\Core\Http\RequestFactory $requestFactory */
+				$requestFactory = GeneralUtility::makeInstance(
+				  \TYPO3\CMS\Core\Http\RequestFactory\RequestFactory::class);
+
+				$uri = $additionalOptions = [
+				  // additional headers for this specific request
+				  'headers' => ['Cache-Control' => 'no-cache'],
+				  'allow_redirects' => false,
+				  'cookies' => true
+				];
+
+				// return a PSR-7 compliant response object
+				$response = $requestFactory->request($url, 'GET', $additionalOptions);
+
+				// get the content as a string on a successful request
+				if ($response->getStatusCode() === 200) {
+				  if ($response->getHeader('Content-Type') === 'text/html') {
+				    $content = $response->getBody()->getContents();
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

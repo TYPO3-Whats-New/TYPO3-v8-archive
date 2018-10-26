@@ -1,0 +1,240 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8 LTS - What's New - Chapter "Doctrine" (Dutch Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		60d29a083c46763520c15ac80b028f76
+% LTXE-CHAPTER-NAME:	Doctrine DBAL
+% ------------------------------------------------------------------------------
+
+\section{Doctrine DBAL}
+\begin{frame}[fragile]
+	\frametitle{Doctrine DBAL}
+
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Doctrine DBAL}}\end{center}
+	\begin{center}\large{\textit{State-of-the-art database-abstractielaag}}\end{center}
+
+\end{frame}
+
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ba4ee976-109c9b7e-80468f33-9f6d2f79
+% LTXE-SLIDE-ORIGIN:	861205b5-d3f4a55e-69279ab1-e18dcb15 English
+% LTXE-SLIDE-TITLE:		Feature: #75454 - PHP Library Doctrine DBAL (1)
+% LTXE-SLIDE-REFERENCE:	Feature-75454-DoctrineDBALForDatabaseConnections.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Doctrine DBAL}
+	\framesubtitle{PHP Bibliotheek "Doctrine DBAL" (1)}
+
+	\begin{itemize}
+
+		\item De PHP-bibliotheek
+			"\href{http://www.doctrine-project.org}{Doctrine DBAL}"
+			is toegevoegd als composer-afhankelijkheid
+			om als een krachtige database-abstractielaag te werken met vele opties
+			voor database-abstractie, schema-analyse en schemabeheer binnen
+			TYPO3 CMS
+
+		\item Een TYPO3-specifieke PHP-klasse
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Core\textbackslash
+				Database\textbackslash
+				ConnectionPool}\newline
+			is toegevoegd voor het beheer van databaseconnecties
+
+		\item Alle connecties geconfigureerd onder
+			\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['DB']['Connections']}\newline
+			zijn toegankelijk via deze beheerder waardoor parallel gebruik van
+			verschillende databasesystemen mogelijk is
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b520183c-580c1557-2a9b61f0-12bbe5f2
+% LTXE-SLIDE-ORIGIN:	988bc43f-175df2eb-d7158156-f8f36703 English
+% LTXE-SLIDE-TITLE:		Feature: #75454 - PHP Library Doctrine DBAL (2)
+% LTXE-SLIDE-REFERENCE:	Feature-75454-DoctrineDBALForDatabaseConnections.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Doctrine DBAL}
+	\framesubtitle{PHP Bibliotheek "Doctrine DBAL" (2)}
+
+	\begin{itemize}
+
+		\item Met het gebruik van de database-abstractiemogelijkheden en de QueryBuilder
+		 	worden de opgebouwde SQL-opdrachten correct gecodeerd en zijn ze automatisch
+		 	zoveel mogelijk compatibel met de verschillende DBMS'en
+
+		\item Bestaande opties in \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['DB']} zijn
+			verwijderd en/of gemigreerd naar de nieuwe Doctrine-opties
+
+		\item De \texttt{Connection} klasse biedt handige functies voor
+			\texttt{insert}, \texttt{select}, \texttt{update}, \texttt{delete} en
+			\texttt{truncate} opdrachten
+
+		\item Voor \texttt{select}, \texttt{update} en \texttt{delete} worden alleen simpele
+			vergelijkingen (zoals \texttt{WHERE "aField" = 'aValue'}) ondersteund.
+			Voor complexe opdrachten is de \texttt{QueryBuilder} nodig.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		64eb0394-df21af2f-d8c172c8-70951606
+% LTXE-SLIDE-ORIGIN:	4e6e640e-d37fcca8-bd0ca330-a70baaab English
+% LTXE-SLIDE-TITLE:		Feature: #75454 - PHP Library Doctrine DBAL (3)
+% LTXE-SLIDE-REFERENCE:	!Feature-75454-DoctrineDBALForDatabaseConnections.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Doctrine DBAL}
+	\framesubtitle{PHP Bibliotheek "Doctrine DBAL" (3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item De \texttt{ConnectionPool} klasse kan zo gebruikt worden:
+			\begin{lstlisting}
+				// Haal verbinding voor meerdere bewerkingen
+				/** @var \TYPO3\CMS\Core\Database\Connecction $conn */
+				$conn = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('aTable');
+				$affectedRows = $conn->insert(
+				  'aTable',
+				  $fields, // Array met kolom/waarde paren, automatisch gecodeerd
+				);
+
+				// Haal QueryBuilder (voor eenmalig gebruik)
+				$query = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('aTable);
+				$query->select('*')
+				  ->from('aTable)
+				  ->where($query->expr()->eq('aField', $query->createNamedParameter($aValue)))
+				  ->andWhere(
+					$query->expr()->lte(
+					  'anotherField',
+					  $query->createNamedParameter($anotherValue)
+					)
+				  )
+				$rows = $query->execute()->fetchAll();
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b5cc034a-bf6b57f6-699cb151-a705a474
+% LTXE-SLIDE-ORIGIN:	c5986329-fb36f473-a5430d2e-6ba49fb1 English
+% LTXE-SLIDE-TITLE:		#78116: Extbase support for Doctrine's native DBAL Statement and QueryBuilder
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Doctrine DBAL}
+	\framesubtitle{Doctrine in Extbase}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Als extensies de Extbase standaard gebruiken is het niet nodig code bij te werken
+
+		\item Directe SQL-query-functionaliteit ondersteunt ook QueryBuilder-objecten en instanties van
+			\texttt{\textbackslash
+			Doctrine\textbackslash
+			DBAL\textbackslash
+			Statement} als prepared statements
+		\item Het volgende voorbeeld werkt in elke Extbase repository met pure Doctrine DBAL statements:
+
+			\begin{lstlisting}
+				$connectie = $this->objectManager->get(ConnectionPool::class)->getConnectionForTable('mijntabel');
+				$statement = $this->objectManager->get(
+				  \Doctrine\DBAL\Statement::class,
+				  'SELECT * FROM mijtabel WHERE uid=? OR titel=?',
+				  $connection
+				);
+
+				$query = $this->createQuery();
+				$query->statement($statement, [$uid, $titel]);
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b6ef8184-24e7e019-cfe3c248-7b725922
+% LTXE-SLIDE-ORIGIN:	82c70aee-3b375252-6cac0ad6-b385b95f English
+% LTXE-SLIDE-TITLE:		Miscellaneous (1)
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Doctrine DBAL}
+	\framesubtitle{Diversen (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Met de migratie naar Doctrine is de hook \texttt{buildQueryParameters} toegevoegd in de klasse
+			\texttt{DatabaseRecordList}.
+
+		\item Deze vervangt de hook \texttt{makeQueryArray} uit de verouderde methode
+			\texttt{AbstractDatabaseRecordList::makeQueryArray}.
+
+		\item Met de nieuwe hook kunnen de parameters gewijzigd worden die gebruikt worden voor de databasequery
+			voor het afbeelden van de lijst met records.
+
+		\item De hook kan geregistreerd worden in \texttt{ext\_localconf.php}:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']
+				  [\TYPO3\CMS\Recordlist\RecordList\DatabaseRecordList::class]['buildQueryParameters'][]
+			\end{lstlisting}
+
+		\item ...en implementeert de publieke methode \texttt{buildQueryParametersPostProcess}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		167511ec-4e8e5ffe-6a69829f-001f4e53
+% LTXE-SLIDE-ORIGIN:	11a9285f-18bdbfac-88ece0c7-b3f2276a English
+% LTXE-SLIDE-TITLE:		Miscellaneous (2)
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Doctrine DBAL}
+	\framesubtitle{Diversen (2)}
+
+	\begin{itemize}
+		\item De databaselaag in Extbase is nu ook complete gebaseerd op de Doctrine DBAL QueryBuilder
+		\item \texttt{EXT:dbal} en \texttt{EXT:adodb} zijn verwijderd uit de TYPO3 core\newline
+			\smaller
+				Als extensies de oude \texttt{TYPO3\_DB} API gebruiken om andere database tabellen dan MySQL te
+				bevragen kunnen deze twee extensies uit TER gehaald worden.
+			\normalsize
+
+		\item \texttt{TYPO3\_DB} verkorte functionaliteit is verwijderd voor het grootste deel van de TYPO3 core PHP klassen\newline
+			\smaller
+				(gebruik van \texttt{\$GLOBALS[TYPO3\_DB]} is nog mogelijk maar wordt afgeraden)
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

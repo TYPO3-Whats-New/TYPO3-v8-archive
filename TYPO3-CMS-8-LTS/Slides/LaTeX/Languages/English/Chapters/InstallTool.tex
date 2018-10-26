@@ -1,0 +1,116 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8 LTS - What's New - Chapter "Install Tool" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		c2b5a740-582cc152-17e7619f-b938f624
+% LTXE-CHAPTER-NAME:	Install Tool
+% ------------------------------------------------------------------------------
+
+\section{Install Tool}
+\begin{frame}[fragile]
+	\frametitle{Install Tool}
+
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Install Tool}}\end{center}
+	\begin{center}\large{\textit{The powerful tool for integrators and developers alike}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f6668b2d-8932a470-5b9c024c-e4e9f53a
+% LTXE-SLIDE-TITLE:		Install Tool: Upgrade Analysis
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Install Tool}
+	\framesubtitle{Upgrade Analysis}
+
+% The install tool, which is also a heavily used feature during updates between
+% TYPO3 versions, has received some more beauty, basically finding all documented
+% changes with a cool filter to show what is relevant for an integrator,
+% extension author or site owner. Although this is already pretty cool, stay
+% tuned for even better features to make migrations even easier between TYPO3
+% versions!
+% The migration and deprecation of existing options and switching within the TCA
+% definitions we have in place since TYPO3 v7, is also visible in the Install Tool
+% now.
+
+	TYPO3 version upgrades made easy with the new \textbf{Upgrade Analysis} tool
+	in the Install Tool (find/filter documented changes between versions).
+
+	\begin{figure}
+		\includegraphics[width=0.7\linewidth]{InstallTool/install-tool-upgrade-analysis.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9702aaf4-f02bbc35-67902b2e-42855506
+% LTXE-SLIDE-TITLE:		Install Tool: Upgrade Analysis
+% LTXE-SLIDE-REFERENCE:	#78222: Dump Class Loading Information UI in Install Tool
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Install Tool}
+	\framesubtitle{Dump Autoload Information}
+
+	In order to re-generate class loading information, a new action has been added
+	to the Install Tool to dump autoload information.
+
+	\begin{figure}
+		\includegraphics[width=0.8\linewidth]{InstallTool/78222.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5a194e82-8eac7f1b-ef2730da-61d781b2
+% LTXE-SLIDE-TITLE:		Install Tool: TCA Migration Messages
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Install Tool}
+	\framesubtitle{TCA Migration Messages}
+
+	TCA migration message(s) can be checked/listed in the Install Tool now.
+
+	\begin{figure}
+		\includegraphics[width=0.8\linewidth]{InstallTool/77799.png}
+	\end{figure}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		8b1a9661-d6fab90f-9c856224-ee663aa2
+% LTXE-SLIDE-TITLE:		#77757: Re-check if an UpdateWizard should run
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Update Wizard}
+
+	\begin{columns}[T]
+		\begin{column}{.5\textwidth}
+			The Update Wizard in the Install Tool lists all tasks marked as \textit{completed}.
+			\newline\newline
+			Checkboxes and a button "Recheck chosen wizards" allow to re-initiate the updates.
+			The wizard will test if the task needs to be executed again.
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{figure}\vspace*{-0.5cm}
+				\includegraphics[width=0.8\linewidth]{InstallTool/77757.png}
+			\end{figure}
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------

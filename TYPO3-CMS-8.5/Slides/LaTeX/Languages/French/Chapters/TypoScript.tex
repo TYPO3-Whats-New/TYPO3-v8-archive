@@ -1,0 +1,154 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.5 - What's New - Chapter "TypoScript" (French Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	French
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		3a9852ea-e2360d9d-1ff5eec1-a7de3f9f
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{Chapitre 2~:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		aee7c947-a271d451-cb640e43-101a5543
+% LTXE-SLIDE-TITLE:		#78549: Override New Page Creation Wizard via page TSconfig
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Assistant de création d'une nouvelle page}
+
+	\begin{itemize}
+		\item Dans les versions précédentes de TYPO3 CMS, il était possible de
+			surcharger l'«~Assistant de création d'une nouvelle page~» à l'aide
+			d'un script personnalisé~:\newline
+			\small
+				\texttt{mod.web\_list.newPageWiz.overrideWithExtension = myextension}
+			\normalsize
+		\item La nouvelle manière de gérer les points d'entrées et scripts personnalisés
+			est faite via les modules et routes. L'option citée ci-dessus est retirée
+		\item La nouvelle option TSconfig suivante s'utilise à la place~:
+			\small
+				\texttt{mod.newPageWizard.override = my\_custom\_module}
+			\normalsize
+
+		\item À la place de la spécification d'une clé d'extension, un module ou
+			une route personnalisée doit être spécifié
+
+	\end{itemize}
+
+\end{frame}
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c56cb2e8-f50d7eed-e93dcb9e-ab7be017
+% LTXE-SLIDE-TITLE:		#73626: Number of search results is configurable now
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Nombre de résultats de recherche}
+
+	\begin{itemize}
+		\item Le nombre maximal de résultats de recherche se configure en TypoScript~:\newline
+			\texttt{plugin.tx\_indexedsearch.settings.blind.numberOfResults}
+		\item Cette option contient une liste de valeurs
+		\item Si le nombre de résultats de recherche est passé dans la requête et qu'il
+			correspond à l'une des valeurs configurées, ce nombre est utilisé
+		\item Si le nombre de résultats de recherche n'est pas passé dans la requête ou
+			qu'il ne correspond à aucune des valeurs configurées, la première valeur
+			est utilisée
+		\item Pour garder la compatibilité, les valeurs par défaut sont~:\newline
+			\texttt{10}, \texttt{25}, \texttt{50} et \texttt{100}
+	\end{itemize}
+
+\end{frame}
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d9b9e73b-db575400-8276f4dd-810f4f4e
+% LTXE-SLIDE-TITLE:		#78672: Fluid data processor for menus (1)
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Processeur de données Fluid pour les menus (1)}
+
+	\begin{itemize}
+		\item Le processeur de menu utilise \texttt{HMENU} pour générer le menu sous forme
+		 	encodée JSON qui est décodée et assignée au \texttt{FLUIDTEMPLATE}
+		\item Les traitements supplémentaires sont possibles et appliqués à chaque élément
+		\item Options supportées~: \texttt{as}, \texttt{levels}, \texttt{expandAll}, \texttt{includeSpacer},
+			\texttt{titleField}
+			(voir \href{https://docs.typo3.org/typo3cms/TyposcriptReference/ContentObjects/Hmenu/Index.html}{TyposcriptReference} pour plus d'options)
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		03e756a0-07740056-a2009898-d6159f4b
+% LTXE-SLIDE-TITLE:		#78672: Fluid data processor for menus (2)
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Processeur de données Fluid pour les menus (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Exemple de configuration TypoScript~:
+
+			\begin{lstlisting}
+				10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+				10 {
+				  special = list
+				  special.value.field = pages
+				  levels = 7
+				  as = menu
+				  expandAll = 1
+				  includeSpacer = 1
+				  titleField = nav_title // title
+				  dataProcessing {
+				    10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+				    10 {
+				      references.fieldName = media
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4f6c99f3-cca1739f-205be2f4-3a0e3326
+% LTXE-SLIDE-TITLE:		#72050: encapsLines does not render duplicate paragraphs anymore
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Function TypoScript \texttt{\_encapsLines}}
+
+	\begin{itemize}
+		\item La fonction TypoScript \texttt{\_encapsLines} transformait le
+			saut de ligne de fin en deux paragraphe dans le contenu. C'est corrigé.
+
+		\item Le changement peut affecter l'apparence en frontend si plusieurs paragraphes
+			de fin vides existent dans le contenu RTE. Le dernier paragraphe n'est plus
+			généré deux fois dans le frontend depuis TYPO3 CMS version 8.5.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

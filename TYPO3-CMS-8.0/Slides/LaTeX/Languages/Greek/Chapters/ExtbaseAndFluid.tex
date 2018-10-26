@@ -1,0 +1,758 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.6 - What's New - Chapter "Extbase & Fluid" (Greek Version)
+%
+% @author	Angeliki Plati <ag.plati@gmail.com>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Greek
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		cfcf5377-f3e96f39-d1ba01e9-2f341646
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{\greektext Κεφάλαιο 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		02096560-e07fe2a6-0e5112d7-5212d8c9
+% LTXE-SLIDE-ORIGIN:	9413e7f2-dd08f22e-dd21ee20-d7a1b0bf English
+% LTXE-SLIDE-TITLE:		Standalone revised Fluid
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Αυτόνομο αναθεωρημένο \latintext Fluid}
+
+	% decrease font size for code listin
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Η μηχανή απόδοσης (\latintext rendering) \greektext του \latintext Fluid \greektext στο
+		\latintext TYPO3 CMS \greektext έχει αντικατασταθεί από το αυτόνομο \latintext Fluid \greektext το οποίο τώρα
+			συμπεριλαμβάνεται ως μία εξάρτηση του \latintext composer
+
+		\item \greektext Η παλιά επέκταση \latintext Fluid \greektext έχει μεατραπεί, θα λέγαμε, σε έναν \latintext \textit{Fluid adapter}
+			\greektext ο οποίος επιτρέπει στο \latintext TYPO3 CMS \greektext να χρησιμοποιεί το αυτόνομο \latintext Fluid
+
+		\item \greektext Νέα χαρακτηριστικά/δυνατότητες έχουν προστεθεί σε περίπου όλες τις ενότητες του \latintext Fluid
+
+		\item \greektext Το πιο σημαντικό: πολλά από  τα στοιχεία του \latintext Fluid \greektext τα οποία είναι εντελώς εσωτερικά και που ήταν αδύνατο
+			να αντικατασταθούν στο παρελθόν, είναι τώρα εύκολο να αντικατασταθούν και έχουν εξοπλιστεί με ένα δημόσιο \latintext API
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ffe7892a-f892a814-97c6cab3-ef37cc1e
+% LTXE-SLIDE-ORIGIN:	32daa81f-7e805b84-6f829395-94677911 English
+% LTXE-SLIDE-TITLE:		Rendering Context (1)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{RenderingContext (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Το πιο σημαντικό κομμάτι του δημόσιου \latintext API \greektext είναι το \latintext RenderingContext
+
+		\item \greektext Το προηγούμενο -εσωτερικό μόνο- \latintext RenderingContext \greektext που χρησιμοποιείτο από το \latintext Fluid
+			\greektext έχει αναπτυχθεί έτσι ώστε να είναι υπεύθυνο για ένα νέο ζωτικό χαρακτηριστικό του \latintext Fluid: \greektext την
+			\textbf{υλοποίηση του \latintext provisioning}
+
+		\item \greektext Αυτό επιτρέπει στους προγραμματιστές να αλλάξουν μια σειρά από κλάσεις, που χρησιμοποιεί το \latintext Fluid \greektext για
+			\latintext parsing, resolving, caching \greektext κτλ.
+
+		\item \greektext Αυτό μπορεί να επιτευχθεί με την συμπερίληψη ενός προσπαρμοσμένου \latintext RenderingContext \greektext ή με το
+			χειρισμό του προεπιλεγμένου \latintext RenderingContext \greektext από δημόσιες μεθόδους.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		62ae813c-4d09c684-0b817366-ad9d2c48
+% LTXE-SLIDE-ORIGIN:	3d44632f-c87d4adf-3328f596-2e5744bc English
+% LTXE-SLIDE-TITLE:		Rendering Context (2)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{RenderingContext (2)}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Τα χαρακτηριστικά στις ακόλουθες διαφάνειες μπορούν να ελεγχθούν με το χειρισμό του
+			\latintext RenderingContext. \greektext Ως εκ προεπιλογής, κάνενα από αυτά δεν είναι ενεργοποιημένο - αλλά η κλήση μίας απλής μεθόδου
+			(μέσω του στιγμιοτύπου \latintext View) \greektext σας επιτρέπει να τα ενεργοποιήσετε:
+
+		\latintext\begin{lstlisting}
+			$view->getRenderingContext()->setLegacyMode(false);
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2e7633ee-9e517816-599b9e5e-760e4666
+% LTXE-SLIDE-ORIGIN:	5f486f77-38e6694e-2fad0d6b-7b260ad1 English
+% LTXE-SLIDE-TITLE:		ExpressionNodes (1)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{ExpressionNodes (1)}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Ο τύπος \latintext ExpressionNodes \greektext είναι μια νέα δομή σύνταξης του \latintext Fluid, \greektext
+			ο οποίος μπορεί να χρησιμοποιηθεί αποκλειστικά εντός αγκίστρων
+
+		\latintext\begin{lstlisting}
+			$view->getRenderingContext()->setExpressionNodeTypes(array(
+			   'Class\Number\One',
+			   'Class\Number\Two'
+			));
+		\end{lstlisting}
+
+		\item \greektext Οι προγραμματιστες μπορούν να προσθέσουν τους δικούς τους επιπρόσθετους τύπους \latintext
+		 ExpressionNode
+
+		\item \greektext Ο καθένας αποτελείται από ένα μοτίβο «ταιριαστών» μεθόδων που υπαγορεύεται από ένα \latintext
+		interface \greektext που επεξεργάζεται αυτά τα «ταιριάσματα»
+
+		\item \greektext Κάθε υπάρχων τύπος \latintext ExpressionNode \greektext μπορεί να χρησιμοποιηθεί ως αναφορά
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		778894bf-054b71c3-d699954e-efeb986d
+% LTXE-SLIDE-ORIGIN:	090cec75-2751b839-6ad8eebc-0adfe66a English
+% LTXE-SLIDE-TITLE:		ExpressionNodes (2)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{ExpressionNodes (2)}
+
+	\greektext Οι τύποι \latintext ExpressionNodes \greektext επιτρέπουν νέες συντάξεις, όπως:
+
+	\begin{itemize}
+
+		\item \greektext Ο τύπος \latintext\textbf{CastingExpressionNode}\newline
+			\small
+				\greektext επιτρέπει το \latintext casting \greektext μίας μεταβλητής σε συγκεκριμένους τύπους,
+				για τη διασφάλιση ότι μία μεταβλητή είναι \latintext integer \greektext ή \latintext boolean.
+				\greektext Χρησιμοποιείται απλά με τη λέξη κλειδί \latintext \texttt{as}:
+				\texttt{\{myStringVariable as boolean\}} \greektext ή
+				\latintext\texttt{\{myBooleanVariable as integer\}} \greektext κ.ο.κ.
+				Η απόπειρα του να γίνει \latintext cast \greektext μίας μεταβλητής σε έναν μη συμβατό τύπο
+				προκαλεί ένα τυπικό σφάλμα \latintext Fluid.
+			\normalsize
+
+		\item \greektext Ο τύπος \latintext\textbf{MathExpressionNode}\newline
+			\small
+				\greektext επιτρέπει τις βασικές μαθηματικές πράξεις πάνω σε μεταβλητές, π.χ.
+				\latintext\texttt{\{myNumber + 1\}}, \texttt{\{myPercent / 100\}} \greektext ή \latintext
+				\texttt{\{myNumber * 100\}} \greektext κ.ο.κ.
+				Μία αδύνατη μαθηματική παράσταση επιστρέφει ένα άδειο αποτέλεσμα.
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ebad49bf-3dab923d-d885f757-221d5d3e
+% LTXE-SLIDE-ORIGIN:	c8935f68-0905db52-11932973-63a85a00 English
+% LTXE-SLIDE-TITLE:		ExpressionNodes (3)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{ExpressionNodes (3)}
+
+	\greektext Οι τύποι \latintext ExpressionNodes \greektext επιτρέπουν νέες συντάξεις, όπως:
+
+	\begin{itemize}
+
+		\item \greektext Ο τύπος \latintext\textbf{TernaryExpressionNode}\newline
+			\small
+				\greektext επιτρέπει μία \latintext inline ternary \greektext συνθήκη η οποία
+				λειτουργεί μόνο πάνω σε μεταβλητές.
+				Τυπική περίπτωση χρήσης είναι: «αν αυτή η μεταβλητή ... τότε χηριμοποίησε αυτή τη μεταβλητή
+				αλλιώς χρησιμοποίησε μία άλλη μεταβλητή». Χρησιμοποιείται ως:\newline
+				\latintext\texttt{\{myToggleVariable ? myThenVariable : myElseVariable\}}\newline
+				\greektext Σημείωση: δεν υποστηρίζει εμφωλευμένες εκφράσεις, συντάξεις \latintext inline ViewHelper
+				\greektext ή ο,τιδήποτε παρόμοιο. Πρέπει να χρησιμοποιείται μόνο με τυπικές μεταβλητές ως είσοδο.
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		56acd9ae-e40550d4-066caf1e-e32535cc
+% LTXE-SLIDE-ORIGIN:	153b9b53-d7f97aef-dc1ba8ab-fc2a763e English
+% LTXE-SLIDE-TITLE:		Namespaces are extensible (1)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Τα \latintext namespaces \greektext είναι επεκτάσιμα (1)}
+
+	\begin{itemize}
+
+		\item \greektext Το \latintext Fluid \greektext επιτρέπει σε κάθε ψευδώνυμο \latintext namespace \greektext (π.χ. \latintext\texttt{f:})
+			\greektext να επεκταθεί με την προσθήκη ενός επιπρόσθετου \latintext PHP namespaces \greektext σε αυτό
+
+		\item \greektext Τα \latintext PHP namespaces \greektext ελέγχονται επίσης για την παρουσία κλάσεων \latintext ViewHelper
+
+		\item \greektext Αυτό σημαίνει επίσης πως οι προγραμματιστές μπορούν να κάνουν \latintext override \greektext μεμονωμένους \latintext
+		 	ViewHelpers \greektext με προσαρμοσμένες εκδόσεις και να τους καλούν όποτε
+		 	το \latintext namespace \texttt{f:} \greektext χρησιμοποιείται.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		dde14390-39232a52-885eb398-7e882ad0
+% LTXE-SLIDE-ORIGIN:	a2f0e799-fe523ffb-57634576-654a8efe English
+% LTXE-SLIDE-TITLE:		Namespaces are extensible (2)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Τα \latintext namespaces \greektext είναι επεκτάσιμα (2)}
+
+	\begin{itemize}
+
+		\item \greektext Αυτή η αλλαγή επίσης σημαίνει πως τα \latintext namespaces \greektext δεν είναι πλέον μοναδικά.\newline
+			\greektext Όταν χρησιμοποιείτε
+			\texttt{
+				\latintext\{namespace f=My\textbackslash
+				Extension\textbackslash
+				ViewHelpers\textbackslash\}}\newline
+				\greektext δε θα λαμβάνετε πλέον το σφάλμα \latintext "namespace already registered".
+				\greektext Αντ'αυτού, το \latintext Fluid \greektext θα προσθέσει αυτό το \latintext PHP namespace \greektext και θα κοιτάξει για
+				\latintext ViewHelpers \greektext και εκεί.
+
+		\item \greektext Τα επιπρόσθετα \latintext namespaces \greektext ελέγχονται από πάνω προς τα κάτω,
+			επιτρέποντας στα επιπλεόν \latintext namespaces \greektext να κάνουν \latintext override \greektext κλάσεις \latintext ViewHelper
+			\greektext με την τοποθέτησή τους στο ίδιο \latintext scope
+
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Τα \latintext namespaces \greektext είναι επεκτάσιμα (3)}
+
+	\begin{itemize}
+
+		\item \greektext Για παράδειγμα: \latintext\texttt{f:format.nl2br} \greektext μπορεί να γίνει \latintext override \greektext από
+			\latintext\texttt{
+				My\textbackslash
+				Extension\textbackslash
+				ViewHelpers\textbackslash
+				Format\textbackslash
+				Nl2brViewHelper},
+
+				\greektext με δεδομένη την εγγραφή \latintext namespace \greektext στις προηγούμενες διαφάνειες
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5c5c11e6-d06d0585-178586f3-edbf3177
+% LTXE-SLIDE-ORIGIN:	2a98636b-3a4db59b-588597f9-0aca826e English
+% LTXE-SLIDE-TITLE:		Rendering using f:render (1)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Το \latintext rendering \greektext χρησιμοποιεί \latintext \texttt{f:render} (1)}
+
+	\greektext Επιτρέπει προεπιλεγμένο περιεχόμενο στο προαιρετικό \latintext \texttt{f:render}:
+
+	\begin{itemize}
+
+		\item \greektext Όποτε το \latintext\texttt{f:render} \greektext χρησιμοποιείται και το \latintext flag \texttt{optional = TRUE}
+			\greektext έχει τεθεί, η απόδοση (\latintext rendering) \greektext ενός απόντος τμήματος έχει ως αποτέλεσμα
+			 ένα άδειο \latintext output.
+
+		\item \greektext Αντί να αποδίδεται αυτό το άδειο \latintext output, \greektext μία νέα ιδιότητα \latintext \texttt{default}
+			(mixed) \greektext έχει προστεθεί και μπορεί να συμπληρωθεί από μία προεπιλεγμένη τιμή τύπου \latintext fallback.
+
+		\item \greektext Εναλλακτικά, το περιεχόμενο του \latintext tag \greektext μπορεί να χρησιμοποιηθεί για να καθορίσει
+			αυτή την \latintext default \greektext τιμή, όπως πολλοί άλλοι ευέλικτοι \latintext ViewHelpers \greektext ως προς το περιεχόμενο
+			και τις ιδιότητες.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9c97993a-030f6289-eef81c8f-eed7078e
+% LTXE-SLIDE-ORIGIN:	78998a07-75b3fe30-431ca5e2-f7b816c4 English
+% LTXE-SLIDE-TITLE:		Rendering using f:render (2)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Το \latintext rendering \greektext χρησιμοποιεί \latintext \texttt{f:render} (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\greektext Περνώντας το περιεχόμενο ενός \latintext tag \greektext με το \latintext\texttt{f:render} \greektext
+	σε ένα \latintext partial/section:
+
+	\begin{itemize}
+
+		\item \greektext Παρέχει μία νέα προσέγγιση για τη διάρθρωση του \latintext Fluid template rendering
+
+		\item \greektext Τα \latintext partials \greektext και τα \latintext sections \greektext μπορούν να χρησιμοποιηθούν ως
+		\latintext "wrappers" \greektext για ένα αυθαίρετο κομμάτι κώδικα \latintext template.
+
+		\item \greektext Παράδειγμα:
+
+			\latintext\begin{lstlisting}
+				<f:section name="MyWrap">
+				  <div>
+				    <!-- more HTML, using variables if desired -->
+				    <!-- tag content of f:render output: -->
+				    {contentVariable -> f:format.raw()}
+				  </div>
+				</f:section>
+				<f:render section="MyWrap" contentAs="contentVariable">
+				  This content will be wrapped. Any Fluid code can go here.
+				</f:render>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		fc82fcca-914fa81d-e9d1c321-7b4a5a9b
+% LTXE-SLIDE-ORIGIN:	7c36b3a7-33860495-4efb65ef-f09ae14e English
+% LTXE-SLIDE-TITLE:		Complex conditional statements
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Περίπλοκες εκφράσεις συνθηκών (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Το \latintext Fluid \greektext υποστηρίζει τώρα κάθε βαθμό πολυπλοκότητας εκφράσεων συνθηκών
+			με εμφωλεύση και ομαδοποίηση:
+
+			\latintext\begin{lstlisting}
+				<f:if condition="({variableOne} && {variableTwo}) || {variableThree} || {variableFour}">
+				  // Done if both variable one and two evaluate to true, or if either variable three or four do.
+				</f:if>
+			\end{lstlisting}
+
+		\item \greektext Επιπρόσθετα, το \latintext\texttt{f:else} \greektext έχει εξοπλιστεί με μία «συμπεριφορά» παρόμοια του \latintext "elseif":
+
+			\latintext\begin{lstlisting}
+				<f:if condition="{variableOne}">
+				  <f:then>Do this</f:then>
+				  <f:else if="{variableTwo}">
+				    Do this instead if variable two evals true
+				  </f:else>
+				  <f:else if="{variableThree}">
+				    Or do this if variable three evals true
+				  </f:else>
+				  . . .
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Περίπλοκες εκφράσεις συνθηκών (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Επιπρόσθετα, το \latintext\texttt{f:else} \greektext έχει εξοπλιστεί με μία «συμπεριφορά»
+		παρόμοια του \latintext "elseif" - Συνέχεια:
+
+			\latintext\begin{lstlisting}
+				. . .
+				  <f:else>
+				    Or do this if nothing above is true
+				  </f:else>
+				</f:if>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		abd0a1a5-4eec1c64-9e6e383f-912e5270
+% LTXE-SLIDE-ORIGIN:	d54cf918-48141072-8184ab81-cecc8e39 English
+% LTXE-SLIDE-TITLE:		Dynamic variable name parts (1)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Δυναμικά μέρη ονόματος μεταβλητής (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Ένα άλλο αναγκαίο χαρακτηριστικό, επίσης συμβατό «προς τα πίσω», είναι η προστεθημένη
+			δυνατότητα της χρήσης αναφορών υπο-μεταβλητής κατά την προσπέλαση των μεταβλητών σας.
+			Σκεφτείτε τον ακόλουθο πίνακα μεταβλητών \latintext Fluid template:
+
+			\latintext\begin{lstlisting}
+				$mykey = 'foo'; // or 'bar', set by any source
+				$view->assign('data', ['foo' => 1, 'bar' => 2]);
+				$view->assign('key', $mykey);
+			\end{lstlisting}
+
+		\item \greektext Με το ακόλουθο \latintext Fluid template:
+
+			\latintext\begin{lstlisting}
+				You chose: {data.{key}}.
+				(output: "1" if key is "foo" or "2" if key is "bar")
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		142d1c30-9a3420b1-d5f748ab-aee663da
+% LTXE-SLIDE-ORIGIN:	20385d89-9c0de3ac-9ef70ba6-310fdec3 English
+% LTXE-SLIDE-TITLE:		Dynamic variable name parts (2)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Δυναμικά μέρη ονόματος μεταβλητής (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Η ίδια προσέγγιση μπορεί επίσης να χρησιμοποιηθεί
+			για την παραγωγή δυναμικών μερών μίας γραμματοσειράς ονόματος μεταβλητής:
+
+			\latintext\begin{lstlisting}
+				$mydynamicpart = 'First'; // or 'Second', set by any source
+				$view->assign('myFirstVariable', 1);
+				$view->assign('mySecondVariable', 2);
+				$view->assign('which', $mydynamicpart);
+			\end{lstlisting}
+
+		\item \greektext Με το ακόλουθο \latintext Fluid template:
+
+			\latintext\begin{lstlisting}
+				You chose: {my{which}Variable}.
+				(output: "1" if which is "First" or "2" if which is "Second")
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bf104093-3d993db4-1cc6ff1e-7a14c64b
+% LTXE-SLIDE-ORIGIN:	15907f4f-d554b015-03be1fdc-4dc0fb25 English
+% LTXE-SLIDE-TITLE:		New ViewHelpers
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Νέοι \latintext ViewHelpers}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item \greektext Μερικοί νέοι \latintext ViewHelpers \greektext έχουν επίσης προστεθεί ως μέρος του
+			αυτοδύναμου \latintext Fluid \greektext και έτσι είναι διαθέσιμοι στο \latintext TYPO3 \greektext από εδώ και στο εξής:
+
+			\begin{itemize}
+
+				\item \latintext\textbf{\texttt{f:or}}\newline
+					\greektext Αυτός είναι ένας συντομότερος τρόπος γραφής (αλληλένδετων) συνθηκών.
+					Υποστηρίζει την ακόλουθη σύνταξη, η οποία ελέγχει κάθε μεταβλητή και δίνει ως έξοδο την πρώτη
+					μη κενή:
+
+					\latintext\begin{lstlisting}
+						{variableOne -> f:or(alternative: variableTwo) -> f:or(alternative: variableThree)}
+					\end{lstlisting}
+
+				\item \latintext\textbf{\texttt{f:spaceless}}\newline
+					\greektext Αυτό μπορεί να χρησιμοποιηθεί σε μορφή \latintext tag \greektext γύρω από κώδικα \latintext template \greektext
+					 για να αποφεύγονται τα περιττά \latintext whitespaces \greektext και οι κενές γραμμές που προκαλούνται για παράδειγμα
+					 όταν δημιουργούμε εσοχές στις χρήσεις \latintext ViewHelper
+
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4c412736-02b50180-ffb71460-49073d22
+% LTXE-SLIDE-ORIGIN:	9fed5ece-ae03648f-c3db2f41-42312f7f English
+% LTXE-SLIDE-TITLE:		ViewHelper namespaces can be extended also from PHP
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Τα \latintext ViewHelper namespaces \greektext μπορούν να επεκταθούν και από την \latintext PHP (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Με την προσπέλαση του \latintext ViewHelperResolver \greektext του \latintext RenderingContext,
+			\greektext οι προγραμματιστές μπορούν να αλλάξουν τις συμπεριλήψεις των \latintext ViewHelper namespaces \greektext
+			σε καθολικό επίπεδο	(βλ: στιγμιότυπο \latintext View):
+
+			\latintext\begin{lstlisting}
+				$resolver = $view->getRenderingContext()->getViewHelperResolver();
+				// equivalent of registering namespace in template(s):
+				$resolver->registerNamespace('news', 'GeorgRinger\News\ViewHelpers');
+				// adding additional PHP namespaces to check when resolving ViewHelpers:
+				$resolver->extendNamespace('f', 'My\Extension\ViewHelpers');
+				// setting all namespaces in advance, globally, before template parsing:
+				$resolver->setNamespaces(array(
+				  'f' => array(
+				    'TYPO3Fluid\\Fluid\\ViewHelpers', 'TYPO3\\CMS\\Fluid\\ViewHelpers',
+				    'My\\Extension\\ViewHelpers'
+				  ),
+				  . . .
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Τα \latintext ViewHelper namespaces \greektext μπορούν να επεκταθούν και από την \latintext PHP (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Με την προσπέλαση του \latintext ViewHelperResolver \greektext του \latintext RenderingContext,
+			\greektext οι προγραμματιστές μπορούν να αλλάξουν τις συμπεριλήψεις των \latintext ViewHelper namespaces \greektext
+			σε καθολικό επίπεδο	(βλ: στιγμιότυπο \latintext View) \greektext - Συνέχεια:
+
+			\latintext\begin{lstlisting}
+				. . .
+				  'vhs' => array(
+				    'FluidTYPO3\\Vhs\\ViewHelpers', 'My\\Extension\\ViewHelpers'
+				  ),
+				  'news' => array(
+				    'GeorgRinger\\News\\ViewHelpers',
+				  );
+				));
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3cd77159-80ca24f7-b3a8ded5-917ddd90
+% LTXE-SLIDE-ORIGIN:	3e41fa42-1d526584-5b7d3a07-c8b347ab English
+% LTXE-SLIDE-TITLE:		ViewHelpers can accept arbitrary arguments (1)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Οι \latintext ViewHelpers \greektext μπορούν να δεχτούν αυθαίρετες παραμέτρους (1)}
+
+	\begin{itemize}
+
+		\item \greektext Αυτό το χρακτηριστικό επιτρέπει στη δική σας κλάση \latintext ViewHelper \greektext να λάβει
+			οποιονδήποτε αριθμό από επιπλέον παραμέτρους με τη χρήση οποιωνδήποτε ονομάτων επιθυμείτε
+
+		\item \greektext Λειτουργεί με τον διαχωρισμό των παραμέτρων που «περνιούνται»
+			σε κάθε \latintext ViewHelper \greektext σε 2 ομάδες: σε αυτές που είναι δηλωμένες χρησιμοποιώντας το \latintext
+			\texttt{registerArgument} \greektext και στις υπόλοιπες
+
+		\item \greektext Αυτές που δεν είναι δηλωμένες, «περνιούνται» σε μία ειδική συνάρτηση \latintext
+			\texttt{handleAdditionalArguments} \greektext στην κλάση \latintext ViewHelper,
+			\greektext η οποία «πετάει» σφάλμα στην προεπιλεγμένη υλοποίηση αν υπάρχουν επιπρόσθετες παράμετροι
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		df3334c3-52d50664-071fe293-4969153d
+% LTXE-SLIDE-ORIGIN:	2462a8ce-0a82a7f0-1b97a84f-02f0a4c2 English
+% LTXE-SLIDE-TITLE:		ViewHelpers can accept arbitrary arguments (2)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Οι \latintext ViewHelpers \greektext μπορούν να δεχτούν αυθαίρετες παραμέτρους (2)}
+
+	\begin{itemize}
+
+		\item \greektext Με το \latintext overriding \greektext αυτής της μεθόδου στον δικό σας \latintext
+		 	ViewHelper, \greektext μπορείτε να αλλάξετε το αν και πότε ο \latintext ViewHelper \greektext
+		 	πρέπει να «πετάξει» σφάλμα αν λάβει αδήλωτες παραμέτρους
+
+		\item \greektext Αυτό το χαρακτηριστικό επιτρέπει επίσης στους \latintext TagBasedViewHelpers \greektext να δέχονται ελεύθερα
+			αυθαίρετες παραμέτρους με πρόθεμα \latintext \texttt{data-} \greektext χωρίς να αποτυγχάνουν
+
+		\item \greektext στους \latintext TagBasedViewHelpers, \greektext η μέθοδος \latintext \texttt{handleAdditionalArguments}
+			απλά προσθέτει νέες παραμέτρους στο \latintext tag \greektext που παράγεται
+			και «πετάει» σφάλμα αν δοθεί κάποια επιπρόσθετη παράμετρος που δεν είναι ούτε δηλωμένη αλλά ούτε και έχει το πρόθεμα
+			\latintext \texttt{data-}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f20ec694-cb960ef2-aef160a6-65710fe5
+% LTXE-SLIDE-ORIGIN:	b5a66715-5681025e-cfb46644-9b9bad55 English
+% LTXE-SLIDE-TITLE:		Added "allowedTags" argument to f:format.stripTags ViewHelper
+% LTXE-SLIDE-REFERENCE:	!Feature-67236-AddedAllowedTagsArgumentToFformatstripTagsViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Η παράμετρος \latintext "allowedTags" \greektext για το \latintext f:format.stripTags}
+
+	\begin{itemize}
+
+		\item \greektext Η παράμετρος \latintext \texttt{allowedTags} \greektext που περιέχει μία λίστα από \latintext
+			HTML tags \greektext τα οποία δε θα αφαιρεθούν μπορεί τώρα να χρησιμοποιηθεί στο \latintext \texttt{f:format.stripTags}
+
+		\item \greektext Η σύνταξη της λίστας με τα \latintext tags \greektext είναι πανομοιότυπη με τη δεύτερη παράμετρο
+			 της συνάρτησης \latintext PHP \texttt{strip\_tags} (\greektext βλ: \latintext\url{http://php.net/strip_tags})
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a6c02b1f-9f893719-22ccf0b6-f942d61a
+% LTXE-SLIDE-ORIGIN:	12b7dd4a-73b912f7-e5d1cefa-e3c8386d English
+% LTXE-SLIDE-TITLE:		Allow accessing ObjectStorage as array in Fluid
+% LTXE-SLIDE-REFERENCE:	!Feature-73752-AllowAccessingObjectStorageAsArrayInFluidAndOtherPlaces.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\greektext Πρόσβαση της \latintext ObjectStorage \greektext ως πίνακα στο \latintext Fluid}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item \greektext Δημιουργεί ένα ψευδόνυμο του \latintext \texttt{toArray()} \greektext επιτρέποντας στη μέθοδο να
+			καλείται ως \latintext \texttt{getArray()} \greektext το οποίο με τη σειρά του επιτρέπει στη μέθοδο
+			να καλείται με διαφάνεια από το \latintext \texttt{ObjectAccess::getPropertyPath},
+			\greektext ενεργοποιώντας την πρόσβαση στο \latintext Fluid \greektext και σε άλλα μέρη
+
+		\item \greektext Παράδειγμα: πάρε το 4ο στοιχείο
+
+			\latintext\begin{lstlisting}
+				// in PHP:
+				ObjectAccess::getPropertyPath($subject, 'objectstorageproperty.array.4')
+
+				// in Fluid:
+				{myObject.objectstorageproperty.array.4}
+				{myObject.objectstorageproperty.array.{dynamicIndex}}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

@@ -1,0 +1,54 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.6 - What's New - Chapter "Deprecated Functions" (English Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		10e028d3-5834c92b-a0fe4127-b0fdad95
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+
+\section{Veraltete/Entfernte Funktionen}
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+
+	\begin{center}\huge{Chapter 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Veraltete und entfernte Funktionen}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d4c8c340-33163839-2ae654ee-9c6834da
+% LTXE-SLIDE-TITLE:		Miscellaneous (#72337, #75150 and #73794)
+% LTXE-SLIDE-REFERENCE:	!Feature-72337-CharsetConversionAutodetection.rst
+% LTXE-SLIDE-REFERENCE:	!Breaking-75150-RemovedTypoScriptOptionIncludeJSlibs.rst
+% LTXE-SLIDE-REFERENCE:	!Breaking-73794-RenderCharsetOptionRemoved.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Veraltete/Entfernte Funktionen}
+	\framesubtitle{Verschiedenes}
+
+	\begin{itemize}
+
+		\item Die folgenden Konfigurations-Optionen wurden entfernt (hier findet eine Autodection statt und es wird per Default \texttt{mbstring} gewählt):
+
+			\begin{itemize}
+				\item \texttt{\$TYPO3\_CONF\_VARS['SYS']['t3lib\_cs\_utils']}
+				\item \texttt{\$TYPO3\_CONF\_VARS['SYS']['t3lib\_cs\_convMethod']}
+			\end{itemize}
+
+		\item Die veraltete TypoScript-Eigenschaft \texttt{page.includeJSlibs} wurde
+			entfernt. Stattdessen muss man nun die TypoScript-Eigenschaft \texttt{page.includeJSLibs}
+			(mit großem "L") verwenden
+
+		\item Die TypoScript-Option \texttt{config.renderCharset} wurde entfernt
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

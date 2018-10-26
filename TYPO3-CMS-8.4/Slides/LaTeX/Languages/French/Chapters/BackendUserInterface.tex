@@ -1,0 +1,159 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.4 - What's New - Chapter "Backend User Interface" (French Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	French
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		07b25346-95b1df21-a6ebe09a-49f53f41
+% LTXE-CHAPTER-NAME:	Interface Utilisateur Backend
+% ------------------------------------------------------------------------------
+
+\section{Interface Utilisateur Backend}
+\begin{frame}[fragile]
+	\frametitle{Interface Utilisateur Backend}
+
+	\begin{center}\huge{Chapitre 1~:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Interface Utilisateur Backend}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a6c5a94b-31750d1f-bf3088c9-41aba79f
+% LTXE-SLIDE-ORIGIN:	75977160-b74e3317-0f697728-71b501d1 English
+% LTXE-SLIDE-TITLE:		Mobile Responsive TYPO3 Backend
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Interface Utilisateur Backend}
+	\framesubtitle{Backend TYPO3 responsive sur mobile}
+
+	Le backend TYPO3 est entièrement responsive sur mobile.
+
+	\begin{figure}
+		\includegraphics[width=0.25\linewidth]{BackendUserInterface/mobile-responsive-backend.jpg}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1568d55d-8e3bdbad-d1c617f7-6f1f65a9
+% LTXE-SLIDE-ORIGIN:	f6668b2d-8932a470-5b9c024c-e4e9f53a English
+% LTXE-SLIDE-TITLE:		Install Tool: Upgrade Analysis
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Interface Utilisateur Backend}
+	\framesubtitle{Outil d'installation~: Analyse de la mise à jour}
+
+% The install tool, which is also a heavily used feature during updates between
+% TYPO3 versions, has received some more beauty, basically finding all documented
+% changes with a cool filter to show what is relevant for an integrator,
+% extension author or site owner. Although this is already pretty cool, stay
+% tuned for even better features to make migrations even easier between TYPO3
+% versions!
+% The migration and deprecation of existing options and switching within the TCA
+% definitions we have in place since TYPO3 v7, is also visible in the Install Tool
+% now.
+
+	La mise à jour de la version de TYPO3 est facilité avec l'outil d'analyse de mise à
+	jour (\textbf{Upgrade Analysis}) dans l'outil d'installation (trouver/filtrer
+	les changements documentés).
+
+	\begin{figure}
+		\includegraphics[width=0.45\linewidth]{BackendUserInterface/install-tool-upgrade-analysis.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4f33a139-401af577-bb9b0331-74526269
+% LTXE-SLIDE-ORIGIN:	9702aaf4-f02bbc35-67902b2e-42855506 English
+% LTXE-SLIDE-TITLE:		Install Tool: Upgrade Analysis
+% LTXE-SLIDE-REFERENCE:	#78222: Dump Class Loading Information UI in Install Tool
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Interface Utilisateur Backend}
+	\framesubtitle{Outil d'installation~: Régénération de l'auto-chargement}
+
+	Afin de régénérer les informations de chargement des classes, l'action pour
+	recréer les informations d'auto-chargement est ajouté à l'outil d'installation.
+
+	\begin{figure}
+		\includegraphics[width=0.8\linewidth]{BackendUserInterface/78222.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f9b5e641-ecf583c1-f80bdc7e-c8d00093
+% LTXE-SLIDE-ORIGIN:	5a194e82-8eac7f1b-ef2730da-61d781b2 English
+% LTXE-SLIDE-TITLE:		Install Tool: TCA Migration Messages
+% LTXE-SLIDE-REFERENCE:	#77799: Display TCA migration messages in Install Tool
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Interface Utilisateur Backend}
+	\framesubtitle{Outil d'installation~: Messages de migration TCA}
+
+	Les messages de migration du TCA sont vérifiés et listés dans l'outil d'installation.
+
+	\begin{figure}
+		\includegraphics[width=0.8\linewidth]{BackendUserInterface/77799.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9b29dd9c-f7d30330-14ebd96a-5cab848b
+% LTXE-SLIDE-ORIGIN:	1e11eae3-872938ec-9612c092-444c408a English
+% LTXE-SLIDE-TITLE:		sys_language records are sortable now
+% LTXE-SLIDE-REFERENCE:	#77652: Make sys_language records sortable
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Enregistrements \texttt{sys\_language}}
+
+	Pour améliorer l'usabilité, les enregistrements \texttt{sys\_language} sont triables.
+
+	\begin{figure}
+		\includegraphics[width=0.8\linewidth]{BackendUserInterface/77652.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		aa687457-9c398501-bb70c9cf-4f79bbdb
+% LTXE-SLIDE-ORIGIN:	a82823ff-94b9520f-5e6d6056-95f1a797 English
+% LTXE-SLIDE-TITLE:		#77668: Hide table listing below group element
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Liste des tables sous l'élément Group}
+
+	\begin{itemize}
+
+		\item Le paramètre \texttt{allowedTables} est ajouté à l'option de
+			configuration TCA \texttt{disable\_controls} du type «~group~».
+			Il permet de cacher l'indice des tables pouvant être
+			référencées par le champ.
+
+	\end{itemize}
+
+	\begin{figure}
+		\includegraphics[width=0.85\linewidth]{BackendUserInterface/77668.png}
+	\end{figure}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

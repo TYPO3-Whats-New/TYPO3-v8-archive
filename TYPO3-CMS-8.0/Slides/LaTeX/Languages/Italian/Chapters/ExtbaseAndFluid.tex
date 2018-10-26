@@ -1,0 +1,699 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 7.6 - What's New - Chapter "Extbase & Fluid" (English Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		cfcf5377-f3e96f39-d1ba01e9-2f341646
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{Capitolo 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4ff82ec5-19851cf7-43da82ad-4191fd26
+% LTXE-SLIDE-ORIGIN:	9413e7f2-dd08f22e-dd21ee20-d7a1b0bf English
+% LTXE-SLIDE-TITLE:		Standalone revised Fluid
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Standalone revised Fluid}
+
+	% decrease font size for code listin
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Il motore di rendering Fluid di TYPO3 CMS è sostituito dal pacchetto
+			Fluid standalone che è incluso come una dipendenza di composer
+
+		\item La vecchia estensione Fluid è convertita con il così chiamato \textit{Fluid adapter}
+			che permette a TYPO3 CMS di usare Fluid standalone
+
+		\item Nuove caratteristiche/funzionalità sono state aggiunte in tutte le aree di Fluid
+
+		\item Molto importante: molti dei componenti di Fluid che erano completamente interni
+			ed impossibili da sostituire in passato, sono ora facilmente sostituibili
+			e sono stati dotati di un API pubblica.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f105cfa5-e76e12f4-19b98cf7-1ef162e1
+% LTXE-SLIDE-ORIGIN:	32daa81f-7e805b84-6f829395-94677911 English
+% LTXE-SLIDE-TITLE:		Rendering Context (1)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{RenderingContext (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item La novità più importante delle API pubbliche è il RenderingContext
+
+		\item Il precedente, solo interno, RenderingContext usato da Fluid è stato 
+			ampliato per essere responsabile di nuove funzionalità vitali di Fluid:
+			\textbf{implementation provisioning}
+
+		\item Questo permette agli sviluppatori di cambiare un range di classi, che Fluid usa per
+			il parser, la conversione, il caching ecc.
+
+		\item Questo può essere ottenuto sia includendo un RenderingContext personalizzato o
+			intervenendo con i metodi pubblici sul RenderingContext di default.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		48c26a1e-7effcdd0-57776618-31d36640
+% LTXE-SLIDE-ORIGIN:	3d44632f-c87d4adf-3328f596-2e5744bc English
+% LTXE-SLIDE-TITLE:		Rendering Context (2)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Rendering Context (2)}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+
+		\item Le funzionalità delle seguenti slide possono essere controllate intervenendo
+			sul RenderingContext. Di default, nessuna di esse è abilitata - ma chiamando
+			un metodo semplice (attraverso un istanza View) permette di abilitarle:
+
+		\begin{lstlisting}
+			$view->getRenderingContext()->setLegacyMode(false);
+		\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c04028b7-50451ff4-b89d8f24-df40d928
+% LTXE-SLIDE-ORIGIN:	5f486f77-38e6694e-2fad0d6b-7b260ad1 English
+% LTXE-SLIDE-TITLE:		ExpressionNodes (1)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{ExpressionNodes (1)}
+
+	% decrease font size for code listing
+	%\lstset{basicstyle=\tiny\ttfamily}
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+
+		\item Le ExpressionNodes sono un nuovo tipo di sintassi della struttura Fluid che condividono
+			tutte un comune tratto: funzionano solo all'interno delle parentesi grafe
+
+		\begin{lstlisting}
+			$view->getRenderingContext()->setExpressionNodeTypes(array(
+			   'Class\Number\One',
+			   'Class\Number\Two'
+			));
+		\end{lstlisting}
+
+		\item Gli sviluppatori possono aggiungere le loro ExpressionNode
+
+		\item Ciascuna di esse consiste in un modello da abbinare e dei metodi dettati da
+			un interfaccia di processo
+
+		\item Ogni tipo esistente di ExpressionNode può essere usato come riferimento
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		21b6bf40-820b4673-9d96ed71-3e60bbf7
+% LTXE-SLIDE-ORIGIN:	090cec75-2751b839-6ad8eebc-0adfe66a English
+% LTXE-SLIDE-TITLE:		ExpressionNodes (2)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{ExpressionNodes (2)}
+
+	ExpressionNodeTypes permettono nuove sintassi come ad esempio:
+
+	\begin{itemize}
+
+		\item \textbf{CastingExpressionNode}\newline
+			\small
+				permette il casting di una variabile ad un certo tipo, per esempio per garantire
+				un integer o un boolean. E' usato semplicemente con la chiave \texttt{as}:
+				\texttt{\{myStringVariable as boolean\}} o
+				\texttt{\{myBooleanVariable as integer\}} e così via.
+				Il tentativo di cast di una variabile ad un tipo incompatibile, causa un errore
+				Fluid standard.
+			\normalsize
+
+		\item \textbf{MathExpressionNode}\newline
+			\small
+				permette operazioni matematiche di base sulle variabili, per esempio
+				\texttt{\{myNumber + 1\}}, \texttt{\{myPercent / 100\}} o
+				\texttt{\{myNumber * 100\}} e così via.
+				Un espressione impossibile ritorna un output vuoto.
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		0696f038-d46d33d4-d9399fd8-d7e55f59
+% LTXE-SLIDE-ORIGIN:	c8935f68-0905db52-11932973-63a85a00 English
+% LTXE-SLIDE-TITLE:		ExpressionNodes (3)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{ExpressionNodes (3)}
+
+	ExpressionNodeTypes permettono nuove sintassi come ad esempio:
+
+	\begin{itemize}
+
+		\item \textbf{TernaryExpressionNode}\newline
+			\small
+				permette una condizione ternaria che opera solo su variabili.
+				Un caso di uso tipico è: "se questa variabile allora usa quella variabile altrimenti usa
+				un'altra variabile". E' usato come:\newline
+				\texttt{\{myToggleVariable ? myThenVariable : myElseVariable\}}\newline
+				Nota: non supporta espressioni nidificate, sintassi di inline ViewHelper
+				o simili al suo interno. Deve essere utilizzata solo con variabili standard
+				come input.
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bfecf675-2a559511-d5305769-ff4653f4
+% LTXE-SLIDE-ORIGIN:	153b9b53-d7f97aef-dc1ba8ab-fc2a763e English
+% LTXE-SLIDE-TITLE:		Namespaces are extensible (1)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{I Namespace sono estensibili (1)}
+
+	\begin{itemize}
+
+		\item Fluid permette che ogni alias di namespace (ad esempio \texttt{f:}) possa
+			essere esteso con l'aggiunta di un ulteriore namespaces
+
+		\item Anche i namespace PHP sono verificati per la presenza di classi ViewHelper
+
+		\item Questo significa che gli sviluppatori possono sovrascrivere singoli ViewHelper
+			con versioni personalizzate ed avere i loro ViewHelper chiamati quando si usa
+			il namespace \texttt{f:} 
+
+		\item Questo cambiamento implica anche che i namespace non siano più monadic.
+			Usando
+			\texttt{
+				\{namespace f=My\textbackslash
+				Extension\textbackslash
+				ViewHelpers\textbackslash\}}\newline
+				non si riceverà più un errore "namespace already registered".
+				Fluid aggiungerà invece questo namespace PHP e cercherà i ViewHelper
+				anche lì.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b1d76282-98fd3d1d-b0330e62-45d9f4e8
+% LTXE-SLIDE-ORIGIN:	a2f0e799-fe523ffb-57634576-654a8efe English
+% LTXE-SLIDE-TITLE:		Namespaces are extensible (2)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{I Namespaces sono estensibili (2)}
+
+	\begin{itemize}
+
+		\item I namespace aggiunti sono verificati dal basso verso l'alto, permettendo
+			ai namespace aggiunti di sostituire le classi ViewHelper mettendole 
+			alla stessa portata
+
+		\item Per esempio: \texttt{f:format.nl2br} può essere sostituito in
+			\texttt{
+				My\textbackslash
+				Extension\textbackslash
+				ViewHelpers\textbackslash
+				Format\textbackslash
+				Nl2brViewHelper},
+
+				con la registrazione del namespace alla precedente slide
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1d1ee87a-9a8a72d9-634f2c85-7d63d113
+% LTXE-SLIDE-ORIGIN:	2a98636b-3a4db59b-588597f9-0aca826e English
+% LTXE-SLIDE-TITLE:		Rendering using f:render (1)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Uso del rendering \texttt{f:render} (1)}
+
+	Consente contenuto predefinito come opzionale \texttt{f:render}:
+
+	\begin{itemize}
+
+		\item Ogniqualvolta \texttt{f:render} è usato con flag \texttt{optional = TRUE}
+			impostato, la visualizzazione di una sezione mancante da come risultato un output vuoto.
+
+		\item Invece di visualizzare un output vuoto, un nuovo attributo di \texttt{default}
+			(mixed) è aggiunto e può essere compilato con un valore di default di tipo fallback.
+
+		\item In alternativa, il contenuto tag può essere usato per definire questo valore predefinito
+			come tanti altri contenuti/attributi flessibili dei ViewHelper
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f0d46114-d9c9d723-dbc5e622-fd959aae
+% LTXE-SLIDE-ORIGIN:	78998a07-75b3fe30-431ca5e2-f7b816c4 English
+% LTXE-SLIDE-TITLE:		Rendering using f:render (2)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Uso del rendering \texttt{f:render} (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	Passaggio di contenuti con tag dal \texttt{f:render} al partial/section:
+
+	\begin{itemize}
+
+		\item Permette un nuovo approcio per strutturare la composizione dei template Fluid
+
+		\item Partial e section possono essere utilizzati come "wrapper" per parti arbitrarie di
+			codice.
+
+		\item Esempio:
+
+			\begin{lstlisting}
+				<f:section name="MyWrap">
+				  <div>
+				    <!-- more HTML, using variables if desired -->
+				    <!-- tag content of f:render output: -->
+				    {contentVariable -> f:format.raw()}
+				  </div>
+				</f:section>
+
+				<f:render section="MyWrap" contentAs="contentVariable">
+				  This content will be wrapped. Any Fluid code can go here.
+				</f:render>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3a725ebf-9072ebab-21861f49-a9f2b4b4
+% LTXE-SLIDE-ORIGIN:	7c36b3a7-33860495-4efb65ef-f09ae14e English
+% LTXE-SLIDE-TITLE:		Complex conditional statements
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Istruzioni condizionali complesse}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Ora Fluid supporta qualsiasi tipo di istruzione complessa di condizioni con nidificazioni e
+			raggruppamenti:
+
+			\begin{lstlisting}
+				<f:if condition="({variableOne} && {variableTwo}) || {variableThree} || {variableFour}">
+				  // Esegue se le variabili One e Two valgono true ,
+				  // o se lo sono le variabili Three o Four.
+				</f:if>
+			\end{lstlisting}
+
+		\item In più, \texttt{f:else} è stato dotato del comportamento tipo "elseif":
+
+			\begin{lstlisting}
+				<f:if condition="{variableOne}">
+				  <f:then>Fa questo se la variabile One vale true</f:then>
+				  <f:else if="{variableTwo}">
+				    Oppure fa questo se invece la variabile Two vale true
+				  </f:else>
+				  <f:else if="{variableThree}">
+				    Oppure fa questo se la variabile Three vale true
+				  </f:else>
+				  <f:else>
+				    Oppure fa questo se nessuno dei precedenti vale true
+				  </f:else>
+				</f:if>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		dd3159b5-384b2e5f-33611c71-9034c190
+% LTXE-SLIDE-ORIGIN:	d54cf918-48141072-8184ab81-cecc8e39 English
+% LTXE-SLIDE-TITLE:		Dynamic variable name parts (1)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Parti dei nomi di variabili dinamiche (1)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Una nuova caratteristica è la possibilità di utilizzare dei riferimenti 
+			dinamici con variabili quando si accede ad una variabile.
+			Si consideri il seguente template Fluid con array di variabili:
+
+			\begin{lstlisting}
+				$mykey = 'foo'; // o 'bar', impostato in un codice sorgente
+				$view->assign('data', ['foo' => 1, 'bar' => 2]);
+				$view->assign('key', $mykey);
+			\end{lstlisting}
+
+		\item Con il seguente template Fluid:
+
+			\begin{lstlisting}
+				Scegliendo: {data.{key}}.
+				(output: "1" con la chiave "foo" o "2" con "bar")
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b7eaa593-561af711-840817d7-65e2e9a1
+% LTXE-SLIDE-ORIGIN:	20385d89-9c0de3ac-9ef70ba6-310fdec3 English
+% LTXE-SLIDE-TITLE:		Dynamic variable name parts (2)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Parti dei nomi di variabili dinamiche (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Lo stesso approcio può essere utilizzato per generare parti dinamiche del nome di variabile:
+
+			\begin{lstlisting}
+				$mydynamicpart = 'First'; // o 'Second', impostato in un codice sorgente
+				$view->assign('myFirstVariable', 1);
+				$view->assign('mySecondVariable', 2);
+				$view->assign('which', $mydynamicpart);
+			\end{lstlisting}
+
+		\item Con il seguente template Fluid:
+
+			\begin{lstlisting}
+				Scegliendo: {my{which}Variable}.
+				(output: "1" se which vale "First" o "2" se which vale "Second")
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d424eec6-c2e69e90-8ee2ae31-90914168
+% LTXE-SLIDE-ORIGIN:	15907f4f-d554b015-03be1fdc-4dc0fb25 English
+% LTXE-SLIDE-TITLE:		New ViewHelpers
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Nuovi ViewHelper}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Alcuni nuovi ViewHelper sono stati aggiunti come parti standalone di Fluid
+			e come tali sono disponibili da ora in TYPO3:
+
+			\begin{itemize}
+
+				\item \textbf{\texttt{f:or}}\newline
+					Questo è un modo più breve di scrivere condizioni concatenate.
+					Esso supporta la seguente sintassi, che verifica ogni variabile
+					restituendo la prima che non è vuota:
+
+					\begin{lstlisting}
+						{variableOne -> f:or(alternative: variableTwo) -> f:or(alternative: variableThree)}
+					\end{lstlisting}
+
+				\item \textbf{\texttt{f:spaceless}}\newline
+					Può essere utilizzato nei tag nel codice dei template per eliminare
+					gli spazi e righe vuote per esempio creati dall'uso di indentazione
+					dei ViewHelper
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		aacee63a-79e519a6-ff40fa2b-2b47751b
+% LTXE-SLIDE-ORIGIN:	9fed5ece-ae03648f-c3db2f41-42312f7f English
+% LTXE-SLIDE-TITLE:		ViewHelper namespaces can be extended also from PHP
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{I namespaces dei ViewHelper possono essere estesi da PHP}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Accedendo al ViewHelperResolver del RenderingContext,
+			gli sviluppatori possono cambiare le inclusioni del namespace di base del ViewHelper a livello globale
+			(leggi: istanza View):
+
+			\begin{lstlisting}
+				$resolver = $view->getRenderingContext()->getViewHelperResolver();
+				// equivalent of registering namespace in template(s):
+				$resolver->registerNamespace('news', 'GeorgRinger\News\ViewHelpers');
+				// adding additional PHP namespaces to check when resolving ViewHelpers:
+				$resolver->extendNamespace('f', 'My\Extension\ViewHelpers');
+				// setting all namespaces in advance, globally, before template parsing:
+				$resolver->setNamespaces(array(
+				  'f' => array(
+				    'TYPO3Fluid\\Fluid\\ViewHelpers', 'TYPO3\\CMS\\Fluid\\ViewHelpers',
+				    'My\\Extension\\ViewHelpers'
+				  ),
+				  'vhs' => array(
+				    'FluidTYPO3\\Vhs\\ViewHelpers', 'My\\Extension\\ViewHelpers'
+				  ),
+				  'news' => array(
+				    'GeorgRinger\\News\\ViewHelpers',
+				  );
+				));
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f3bb31e2-8db113ee-fee52f59-4b727b9e
+% LTXE-SLIDE-ORIGIN:	3e41fa42-1d526584-5b7d3a07-c8b347ab English
+% LTXE-SLIDE-TITLE:		ViewHelpers can accept arbitrary arguments (1)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{I ViewHelper possono accettare argomenti opzionali (1)}
+
+	\begin{itemize}
+
+		\item Questa funzionalità permette alla classe ViewHelper un numero qualsiasi di parametri
+			aggiuntivi utilizzando qualsiasi variabile si desideri
+
+		\item Funziona separando i parametri che vengono passati ad ogni ViewHelper in due
+			gruppi: quelli che vengono dichiarati utilizzando \texttt{registerArgument}
+			(o come parametri del metodo) e quelli che non lo sono
+
+		\item I parametri non dichiarati, sono passati ad una funziona speciale
+			\texttt{handleAdditionalArguments}
+			nella classe del ViewHelper, che nell'implementazione predefinita genera un errore
+			se esistono parametri aggiuntivi.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4e136a6b-1f0ffd0f-b163d696-1529683e
+% LTXE-SLIDE-ORIGIN:	2462a8ce-0a82a7f0-1b97a84f-02f0a4c2 English
+% LTXE-SLIDE-TITLE:		ViewHelpers can accept arbitrary arguments (2)
+% LTXE-SLIDE-REFERENCE:	!Feature-69863-UseNewStandaloneFluidAsComposerDependency.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{I ViewHelper possono accettare argomenti opzionali (2)}
+
+	\begin{itemize}
+
+		\item Con l'ovveride di questo metodo nel ViewHelper, si può modificare se e quando
+			il ViewHelper dovrebbe registrare un errore alla ricezione di parametri non registrati
+
+		\item Questa funzionalità è quella che permette ai TagBasedViewHelpers di accettare liberamente
+			parametri con prefisso \texttt{data-} senza andare in errore
+
+		\item In TagBasedViewHelpers, il metodo \texttt{handleAdditionalArguments} 
+			aggiunge semplicemente nuovi attributi al tag generato e crea un errore
+			se sono presenti parametri aggiuntivi che non sono registrati o 
+			con il prefisso \texttt{data-}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		515d6c27-37efbb5c-29a19a03-741a301c
+% LTXE-SLIDE-ORIGIN:	b5a66715-5681025e-cfb46644-9b9bad55 English
+% LTXE-SLIDE-TITLE:		Added "allowedTags" argument to f:format.stripTags ViewHelper
+% LTXE-SLIDE-REFERENCE:	!Feature-67236-AddedAllowedTagsArgumentToFformatstripTagsViewHelper.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Parametri "allowedTags" per f:format.stripTags}
+
+	\begin{itemize}
+
+		\item Il parametro \texttt{allowedTags} contiene una lista di tag HTML 
+			che non devono essere tolti usando \texttt{f:format.stripTags}
+
+		\item La sintassi della lista di tag è identica al secondo parametro del comando PHP
+			\texttt{strip\_tags} (vedi: \url{http://php.net/strip_tags})
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a5c83c6d-26b97d82-ccec012e-40e9af6b
+% LTXE-SLIDE-ORIGIN:	12b7dd4a-73b912f7-e5d1cefa-e3c8386d English
+% LTXE-SLIDE-TITLE:		Allow accessing ObjectStorage as array in Fluid
+% LTXE-SLIDE-REFERENCE:	!Feature-73752-AllowAccessingObjectStorageAsArrayInFluidAndOtherPlaces.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Consentire l'accesso a ObjectStorage come array in Fluid}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Creando un alias di \texttt{toArray()} si permette al metodo di essere
+			chiamato come \texttt{getArray()} che a sua volta permette al metodo di
+			essere chiamato da \texttt{ObjectAccess::getPropertyPath},
+			che consente l'accesso a Fluid e altre parti
+
+		\item Con la creazione di un semplice alias di \texttt{toArray()} su
+			ObjectStorage, permette di essere chiamato come \texttt{getArray()}
+
+		\item Esempio: ottenere il quarto elemento
+
+			\begin{lstlisting}
+				// in PHP:
+				ObjectAccess::getPropertyPath($subject, 'objectstorageproperty.array.4')
+
+				// in Fluid:
+				{myObject.objectstorageproperty.array.4}
+				{myObject.objectstorageproperty.array.{dynamicIndex}}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

@@ -1,0 +1,261 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.7 - What's New - Chapter "TypoScript" (French Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	French
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		3a9852ea-e2360d9d-1ff5eec1-a7de3f9f
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{Chapitre 1~:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2421046d-b86f4bd5-1b57de04-f2ff792f
+% LTXE-SLIDE-ORIGIN:	27017c26-9a66e642-46da3a71-4b18702a English
+% LTXE-SLIDE-TITLE:		Breaking: #80412 - New shared content element typoscript libary object for Fluid Styled Content
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Nouvel objet TS d'élément de contenu partagé pour FSC (1/3)}
+
+	\begin{itemize}
+		\item Pour résoudre une incohérence entre les inscriptions d'élément de contenu entre
+			CSS Styled Content (CSC) et Fluid Styled Content (FSC) avec \texttt{Extbase} ou
+			\texttt{addPItoST43}, nous introduisons un objet de contenu partagé pour les
+			éléments de contenu et retirons l'usage de \texttt{lib.fluidContent}.
+
+		\item Le code se basait sur l'existence retirée de \texttt{lib.stdheader} et ignorait
+			les différentes informations de disposition dans le contexte de Fluid Styled Content.
+
+		\item Code généré avant le changement~:
+
+			\begin{lstlisting}
+				tt_content.myce = COA
+				tt_content.myce {
+				    10 =< lib.stdheader
+				    20 =< plugin.myContent
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5bad9a0e-62ce5938-e6805a97-97814c56
+% LTXE-SLIDE-ORIGIN:	1db56916-738b57dc-34c59088-f05c64e0 English
+% LTXE-SLIDE-TITLE:		Breaking: #80412 - New shared content element typoscript libary object for Fluid Styled Content
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Nouvel objet TS d'élément de contenu partagé pour FSC (2/3)}
+
+	\begin{itemize}
+		\item Pour l'inscription des éléments de contenu, le TypoScript \texttt{lib.contentElement}
+			est utilisé par "CSC" et "FSC" et remplace l'utilisation de \texttt{lib.fluidContent}.
+			Le code généré est légèrement ajusté pour correspondre aux besoins de toutes les
+			définitions de rendu de contenu et s'adapte pour les besoins spécifiques puisqu'une
+			référence est utilisée au lieu d'une définition directe.
+
+		\item Code généré après le changement~:
+
+			\begin{lstlisting}
+				tt_content.myce =< lib.contentElement
+				tt_content.myce {
+				    templateName = Generic
+				    20 =< plugin.myContent
+				}
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		dd3c6358-7be3923d-14613c0a-fea064f8
+% LTXE-SLIDE-ORIGIN:	d96ab2c6-978a155e-837800a0-02b7772a English
+% LTXE-SLIDE-TITLE:		Breaking: #80412 - New shared content element typoscript libary object for Fluid Styled Content
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Nouvel objet TS d'élément de contenu partagé pour FSC (3/3)}
+
+	\begin{itemize}
+		\item CSS Styled Content ajoute l'objet \texttt{lib.stdheader} manquant et tout fonctionne
+			comme précédemment, aucune migration ou ajustement du code est nécessaire. Comme
+			\texttt{COA} ne comprend pas l'option \texttt{templateName}, elle sera simplement ignorée.
+
+		\item Fluid Styled Content ajoute la logique nécessaire à travers \texttt{lib.contentElement}.
+			Tous les éléments de contenu inscrits au travers des APIs TYPO3 partagent maintenant un
+			template multifonction \texttt{Generic}. Celui-ci fourni les dispositions et surcharges des
+			options connues de "FSC".
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1bf59708-469356bf-41ece0b9-25e8f7ae
+% LTXE-SLIDE-ORIGIN:	0dfec33b-e8368c0a-9e16d774-edafcbf9 English
+% LTXE-SLIDE-TITLE:		Feature: #79812 - Allow overriding cropVariants for Image Manipulation
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Surcharge de \texttt{cropVariants} pour la manipulation d'images (1/3)}
+
+	\begin{itemize}
+		\item L'introduction des variantes de recadrage (Ticket \texttt{75880}) a cassé la
+			gestion des images recadrées lors de l'utilisation de TypoScript pour le rendu des
+			fichiers et références. La fonctionnalité est corrigée et une option TypoScript est
+			introduite pour spécifier une \texttt{cropVariant} différente.
+
+		\item Pour utiliser une \texttt{cropVariant} différente de celle par défaut, il est
+			possible de spécifier un nom de \texttt{cropVariant} dans la configuration TypoScript.
+
+			\begin{lstlisting}
+				# Use specific cropVariant for the images
+				tt_content.image.20.1.file.cropVariant = mobile
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		478c4e48-59a221ff-c4fc5292-0d7fd032
+% LTXE-SLIDE-ORIGIN:	1beb3276-d79fb9a6-b53dcde1-fcacdec3 English
+% LTXE-SLIDE-TITLE:		Feature: #79812 - Allow overriding cropVariants for Image Manipulation
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Surcharge de \texttt{cropVariants} pour la manipulation d'images (2/3)}
+
+	\begin{itemize}
+		\item Avec l'introduction du Ticket \texttt{75880}, il est possible de définir de multiples
+			\texttt{cropVariants} en TCA. La possibilité de changer ou surcharger ces \texttt{cropVariants}
+			par TSconfig est ajoutée.
+
+		\item Définir une option FormEngine par
+			\texttt{TCEFORM.sys\_file\_reference.crop.config.cropVariants.*} ne fonctionne pas.
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9e908bba-e991a1a2-53898d45-c9f68c51
+% LTXE-SLIDE-ORIGIN:	1bfe3276-d79acb9a6-b5dbcde1-fc95dec3 English
+% LTXE-SLIDE-TITLE:		Feature: #79812 - Allow overriding cropVariants for Image Manipulation
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Surcharge de \texttt{cropVariants} pour la manipulation d'images (3/3)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Exemple~:
+
+			\begin{lstlisting}
+				TCEFORM.sys_file_reference.crop.config.cropVariants {
+				    default {
+				        title = Default desktop
+				        selectedRatio = NaN
+				        allowedAspectRatios {
+				            NaN {
+				                title = free
+				                value = 0.0
+				            }
+				        }
+				    }
+				    specialMobile {
+				        title = Our special mobile variant
+				        selectedRatio = NaN
+				        allowedAspectRatios {
+				            4:3 {
+				                title = ratio 4/3
+				                value = 1.3333333
+				            }
+				        }
+				    }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		78effb07-1a8a93fb-cbf000da-566dc720
+% LTXE-SLIDE-ORIGIN:	47d7657b-8d44ad91-6d089504-42a0a201 English
+% LTXE-SLIDE-TITLE:		Feature: #80452 - Extbase CLI commands available via new CLI API
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Configuration de l'authentification Frontend disponible par constantes TypoScript}
+
+	\begin{itemize}
+		\item Les options de configurations les plus communes de l'authentification Frontend
+		  	sont disponibles en constantes TypoScript et déplacées dans une section "Authentification
+		  	Frontend" dans l'éditeur de constantes.
+
+		\item Pour la liste des constantes, voir~:
+			\href{https://docs.typo3.org/typo3cms/extensions/core/8-dev/singlehtml/Index.html#feature-80374-frontend-login-configuration-now-available-through-typoscript-constants}{docs.typo3.org}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6cfddfd1-40840aef-7e6d8051-b2311809
+% LTXE-SLIDE-ORIGIN:	37c364c5-ea04bd46-34e95917-172744bf English
+% LTXE-SLIDE-TITLE:		Important: #80506 - Dbal compatible field quoting in TypoScript
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Protection des champs en TypoScript compatible avec DBAL}
+
+	\begin{itemize}
+		\item Les propriétés TypoScript contenant des fragments SQL nécessitent la bonne protection
+		 	des noms de champ pour être compatible avec les différents pilotes de base de données.
+		 	Le framework de base de données du noyau applique la bonne protection si les noms de champ
+		 	sont entourés comme \texttt{\{\#fieldName\}}
+
+		\item Il est conseillé d'adapter les extensions pour la bonne exécution sur les base de données comme
+		 	PostgreSQL.
+
+			\begin{lstlisting}
+				select.where = {#colPos}=0
+			\end{lstlisting}
+
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

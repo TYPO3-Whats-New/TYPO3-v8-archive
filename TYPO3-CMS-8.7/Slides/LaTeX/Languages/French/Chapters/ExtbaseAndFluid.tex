@@ -1,0 +1,97 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.7 - What's New - Chapter "Extbase & Fluid" (French Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	French
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		846d40ce-66fdc2ec-750dcf95-33ce93e0
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{Chapitre 3~:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6f9116e0-8e90899e-7fc90af0-37a287e2
+% LTXE-SLIDE-ORIGIN:	c5986329-fb36f473-a5430d2e-6ba49fb1 English
+% LTXE-SLIDE-TITLE:		Feature: #80374 - Add generic fluid template for already rendered content
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Ajout de gabarit générique fluid pour les contenus non-fluid (1/2)}
+
+	\begin{itemize}
+		\item Un gabarit générique est introduit pour améliorer le support des éléments de contenu
+			pour lesquels le contenu n'est pas traité par fluid et pour faciliter la prise
+			en charge de la disposition universelle de Fluid Styled Content.
+
+		\item Le gabarit générique ne fait qu'entourer le code html déjà généré et assigné à la
+			variable \texttt{content}. Ceci élimine le besoin pour les extensions de fournir des
+			modèles personnalisés afin de reproduire le même comportement que les autres éléments
+			de contenu de Fluid Styled Content.
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ae386cbb-83e3dc62-b754a43d-c4842cd5
+% LTXE-SLIDE-ORIGIN:	b3ea270e-31b95c44-50dfcef2-af00b788 English
+% LTXE-SLIDE-TITLE:		Feature: #80374 - Add generic fluid template for already rendered content
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Ajout de gabarit générique fluid pour les contenus non-fluid (2/2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Template
+			\vspace{-0.1cm}
+			\begin{lstlisting}
+				<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+				      data-namespace-typo3-fluid="true">
+				<f:layout name="Default" />
+				<f:section name="Main">
+				    <f:comment>This templates is used to provide necessary functionality for external
+				               processed content and could be used across multiple sources, for example
+				               the frontend login content element.</f:comment>
+				    {content -> f:format.raw()}
+				</f:section>
+				</html>
+			\end{lstlisting}
+
+		\item Fluid
+			\vspace{-0.1cm}
+			\begin{lstlisting}
+				tt_content.mycontent =< lib.contentElement
+				tt_content.mycontent {
+				    templateName = Generic
+				    variables {
+				        content = USER_INT
+				        content {
+				            userFunc = ACME\ContentExtension\Controller\SuperController->main
+				        }
+				    }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

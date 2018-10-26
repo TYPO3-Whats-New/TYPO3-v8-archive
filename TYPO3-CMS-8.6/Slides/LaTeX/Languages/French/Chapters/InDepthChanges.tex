@@ -1,0 +1,769 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.6 - What's New - Chapter "Changements en profondeur" (French Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	French
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		5ebcecbe-66abfa57-cf38bc00-aa637965
+% LTXE-CHAPTER-NAME:	Changements en profondeur
+% ------------------------------------------------------------------------------
+
+\section{Changements en profondeur}
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+
+	\begin{center}\huge{Chapitre 3~:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Changements en profondeur}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2937be8a-f6119f51-7fb50c6b-edf1e170
+% LTXE-SLIDE-ORIGIN:	5ae3ff92-e2f03af9-8f5caf79-b7e0aca1 English
+% LTXE-SLIDE-TITLE:		Page Browser for scheduler tasks
+% LTXE-SLIDE-REFERENCE:	!Feature: #12211 - Usability: Scheduler provide page browser to choose start page
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Navigateur de page pour le planificateur}
+
+	\begin{itemize}
+		\item Les tâches planifiées nécessitant un identifiant de page (\texttt{uid}) peuvent
+			ajouter un bouton pour le navigateur de page.
+
+		\item Dans \texttt{ValidatorTaskAdditionalFieldProvider}, deux champs supplémentaires
+			sont ajoutés.
+
+		\item Si le champ supplémentaire \texttt{browser} est défini à \texttt{page} alors le
+			\texttt{SchedulerModuleController} ajoute un bouton pour appeler le navigateur de
+			page pour le champ.
+
+			\begin{lstlisting}
+				'browser' => 'page',
+			\end{lstlisting}
+
+		\item Le champ \texttt{pageTitle} contient le titre de la page qui est affiché à côté
+		 	du bouton de navigation.
+
+			\begin{lstlisting}
+				'pageTitle' => $pageTitle,
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		b81e3859-05a0a2c8-a335d708-f1cd01b2
+% LTXE-SLIDE-ORIGIN:	02a7fe32-ae3fd901-b04372a2-7d3726f4 English
+% LTXE-SLIDE-TITLE:		Synchronized field values in localized records (1/2)
+% LTXE-SLIDE-REFERENCE:	!Feature: #51291 - Synchronized field values in localized records
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Valeurs de champs synchronisées dans les traductions (1/2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Le comportement de recouvrement des enregistrements traduits est changé pour
+			rendre les traductions indépendantes.
+
+		\item Précédemment, si des champs dans les colonnes \texttt{TCA} étaient définies à
+			\texttt{l10n\_mode} \texttt{exclude} ou \texttt{mergeIfNotBlank}, l'enregistrement
+			de traduction ne contenait pas de valeurs, celles-ci étant «~remontées~» depuis
+			l'enregistrement de langue par défaut.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		72607275-94e0bf62-4ddc99c8-999fa4ad
+% LTXE-SLIDE-ORIGIN:	cf030e7c-03fb0ac4-9b9ff848-ac69581b English
+% LTXE-SLIDE-TITLE:		Synchronized field values in localized records (2/2)
+% LTXE-SLIDE-REFERENCE:	!Feature: #51291 - Synchronized field values in localized records
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Valeurs de champs synchronisées dans les traductions (2/2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item C'est changé, le \texttt{DataHandler} copie ces valeurs dans l'enregistrement
+			traduit et les synchronises quand l'enregistrement de langue par défaut est
+			changé.
+
+			\begin{lstlisting}
+				'columns' => [
+				  ...
+				  'header' => [
+				    'label' => 'My header',
+				    'config' => [
+				      'type' => 'input',
+				      'behaviour' => [
+				        'allowLanguageSynchronization' => true,
+				      ],
+				    ],
+				  ],
+				],
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a1792ff2-4f02d3f7-b9c56010-fa62dfa1
+% LTXE-SLIDE-ORIGIN:	18c4f826-440f3e00-a854e8e8-ddc7cbc0 English
+% LTXE-SLIDE-TITLE:		Image Manipulation Tool (1/6)
+% LTXE-SLIDE-REFERENCE:	!Feature: #75880 - Implement multiple cropping variants in image manipulation tool
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Outil de manipulation d'images (1/6)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Le type TCA \texttt{imageManipulation} est capable de gérer plusieurs variantes
+			de cadrage si configuré.
+
+		\item Il est également possible de définir une zone de cadrage initiale. S'il n'y
+			en a pas de définie, la zone de cadrage sélectionnée par défaut couvre toute
+			l'image.
+		\item Les zones de cadrage sont définies relativement avec des nombres réels. Les
+			coordonnées et tailles doivent être définies pour cela.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		99e4d805-3fa3947e-3e6a7f1d-5c3b911b
+% LTXE-SLIDE-ORIGIN:	36ea74c0-3b92dbf6-e35c9e25-af0a0abf English
+% LTXE-SLIDE-TITLE:		Image Manipulation Tool (2/6)
+% LTXE-SLIDE-REFERENCE:	!Feature: #75880 - Implement multiple cropping variants in image manipulation tool
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Outil de manipulation d'images (2/6)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item L'exemple suivant configure deux zones de cadrage, avec les
+			identifiants «~mobile~» et «~desktop~». La clé du tableau sera
+			utilisée lors du rendu avec le ViewHelper Image comme identifiant.
+
+			\begin{lstlisting}
+				'config' => [
+				  'type' => 'imageManipulation',
+				  'cropVariants' => [
+				    'mobile' => [
+				      'title' => 'Mobile',
+				      'allowedAspectRatios' => [
+				        '4:3' => [
+				          'title' => '4:3',
+				          'value' => 4 / 3
+				        ],
+				        ...
+				      ],
+				    ],
+				    'desktop' => [
+				      ...
+				    ],
+				  ],
+				]
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		84b69aef-b6cdef68-829458b8-f2ddea42
+% LTXE-SLIDE-ORIGIN:	27b20030-548f80c4-3540aabb-41a83498 English
+% LTXE-SLIDE-TITLE:		Image Manipulation Tool (3/6)
+% LTXE-SLIDE-REFERENCE:	!Feature: #75880 - Implement multiple cropping variants in image manipulation tool
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Outil de manipulation d'images (3/6)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item L'exemple suivant a une zone initiale de cadrage de la taille du
+		 	cadreur d'image précédent fourni par défaut.
+
+			\begin{lstlisting}
+				'config' => [
+				  'type' => 'imageManipulation',
+				  'cropVariants' => [
+				    'mobile' => [
+				      'title' => 'LLL:EXT:ext_key/Resources/Private/Language/locallang.xlf:imageManipulation.mobile',
+				      'cropArea' => [
+				        'x' => 0.1,
+				        'y' => 0.1,
+				        'width' => 0.8,
+				        'height' => 0.8,
+				      ],
+				    ],
+				  ],
+				]
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		97315913-05e4d690-758aa9e5-c32eb8f8
+% LTXE-SLIDE-ORIGIN:	58cebeda-4ee109f4-5e9eb728-b7703b40 English
+% LTXE-SLIDE-TITLE:		Image Manipulation Tool (4/6)
+% LTXE-SLIDE-REFERENCE:	!Feature: #75880 - Implement multiple cropping variants in image manipulation tool
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Outil de manipulation d'images (4/6)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Les utilisateurs peuvent aussi sélectionner une zone de mise en avant,
+			si configuré.
+		\item Cette zone est toujours dans la zone de cadrage et marque une zone de
+			l'image qui doit être visible pour que l'image transporte son sens.
+
+			\begin{lstlisting}
+				'config' => [
+				  'type' => 'imageManipulation',
+				  'cropVariants' => [
+				    'mobile' => [
+				      'title' =>
+				        'LLL:EXT:ext_key/Resources/Private/Language/locallang.xlf:imageManipulation.mobile',
+				      'focusArea' => [
+				        'x' => 1 / 3,
+				        'y' => 1 / 3,
+				        'width' => 1 / 3,
+				        'height' => 1 / 3,
+				      ],
+				    ],
+				  ],
+				]
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		91dfd8de-721188b8-e82a6d5c-54ffa11d
+% LTXE-SLIDE-ORIGIN:	94d809e0-3369bf18-616710ee-93f6a9da English
+% LTXE-SLIDE-TITLE:		Image Manipulation Tool (5/6)
+% LTXE-SLIDE-REFERENCE:	!Feature: #75880 - Implement multiple cropping variants in image manipulation tool
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Outil de manipulation d'images (5/6)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Souvent, les images sont utilisées dans un contexte, où elles sont recouvertes
+			par autre élément tel qu'un titre.
+		\item Pour fournir aux éditeurs un indice de quelle zone de l'image est affectée,
+			lors de la sélection d'une zone de cadrage, il est possible de définir plusieurs
+			zones de recouvrement.
+		\item Ces zones sont affichées dans la zone de cadrage. La zone de mise en avant
+			ne peux pas croiser les zones de recouvrement.
+
+			\begin{lstlisting}
+				'config' => [
+				  'type' => 'imageManipulation',
+				  'coverAreas' => [
+				    [
+				      'x' => 0.05, 'y' => 0.85,
+				      'width' => 0.9, 'height' => 0.1,
+				    ],
+				  ],
+				]
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		eb098ff9-f1f95408-1f61d30f-cb05def5
+% LTXE-SLIDE-ORIGIN:	c9df3305-35544e3c-6a073be7-1cec40f4 English
+% LTXE-SLIDE-TITLE:		Image Manipulation Tool (6/6)
+% LTXE-SLIDE-REFERENCE:	!Feature: #75880 - Implement multiple cropping variants in image manipulation tool
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Outil de manipulation d'images (6/6)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+		\item Pour effectuer le rendu d'une variante de cadrage, son identifiant peut être
+			spécifié comme argument du ViewHelper Image~:
+
+			\begin{lstlisting}
+				<f:image image="{data.image}" cropVariant="mobile" width="800" >
+				</f:image>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a68a04da-84042ebf-7af38a2f-1b136e1d
+% LTXE-SLIDE-ORIGIN:	a71d77d1-6a419c8d-0fbb35d0-e1ce57e4 English
+% LTXE-SLIDE-TITLE:		Default Content Element Changed for Fluid Styled Content
+% LTXE-SLIDE-REFERENCE:	!Breaking: #79622 - Default content element changed for Fluid Styled Content
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Élément de contenu par défaut changé pour Fluid Styled Content}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item L'élément de contenu par défaut est mis en accord avec CSS Styled Content
+			et changé à «~Text~»
+		\item Pour revenir à la configuration précédente, il est nécessaire de définir
+			manuellement l'élément de contenu par défaut au choix préféré. Il suffit de
+			surcharger de nouveau la configuration dans un fichier
+			\texttt{Configuration/TCA/Overrides/tt\_content.php}.
+
+			\begin{lstlisting}
+				$GLOBALS['TCA']['tt_content']['columns']['CType']['config']['default'] = 'textmedia';
+				$GLOBALS['TCA']['tt_content']['columns']['CType']['config']['default'] = 'header';
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9f6a9230-def43e1d-a1256b50-645c8b38
+% LTXE-SLIDE-ORIGIN:	035f6a19-9be2f793-bc0ebb3e-c6a4cca4 English
+% LTXE-SLIDE-TITLE:		TCA Changes (1/2)
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #79440 - TCA Changes
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Changements TCA (1/2)}
+
+	\begin{itemize}
+
+		\item Le \texttt{TCA} au niveau champ est changé.
+
+		\item Quasiment tous les types de colonne sont touchés.
+
+		\item En général, la sous-section \texttt{wizards} est retirée et remplacée
+			par une combinaison de nouveaux \texttt{renderType} et un nouvel ensemble
+			d'options de configuration.
+
+		\item Les assistants sont scindés en trois catégories différentes~:
+			\texttt{fieldInformation}, \texttt{fieldControl} et \texttt{fieldWizard}.
+
+	\end{itemize}
+
+\end{frame}
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c4fd0dea-6c134299-dd7fa185-9eba1a0a
+% LTXE-SLIDE-ORIGIN:	55c8113e-b234daa0-e701f035-8e1b58d1 English
+% LTXE-SLIDE-TITLE:		TCA Changes (2/2)
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #79440 - TCA Changes
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Changements TCA (2/2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Exemple~:
+
+			\begin{lstlisting}
+				'fieldControl' => [
+				  'editPopup' => [
+				    'disabled' => false,
+				  ],
+				  'addRecord' => [
+				    'disabled' => false,
+				    'options' => [
+				      'setValue' => 'prepend',
+				    ],
+				  ],
+				  'listModule' => [
+				    'disabled' => false,
+				  ],
+				],
+			\end{lstlisting}
+
+		\item Plus de détails à
+			\href{https://docs.typo3.org/typo3cms/extensions/core/8-dev/singlehtml/Index.html#deprecation-79440-formengine-element-expansion}{docs.typo3.org}
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		cd3e706d-a8f3eab2-babf4ecc-f211050c
+% LTXE-SLIDE-ORIGIN:	da922107-1604619b-66f713fe-9508d9d7 English
+% LTXE-SLIDE-TITLE:		Introduce Session Storage Framework
+% LTXE-SLIDE-REFERENCE:	!Feature: #70316 - Introduce Session Storage Framework
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Introduction du framework d'enregistrement de session}
+
+	\begin{itemize}
+		\item Un framework d'enregistrement de session est introduit (Session Storage Framework)
+		\item Le but de ce framework est de créer l'interopérabilité entre les
+			différents stockages de session (appelés «~backends~») comme la base
+			de données, les fichiers, Redis, etc.
+		\item Les backends de session suivants sont disponibles par défaut~:
+
+			\begin{itemize}
+				\item
+					\smaller\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Session\textbackslash
+						Backend\textbackslash
+						DatabaseSessionBackend}
+
+				\item
+					\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Session\textbackslash
+						Backend\textbackslash
+						RedisSessionBackend}
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d1520e48-f4ab4d96-b1482593-7c61f70a
+% LTXE-SLIDE-ORIGIN:	2d65beca-277a2f35-a1bc5ae7-c71712aa English
+% LTXE-SLIDE-TITLE:		CLI Support for T3D Imports
+% LTXE-SLIDE-REFERENCE:	!Feature: #72749 - CLI support for T3D import
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Support CLI pour imports T3D}
+
+	\begin{itemize}
+		\item \texttt{EXT:impexp} permet d'importer des fichiers de données (T3D ou XML)
+			depuis l'interface en ligne de commande à travers une commande Symfony.
+
+		\item Usage~:\newline
+			\smaller
+				\texttt{./typo3/sysext/core/bin/typo3 impexp:import [<options>] <file> <pageId>}
+			\normalsize
+
+		\item Options~:
+			\begin{itemize}
+				\item \texttt{-}\texttt{-updateRecords}~: Forcer la mise à jour des
+					enregistrements existants
+				\item \texttt{-}\texttt{-ignorePid}~: Ne pas corriger l'identifiant de page
+					des enregistrements mis à jour
+				\item \texttt{-}\texttt{-enableLog}~: journaliser l'ensemble des opérations
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		fedf06b1-97cdeb74-fb28b36f-a058b192
+% LTXE-SLIDE-ORIGIN:	38064844-53baa89a-7f73669e-2bb96cab English
+% LTXE-SLIDE-TITLE:		Hook in typolink for Modification of Page Params
+% LTXE-SLIDE-REFERENCE:	!Feature: #79121 - Implement hook in typolink for modification of page params
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Hook dans \texttt{typolink} pour la modification des paramètres de page}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Un nouveau hook est intégré à \texttt{ContentObjectRenderer::typoLink} pour les liens vers les pages.
+			Celui-ci permet la modification de la configuration du lien, par exemple l'enrichir avec des paramètres
+			supplémentaires ou des métadonnées depuis l'enregistrement de page.
+
+		\item L'enregistrement s'effectue via~:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typolinkProcessing']
+				  ['typolinkModifyParameterForPageLinks'][] = \Your\Namespace\Hooks\MyHook::class;
+			\end{lstlisting}
+
+		\item Usage~:
+
+			\begin{lstlisting}
+				public function modifyPageLinkConfiguration(
+				  array $linkConfiguration, array $linkDetails, array $pageRow) : array
+				{
+				  $linkConfiguration['additionalParams'] .= $pageRow['myAdditionalParamsField'];
+				  return $linkConfiguration;
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ed7db278-02de8e66-88ed3457-dfccdd8b
+% LTXE-SLIDE-ORIGIN:	290e1c2e-e708ede1-82aaf127-e69b2338 English
+% LTXE-SLIDE-TITLE:		Hook to Add Custom TypoScript Templates (1/2)
+% LTXE-SLIDE-REFERENCE:	!Feature: #79140 - Add hook to add custom TypoScript templates
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Hook pour ajouter des template TypoScript personnalisés (1/2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Un nouveau hook dans TemplateService permet l'ajout ou la modification de template
+			TypoScript.
+
+		\item L'enregistrement au hook s'effectue via le code suivant dans le fichier
+			\texttt{ext\_localconf.php} des extensions~:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['Core/TypoScript/TemplateService']
+				  ['runThroughTemplatesPostProcessing']
+			\end{lstlisting}
+
+		\item \texttt{EXT:my\_site/Classes/Hooks/TypoScriptHook.php} (1/2)
+
+			\begin{lstlisting}
+				namespace MyVendor\MySite\Hooks;
+				class TypoScriptHook
+				{
+				  /**
+				   * Hooks into TemplateService after
+				   * @param array $parameters
+				   * @param \TYPO3\CMS\Core\TypoScript\TemplateService $parentObject
+				   * @return void
+				   */
+				...
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d2690d5b-bb4c70ea-326b487b-5118f376
+% LTXE-SLIDE-ORIGIN:	d64368f4-0f5c43e3-92a546bf-75d50a61 English
+% LTXE-SLIDE-TITLE:		Hook to Add Custom TypoScript Templates (2/2)
+% LTXE-SLIDE-REFERENCE:	!Feature: #79140 - Add hook to add custom TypoScript templates
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Hook pour ajouter des template TypoScript personnalisés (2/2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item \texttt{EXT:my\_site/Classes/Hooks/TypoScriptHook.php} (2/2)
+
+			\begin{lstlisting}
+				...
+				  public function addCustomTypoScriptTemplate($parameters, $parentObject)
+				  {
+				    // Disable the inclusion of default TypoScript set via TYPO3_CONF_VARS
+				    $parameters['isDefaultTypoScriptAdded'] = true;
+				    // Disable the inclusion of ext_typoscript_setup.txt of all extensions
+				    $parameters['processExtensionStatics'] = false;
+
+				    // No template was found in rootline so far, so a custom "fake" sys_template record is added
+				    if ($parentObject->outermostRootlineIndexWithTemplate === 0) {
+				      $row = [
+				        'uid' => 'my_site_template',
+				        'config' =>
+					      '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:my_site/Configuration/TypoScript/site_setup.t3s">',
+				        'root' => 1,
+				        'pid' => 0
+				      ];
+				      $parentObject->processTemplate($row, 'sys_' . $row['uid'], 0, 'sys_' . $row['uid']);
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bbaba923-c2ae8f17-86e3391a-ce69e3fb
+% LTXE-SLIDE-ORIGIN:	ad9f66e3-bcd548f4-8e14e04c-de29a79c English
+% LTXE-SLIDE-TITLE:		Plugin Preview with Fluid
+% LTXE-SLIDE-REFERENCE:	!Feature: #79225 - Plugin preview with Fluid
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Prévisualisation de plugin avec Fluid}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item La configuration TypoScript de page pour prévisualiser un élément de contenu dans le
+			Backend est améliorée en permettant aussi le rendu des plugins via Fluid
+
+		\item Toutes les propriétés de l'enregistrement \texttt{tt\_content} sont disponibles directement
+			dans le template (i.e. UID via \{uid\})
+
+		\item Les données du champ flexform \texttt{pi\_flexform} sont disponibles dans la propriété
+			\texttt{pi\_flexform\_transformed} comme tableau.
+
+			\begin{lstlisting}
+				mod.web_layout.tt_content.preview.list.simpleblog_bloglisting =
+				  EXT:simpleblog/Resources/Private/Templates/Preview/SimpleblogPlugin.html
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		64d746ed-4caef190-d7ceac0f-a7c2b636
+% LTXE-SLIDE-ORIGIN:	245de018-04aed929-a3b3c380-6c822a14 English
+% LTXE-SLIDE-TITLE:		Template Paths in BackendTemplateView
+% LTXE-SLIDE-REFERENCE:	!Feature: #79124 - Allow overwriting of template paths in BackendTemplateView
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Chemins des templates dans BackendTemplateView}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item BackendTemplateView permet de surcharger le chemin des templates pour ajouter son
+			propre emplacement pour templates, partials et layouts dans un module backend basé
+			sur BackendTemplateView.
+
+			\begin{lstlisting}
+				$frameworkConfiguration =
+				  $this->configurationManager->getConfiguration(
+				    ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+				  );
+				$viewConfiguration = [
+				  'view' => [
+				    'templateRootPaths' => ['EXT:myext/Resources/Private/Backend/Templates'],
+				    'partialRootPaths' => ['EXT:myext/Resources/Private/Backend/Partials'],
+				    'layoutRootPaths' => ['EXT:myext/Resources/Private/Backend/Layouts'],
+				  ],
+				];
+				$this->configurationManager->setConfiguration(
+				  array_merge($frameworkConfiguration, $viewConfiguration)
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		dd8f25c6-9d8b3599-3908419d-c6e13546
+% LTXE-SLIDE-ORIGIN:	82514d33-f6c72709-2052880d-4d753fe8 English
+% LTXE-SLIDE-TITLE:		Miscellaneous
+% LTXE-SLIDE-REFERENCE:	!Feature: #78899 - TCA maxitems optional
+% LTXE-SLIDE-REFERENCE:	!Feature: #79240 - Single cli user for cli commands
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Changements en profondeur}
+	\framesubtitle{Divers}
+
+	\begin{itemize}
+		\item La configuration \texttt{TCA} \texttt{maxitems} des champs de type \texttt{select} et
+			\texttt{group} est optionnelle et sa valeur par défaut est élevée (99999) au lieu de 1.
+
+		\item L'accès aux fonctionnalités de TYPO3 depuis la ligne de commande est simplifié. Les commandes
+			n'ont plus besoin d'utilisateur dans la base de données. Au lieu de cela, les commandes utilisent
+			le nom d'utilisateur \texttt{\_cli\_}. L'utilisateur est créé à la demande par le framework s'il
+			n'existe pas déjà lors de la première exécution d'une commande. Cet utilisateur possède les
+			droits d'administrateur et ne nécessite plus d'avoir ses autorisations assignées explicitement
+			pour effectuer les tâches comme la manipulation de la base de données avec \texttt{DataHandler}.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

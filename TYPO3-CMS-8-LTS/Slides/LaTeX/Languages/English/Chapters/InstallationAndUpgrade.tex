@@ -1,0 +1,119 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8 LTS - What's New - Chapter "Installation and Upgrade" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		6dc8a329-7fd5f485-7c9c0ef0-dd2c6549
+% LTXE-CHAPTER-NAME:	Installation and Upgrade
+% ------------------------------------------------------------------------------
+
+\section{Installation and Upgrade}
+\begin{frame}[fragile]
+	\frametitle{Installation and Upgrade}
+
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Installation and Upgrade}}\end{center}
+	\begin{center}\large{\textit{It's time to check out TYPO3 v8 LTS}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2924aa0e-f575ecd8-c637f4c2-6b39b1c9
+% LTXE-SLIDE-TITLE:		Installation
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Installation and Upgrade}
+	\framesubtitle{Traditional Installation Method}
+
+	\begin{itemize}
+		\item Official \textit{traditional} installation procedure under Linux/Mac OS X\newline
+			(DocumentRoot for example \texttt{/var/www/site/htdocs}):
+		\begin{lstlisting}
+			$ cd /var/www/site/
+			$ wget --content-disposition get.typo3.org/8.7
+			$ tar xzf typo3_src-8.7.0.tar.gz
+			$ cd htdocs
+			$ ln -s ../typo3_src-8.7.0 typo3_src
+			$ ln -s typo3_src/index.php
+			$ ln -s typo3_src/typo3
+			$ touch FIRST_INSTALL
+		\end{lstlisting}
+
+		\item Symbolic links under Microsoft Windows:
+
+			\begin{itemize}
+				\item Use \texttt{junction} under Windows XP/2000
+				\item Use \texttt{mklink} under Windows Vista and Windows 7
+			\end{itemize}
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ed06d060-dc1f7c61-00bacc1f-6a2ccd9f
+% LTXE-SLIDE-TITLE:		Installation using composer
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Installation and Upgrade}
+	\framesubtitle{Installation Using \texttt{composer}}
+
+	\begin{itemize}
+		\item Installation using \textit{composer} under Linux/Mac OS X
+
+			\begin{lstlisting}
+				$ cd /var/www/site/
+				$ composer create-project typo3/cms-base-distribution
+			\end{lstlisting}
+
+		\item Alternatively, create your custom \texttt{composer.json} file and run:
+
+			\begin{lstlisting}
+				$ composer install
+			\end{lstlisting}
+
+			An example \texttt{composer.json} file can be downloaded at:\newline
+			\small
+				\href{https://git.typo3.org/TYPO3CMS/Distributions/Base.git/blob/HEAD:/composer.json}{git.typo3.org/TYPO3CMS/Distributions/Base.git/blob/HEAD:/composer.json}
+			\normalsize
+
+
+	\end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		061ecffe-6aadad2d-6e64a67a-3c50a5cf
+% LTXE-SLIDE-TITLE:		Upgrade to TYPO3 CMS 7
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Installation and Upgrade}
+	\framesubtitle{Upgrade to TYPO3 v8 LTS}
+
+	\begin{itemize}
+		\item Upgrades only possible from TYPO3 v7 LTS
+		\item TYPO3 CMS < 7.6 LTS should be updated to TYPO3 version 7.6 first
+	\end{itemize}
+
+	\begin{itemize}
+
+		\item Upgrade instructions:\newline
+			\smaller\url{http://wiki.typo3.org/Upgrade#Upgrading_to_8.7}\normalsize
+		\item Official TYPO3 guide "TYPO3 Installation and Upgrading":
+			\smaller\url{http://docs.typo3.org/typo3cms/InstallationGuide}\normalsize
+		\item General approach:
+			\begin{itemize}
+				\item Check minimum system requirements \small(PHP, MySQL, etc.)
+				\item Review \textbf{deprecation\_*.log} in old TYPO3 instance
+				\item Update all extensions to the latest version
+				\item Deploy new sources and run Install Tool -> Upgrade Wizard
+				\item Review startup module for backend users (optionally)
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

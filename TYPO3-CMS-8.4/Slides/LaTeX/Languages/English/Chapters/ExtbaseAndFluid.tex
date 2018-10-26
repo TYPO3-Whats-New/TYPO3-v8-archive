@@ -1,0 +1,114 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.4 - What's New - Chapter "Extbase & Fluid" (English Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		846d40ce-66fdc2ec-750dcf95-33ce93e0
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{Chapter 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1ae5bb97-11d5b876-c9a11472-7a187619
+% LTXE-SLIDE-TITLE:		Extbase's persistence uses Doctrine DBAL's QueryBuilder now
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Doctrine DBAL}
+
+	\begin{itemize}
+
+		\item Extbase's persistence uses Doctrine DBAL's QueryBuilder now
+		\item This allows for \textbf{prepared statements} for all Extbase queries
+		\item Backwards compatibility is still maintained
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		71749dc0-def142b7-4d032fcc-9407cb52
+% LTXE-SLIDE-TITLE:		ObjectAccess cleaned up
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{ObjectAccess Cleanup (1)}
+
+	\begin{itemize}
+
+		\item Various improvements of the \texttt{ObjectAccess} class, which results in a performance boost
+		\item The following changes have been implemented:
+
+			\begin{itemize}
+				\item More native PHP methods used where reasonable
+				\item Fewer method calls used where reasonable
+				\item Got rid of variables passed by reference
+				\item More cases return \texttt{null} rather than throw Exceptions
+				\item Fastest decisions and access methods come first
+				\item ...
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ad50a8f9-f6f9568a-a127d688-ac96c0fd
+% LTXE-SLIDE-TITLE:		ObjectAccess cleaned up
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{ObjectAccess Cleanup (2)}
+
+	\begin{itemize}
+
+		\item The following changes have been implemented (\textit{continued}):
+
+			\begin{itemize}
+				\item ...
+				\item Reflection-based access isolated to edge cases and access with the "force direct access" flag enabled
+				\item Sacrifices ability to read objects of types other than persisted objects contained in an ObjectStorage or subclass of ObjectStorage
+				\item Changes verdict from \texttt{false} to \texttt{true} when determining if a dynamically added property exists on an object
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		80a1d725-9c010064-9366cafb-0417ea5a
+% LTXE-SLIDE-TITLE:		#77547: Behaviour of RecordCollectionRepository::findByUid() changed
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{RecordCollectionRepository::findByUid()}
+
+	\begin{itemize}
+		\item Behaviour of \texttt{RecordCollectionRepository::findByUid()} has changed
+		\item When TYPO3 is in FE mode, the method will now respect the configured \textit{enable fields}
+		\item Instead of returning an object that is supposed to be disabled, method returns \texttt{null} now
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

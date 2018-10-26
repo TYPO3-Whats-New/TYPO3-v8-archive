@@ -1,0 +1,133 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.3 - What's New - Chapter "Extbase & Fluid" (English Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		846d40ce-66fdc2ec-750dcf95-33ce93e0
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{Chapter 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		06a9e027-1c0e09af-d41d1c4c-c0f07273
+% LTXE-SLIDE-TITLE:		Feature: #76531 - Add IconForRecordViewHelper
+% LTXE-SLIDE-REFERENCE:	Feature-76531-AddIconForRecordViewHelper.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Add IconForRecordViewHelper}
+
+	% decrease font size for code listin
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item A new ViewHelper to render icons for records has been added
+
+			\begin{lstlisting}
+				<core:iconForRecord table="sys_template" row="{templateRecord}" ></core:iconForRecord>
+
+				// output:
+				<span class="t3js-icon icon icon-size-small icon-state-default icon-mimetypes-x-content-template"
+				  data-identifier="mimetypes-x-content-template">
+				  <span class="icon-markup">
+				    <img src="/typo3/sysext/core/Resources/Public/Icons/T3Icons/mimetypes/mimetypes-x-content-template.svg" width="16" height="16">
+				  </span>
+				</span>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c88b95e6-9808a38a-747272d5-19346080
+% LTXE-SLIDE-TITLE:		Feature #76107: Add Fluid Interceptor Registration (1)
+% LTXE-SLIDE-REFERENCE:	Feature-76107-AddFluidInterceptorRegistration.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Add Fluid Interceptor Registration (1)}
+
+	% decrease font size for code listin
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Interceptors in \textit{Fluid Standalone} were introduced to be able to change the template output
+
+		\item The Fluid API already allows for registration of custom interceptors.
+			Now it is possible to define custom interceptors by using the following option:
+
+			\small
+				\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['fluid']['interceptors']}
+			\normalsize
+
+		\item Interceptors registered here are added to the Fluid parser configuration
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bec08e51-3b4dccca-f2060fd8-35d46d4b
+% LTXE-SLIDE-TITLE:		Feature #76107: Add Fluid Interceptor Registration (2)
+% LTXE-SLIDE-REFERENCE:	Feature-76107-AddFluidInterceptorRegistration.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Add Fluid Interceptor Registration (2)}
+
+	% decrease font size for code listin
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Register own interceptor to fluid parser configuration
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['interceptors']
+			      [\TYPO3\CMS\Fluid\Core\Parser\Interceptor\DebugInterceptor::class] =
+				  \TYPO3\CMS\Fluid\Core\Parser\Interceptor\DebugInterceptor::class;
+			\end{lstlisting}
+
+		\item Class code:
+
+			\begin{lstlisting}
+				use TYPO3Fluid\Fluid\Core\Parser\InterceptorInterface;
+				use TYPO3Fluid\Fluid\Core\Parser\ParsingState;
+				use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\NodeInterface;
+
+				class DebugInterceptor implements InterceptorInterface
+				{
+				  public function process(NodeInterface $node, $interceptorPosition, ParsingState $parsingState)
+				  {
+				    return $node;
+				  }
+
+				  public function getInterceptionPoints()
+				  {
+				    return [];
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

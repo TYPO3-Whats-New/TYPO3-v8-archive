@@ -1,0 +1,178 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.5 - What's New - Chapter "Extbase & Fluid" (Dutch Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		846d40ce-66fdc2ec-750dcf95-33ce93e0
+% LTXE-CHAPTER-NAME:	Extbase & Fluid
+% ------------------------------------------------------------------------------
+
+\section{Extbase \& Fluid}
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+
+	\begin{center}\huge{Hoofdstuk 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Extbase \& Fluid}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1fd8fd16-06e4d566-11d651d4-aa3dce09
+% LTXE-SLIDE-ORIGIN:	c5986329-fb36f473-a5430d2e-6ba49fb1 English
+% LTXE-SLIDE-TITLE:		#78116: Extbase support for Doctrine's native DBAL Statement and QueryBuilder
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Doctrine DBAL}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Directe SQL-query-functionaliteit ondersteunt ook QueryBuilder-objecten en instanties van
+			\texttt{\textbackslash
+			Doctrine\textbackslash
+			DBAL\textbackslash
+			Statement} als prepared statements
+		\item Het volgende voorbeeld werkt in elke Extbase repository met pure Doctrine DBAL statements:
+
+			\begin{lstlisting}
+				$connectie = $this->objectManager->get(ConnectionPool::class)->getConnectionForTable('mijntabel');
+				$statement = $this->objectManager->get(
+				  \Doctrine\DBAL\Statement::class,
+				  'SELECT * FROM mijtabel WHERE uid=? OR titel=?',
+				  $connection
+				);
+
+				$query = $this->createQuery();
+				$query->statement($statement, [$uid, $titel]);
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		137efb55-723a570d-d61c8ab4-076b7eb7
+% LTXE-SLIDE-ORIGIN:	8d31d436-4397d4fd-aa0eed2e-df798aa3 English
+% LTXE-SLIDE-TITLE:		#78002: Enforce cHash argument for Extbase actions
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\texttt{cHash} Argument}
+
+	\begin{itemize}
+		\item URI's naar Extbase-acties vereisen nu standaard een geldige \texttt{cHash}\newline
+			(gecachete en ongecachete acties)
+		\item Het gedrag kan uitgeschakeld worden voor alle acties met de optie
+			\texttt{requireCHashArgumentForActionArguments}
+	\end{itemize}
+
+\end{frame}
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c925287a-db500aa4-d240b4e2-2d207790
+% LTXE-SLIDE-ORIGIN:	50143a1e-53a17c8c-83ffe7ea-5e88cba0 English
+% LTXE-SLIDE-TITLE:		#29399: OptionViewHelper and OptgroupViewHelper
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Inhoud voor ViewHelper \texttt{f:form.select}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Er zijn twee nieuwe ViewHelpers voor het handmatig definiëren van alle opties en
+		 	optgroups voor de \texttt{f:form.select} als inhoud van een select-veld
+
+			\begin{itemize}
+				\item \texttt{OptionViewHelper}
+				\item \texttt{OptgroupViewHelper}
+			\end{itemize}
+
+		\item Voorbeeld:
+
+			\begin{lstlisting}
+				<f:form.select name="myproperty">
+				  <f:form.select.option value="1">Optie eem</f:form.select.option>
+				  <f:form.select.option value="2">Optie twee</f:form.select.option>
+				  <f:form.select.optgroup>
+				    <f:form.select.option value="3">Gegroepeerde optie een</f:form.select.option>
+				    <f:form.select.option value="4">Gegroupeerde optie twee</f:form.select.option>
+				  </f:form.select.optgroup>
+				</f:form.select>
+			\end{lstlisting}
+
+		\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a37bd34d-794ba46c-a905b4e7-62800639
+% LTXE-SLIDE-ORIGIN:	d36b9935-fc7d9e60-742a3f42-ef15e856 English
+% LTXE-SLIDE-TITLE:		#78415: Global Fluid ViewHelper Namespace
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{Globale Fluid ViewHelper Namespace}
+
+	\begin{itemize}
+		\item Globale Fluid ViewHelper namespaces zijn nu instelbaar:\newline
+			\smaller
+				\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['SYS']['fluid']['namespaces']}
+			\normalsize
+		\item Hiermee kunnen de namespaces bewerkt worden als onderdeel van de configuratie van een site
+		\item Voordelen:
+
+			\begin{itemize}
+				\item ViewHelper pakketten van derden kunnen de globale Fluid namespace \texttt{f:} aanpassen
+				\item ViewHelper pakketten van derden kunnen nieuwe globale namespaces registreren
+				\item Ontwikkelaars van sjablonen kunnen die globale namespaces gebruiken zonder ze eerst te importeren
+					en kunnen ze gebruiken in alle Fluid-sjablonen ongeacht de context
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2a0a1672-56f18db2-60b397cb-effebca2
+% LTXE-SLIDE-ORIGIN:	e16e8cfd-26f35f09-23b473a2-442ff1e2 English
+% LTXE-SLIDE-TITLE:		#78842: FLUIDTEMPLATE can mimic an actual Extbase web request
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Extbase \& Fluid}
+	\framesubtitle{\texttt{FLUIDTEMPLATE} kan een Extbase web-request nabootsen}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\small\ttfamily}
+
+	\begin{itemize}
+		\item Het \texttt{FLUIDTEMPLATE} inhoudselement kan een Extbase web request nabootsen
+		\item Hiermee is het mogelijk om bijvoorbeeld verstuurde gegevens te benaderen:
+
+			\begin{lstlisting}
+				$view->getRenderingContext()
+				  ->getControllerContext()
+				  ->getRequest()
+				  ->getArguments();
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+
+% ------------------------------------------------------------------------------

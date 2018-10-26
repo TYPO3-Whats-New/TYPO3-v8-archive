@@ -1,0 +1,151 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.3 - What's New - Chapter "Deprecated Functions" (English Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		3f842373-9262b8d3-f9c8de76-cf29ce17
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+
+\section{Funzionalità deprecate/rimosse}
+\begin{frame}[fragile]
+	\frametitle{Funzionalità deprecate/rimosse}
+
+	\begin{center}\huge{Capitolo 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Funzionalità deprecate/rimosse}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7eaea9a2-a4b576ba-df31c378-e573a5a5
+% LTXE-SLIDE-ORIGIN:	1b162dfa-75daabe7-fa50f9d2-a6be83d3 English
+% LTXE-SLIDE-TITLE:		!Breaking: #77460 - Extbase query cache removed
+% LTXE-SLIDE-REFERENCE:	!Breaking-77460-ExtbaseQueryCacheRemoved.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Funzionalità deprecate/rimosse}
+	\framesubtitle{Rimosso Extbase Query Cache}
+
+	\begin{itemize}
+
+		\item La funzionalità di cache delle query, basato su PHP nello strato di persistenza Extbase, è stato rimosso
+
+		\item I seguenti metodi pubblici all'interno dello strato di persistenza Extbase sono stati rimossi:
+
+			\begin{itemize}
+				\item \small\texttt{Typo3DbBackend->quoteTextValueCallback()}\normalsize
+				\item \small\texttt{Typo3DbBackend->injectCacheManager()}\normalsize
+				\item Definizione di interfaccia in \small\texttt{QuerySettingsInterface->getUseQueryCache}\normalsize
+			\end{itemize}
+
+		\item La configurazione della cache non ha più nessun effetto:\newline
+			\smaller
+				\texttt{\$TYPO3\_CONF\_VARS[SYS][cache][cacheConfigurations]}\newline
+				\tabto{0.4cm}\texttt{[extbase\_typo3dbbackend\_queries]}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		251c5f1b-16d0903c-db25cc88-43a88bc2
+% LTXE-SLIDE-ORIGIN:	17027d66-b0c438e9-772bb37e-87c9da9e English
+% LTXE-SLIDE-TITLE:		!Deprecation: #77432 - Extbase: Prepared Statement Query Option
+% LTXE-SLIDE-REFERENCE:	!Deprecation-77432-ExtbasePreparedStatementQueryOption.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Funzionalità deprecate/rimosse}
+	\framesubtitle{Extbase: Opzione di dichiarazione preparata delle Query}
+
+	\begin{itemize}
+
+		\item La possibilità di utilizzare dichiarazioni preparate all'interno della persistenza di Extbase è stata rimossa
+
+		\item I seguenti metodi sono stati rimossi da \texttt{QuerySettingsInterface},
+			come lo strato di astrazione del database che si prenderà cura delle istruzioni preparate automaticamente:
+
+			\begin{itemize}
+				\item \texttt{getUsePreparedStatement()}
+				\item \texttt{usePreparedStatement()}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		90d8c2a2-e66de18d-90cb3fb5-d1fb6b2a
+% LTXE-SLIDE-ORIGIN:	f3a46b25-45c62e81-c1210a40-65dae367 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (1)
+% LTXE-SLIDE-REFERENCE:	Breaking-75710-RTE-relatedTSconfigOptionsSkipAlignAndSkipClassRemoved.rst
+% LTXE-SLIDE-REFERENCE: Breaking-76802-DropXcacheCacheBackend.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-15415-DeprecateRemoveBadHTML.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-76104-Deprecated-Single-Slash-Comments-In-TypoScript.rst
+% LTXE-SLIDE-REFERENCE: Important-77411-RemovedExtbaseTableColumnCache.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Funzionalità deprecate/rimosse}
+	\framesubtitle{Varie (1)}
+
+	\begin{itemize}
+
+		\item Le due opzioni TSConfig collegate a RTE, che non consento di avere attributi align e class durante la conversione
+			di contenuti da RTE al database, sono state rimosse:\newline
+			\small
+				\texttt{RTE.default.proc.skipAlign} e \texttt{RTE.default.proc.skipClass}
+			\normalsize
+
+		\item La cache "xcache" di backend è stata rimossa perchè PHP versione 7 non supporta più xcache
+
+		\item La seguente funzione \texttt{stdWrap} in TypoScript è stata dichiarata \textbf{deprecata}:
+			\texttt{removeBadHTML}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		8bafc1bd-10ddd8ee-bb7f4fb9-3527e7de
+% LTXE-SLIDE-ORIGIN:	45c62e81-f3a46b25-65dae367-c1210a40 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (2)
+% LTXE-SLIDE-REFERENCE:	Breaking-75710-RTE-relatedTSconfigOptionsSkipAlignAndSkipClassRemoved.rst
+% LTXE-SLIDE-REFERENCE: Breaking-76802-DropXcacheCacheBackend.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-15415-DeprecateRemoveBadHTML.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-76104-Deprecated-Single-Slash-Comments-In-TypoScript.rst
+% LTXE-SLIDE-REFERENCE: Important-77411-RemovedExtbaseTableColumnCache.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Funzionalità deprecate/rimosse}
+	\framesubtitle{Varie (2)}
+
+	\begin{itemize}
+
+		\item I commenti di una linea in TypoScript devono iniziare con due slash, il primo carattere non deve essere vuoto
+			e dovrebbero essere seguiti da uno spazio bianco. Un singolo slash usato come commento è ora \textbf{deprecato}.
+
+		\item La tabella Extbase column cache (che è stata usata per memorizzare tutti i campi di tutte le tabelle del database)
+			è stata rimossa:\newline
+			\texttt{extbase\_typo3dbbackend\_tablecolumns}
+
+		\item La variabile di configurazione associata può essere rimossa:
+			\smaller
+				\texttt{\$TYPO3\_CONF\_VARS[SYS][caching][cacheConfigurations]}\newline
+				\tabto{0.4cm}\texttt{[extbase\_typo3dbbackend\_tablecolumns]}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

@@ -1,0 +1,157 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.5 - What's New - Chapter "TypoScript" (Dutch Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		3a9852ea-e2360d9d-1ff5eec1-a7de3f9f
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{Hoofdstuk 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c410c002-5b37ba1d-36a2abd1-c9cb6fb2
+% LTXE-SLIDE-ORIGIN:	aee7c947-a271d451-cb640e43-101a5543 English
+% LTXE-SLIDE-TITLE:		#78549: Override New Page Creation Wizard via page TSconfig
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Nieuwe assistent pagina aanmaken}
+
+	\begin{itemize}
+		\item In vorige versies van TYPO3 CMS was het mogelijk om de "Assistent nieuwe pagina aanmaken"
+		 	te overschrijven met eigen scripts:\newline
+			\small
+				\texttt{mod.web\_list.newPageWiz.overrideWithExtension = myextension}
+			\normalsize
+		\item De nieuwe manier van het afhandelen van ingangen en eigen scripts is gebouwd met modules/routes
+		 	en de bovenstaande optie is verwijderd
+		\item De volgende TSconfig-optie kan in plaats hiervan gebruikt worden:
+			\small
+				\texttt{mod.newPageWizard.override = my\_custom\_module}
+			\normalsize
+
+		\item In plaats van het instellen van een extensie-key moet er nu een module of
+		 	route gespecificeerd worden
+
+	\end{itemize}
+
+\end{frame}
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		05cf8a69-f162fcfb-e5502986-a52948e4
+% LTXE-SLIDE-ORIGIN:	c56cb2e8-f50d7eed-e93dcb9e-ab7be017 English
+% LTXE-SLIDE-TITLE:		#73626: Number of search results is configurable now
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Aantal zoekresultaten}
+
+	\begin{itemize}
+		\item Het maximale aantal zoekresultaten kan in TypoScript ingesteld worden:\newline
+			\texttt{plugin.tx\_indexedsearch.settings.blind.numberOfResults}
+		\item Deze instelling slaat een lijst met waardes op
+		\item Als het aantal resultaten wordt vermeld in het request en overeenkomt met een van
+			de ingestelde waarden dan wordt het gebruikt
+		\item Als het niet wordt meegestuurd of niet overeenkomt met de ingestelde waarden dan
+		 	wordt de eerste van de lijst gebruikt
+		\item Om compatibel te zijn met vorige versies is de standaard:\newline
+			\texttt{10}, \texttt{25}, \texttt{50} and \texttt{100}
+	\end{itemize}
+
+\end{frame}
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9a235253-f4ebf567-c9e4a64e-b4c78fcc
+% LTXE-SLIDE-ORIGIN:	d9b9e73b-db575400-8276f4dd-810f4f4e English
+% LTXE-SLIDE-TITLE:		#78672: Fluid data processor for menus (1)
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Fluid Data Processor voor menu's (1)}
+
+	\begin{itemize}
+		\item Menu processor gebruikt \texttt{HMENU} om de JSON-gecodeerde menu-tekenreeks te maken
+			die gedecodeerd wordt en toegewezen aan \texttt{FLUIDTEMPLATE}
+		\item Extra DataProcessing wordt ondersteund en op elk record toegepast
+		\item Ondersteunde opties: \texttt{as}, \texttt{levels}, \texttt{expandAll}, \texttt{includeSpacer},
+			\texttt{titleField}
+			(zie \href{https://docs.typo3.org/typo3cms/TyposcriptReference/ContentObjects/Hmenu/Index.html}{TyposcriptReference} voor meer opties)
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		434c39b6-cad55c2d-f415d022-6acedee3
+% LTXE-SLIDE-ORIGIN:	03e756a0-07740056-a2009898-d6159f4b English
+% LTXE-SLIDE-TITLE:		#78672: Fluid data processor for menus (2)
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Fluid Data Processor voor menu's (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Voorbeeld TypoScript-configuratie:
+
+			\begin{lstlisting}
+				10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+				10 {
+				  special = list
+				  special.value.field = pages
+				  levels = 7
+				  as = menu
+				  expandAll = 1
+				  includeSpacer = 1
+				  titleField = nav_title // title
+				  dataProcessing {
+				    10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+				    10 {
+				      references.fieldName = media
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		23ed6f7c-876e1ec2-b140989e-273040de
+% LTXE-SLIDE-ORIGIN:	4f6c99f3-cca1739f-205be2f4-3a0e3326 English
+% LTXE-SLIDE-TITLE:		#72050: encapsLines does not render duplicate paragraphs anymore
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{TypoScript functie \texttt{\_encapsLines}}
+
+	\begin{itemize}
+		\item TypoScript functie \texttt{\_encapsLines} maakte twee paragrafen voor elke lege regeleinde
+		 	aan het eide van de content. Dit is gerepareerd.
+
+		\item De wijziging beïnvloedt mogelijk de weergave in de frontend als meerdere lege regeleindes
+			in de RTE-tekst zitten. De laatste paragraaf is niet langer dubbel gerenderd in de frontend
+			sinds TYPO3 CMS versie 8.5.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

@@ -1,0 +1,151 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.3 - What's New - Chapter "Deprecated Functions" (Serbian Version)
+%
+% @author	Patrick Lobacher <patrick@lobacher.de> and Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	Serbian
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		3f842373-9262b8d3-f9c8de76-cf29ce17
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+
+\section{Zastarele/izbacene funkcije}
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbacene funkcije}
+
+	\begin{center}\huge{Poglavlje 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Zastarele/izbacene funkcije}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1c68e194-80c135e4-d198fd39-54871a0b
+% LTXE-SLIDE-ORIGIN:	1b162dfa-75daabe7-fa50f9d2-a6be83d3 English
+% LTXE-SLIDE-TITLE:		!Breaking: #77460 - Extbase query cache removed
+% LTXE-SLIDE-REFERENCE:	!Breaking-77460-ExtbaseQueryCacheRemoved.rst
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbacene funkcije}
+	\framesubtitle{Izbacen je Extbase Query Cache}
+
+	\begin{itemize}
+
+		\item Izbacena je funkcionalnost kesiranja PHP upita unutar Extbase persistence layer-a
+
+		\item Izbacene su sledece javne metode unutar Extbase persistence layer-a:
+
+			\begin{itemize}
+				\item \small\texttt{Typo3DbBackend->quoteTextValueCallback()}\normalsize
+				\item \small\texttt{Typo3DbBackend->injectCacheManager()}\normalsize
+				\item Definicija interfejsa u \small\texttt{QuerySettingsInterface->getUseQueryCache}\normalsize
+			\end{itemize}
+
+		\item Njoj saglasna kes konfiguracija vise nema efekta:\newline
+			\smaller
+				\texttt{\$TYPO3\_CONF\_VARS[SYS][cache][cacheConfigurations]}\newline
+				\tabto{0.4cm}\texttt{[extbase\_typo3dbbackend\_queries]}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		91ca7ee7-9b90ae7a-02cb58c8-17647b37
+% LTXE-SLIDE-ORIGIN:	17027d66-b0c438e9-772bb37e-87c9da9e English
+% LTXE-SLIDE-TITLE:		!Deprecation: #77432 - Extbase: Prepared Statement Query Option
+% LTXE-SLIDE-REFERENCE:	!Deprecation-77432-ExtbasePreparedStatementQueryOption.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbacene funkcije}
+	\framesubtitle{Extbase: Prepared Statement za upite}
+
+	\begin{itemize}
+
+		\item Uklonjena je opcija za koriscenja prepared statements unutar Extbase persistence layer-a
+
+		\item Sledece metode su uklonjene iz \texttt{QuerySettingsInterface},
+			posto ce database abstraction layer automatski da vodi brigu o Prepared Statements:
+
+			\begin{itemize}
+				\item \texttt{getUsePreparedStatement()}
+				\item \texttt{usePreparedStatement()}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3388df3a-e7a81329-88fa442d-ccd4be20
+% LTXE-SLIDE-ORIGIN:	f3a46b25-45c62e81-c1210a40-65dae367 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (1)
+% LTXE-SLIDE-REFERENCE:	Breaking-75710-RTE-relatedTSconfigOptionsSkipAlignAndSkipClassRemoved.rst
+% LTXE-SLIDE-REFERENCE: Breaking-76802-DropXcacheCacheBackend.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-15415-DeprecateRemoveBadHTML.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-76104-Deprecated-Single-Slash-Comments-In-TypoScript.rst
+% LTXE-SLIDE-REFERENCE: Important-77411-RemovedExtbaseTableColumnCache.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbacene funkcije}
+	\framesubtitle{Razno (1)}
+
+	\begin{itemize}
+
+		\item Uklonjene su dve TSconfig opcije povezane sa RTE, koje ne dozvoljavaju poravnanje 
+			i atribute klasa kada se konvertuje sadrzaj iz RTE-a u bazu podataka::\newline
+			\small
+				\texttt{RTE.default.proc.skipAlign} i \texttt{RTE.default.proc.skipClass}
+			\normalsize
+
+		\item Izbacen je "xcache" core cache zato sto PHP verzija 7 vise ne podrzava xcache
+
+		\item Sledeca TypoScript \texttt{stdWrap}-funkcija oznacena je kao \textbf{zastarela}:
+			\texttt{removeBadHTML}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		26da64ed-512d6cba-b6525c85-11635638
+% LTXE-SLIDE-ORIGIN:	45c62e81-f3a46b25-65dae367-c1210a40 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (2)
+% LTXE-SLIDE-REFERENCE:	Breaking-75710-RTE-relatedTSconfigOptionsSkipAlignAndSkipClassRemoved.rst
+% LTXE-SLIDE-REFERENCE: Breaking-76802-DropXcacheCacheBackend.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-15415-DeprecateRemoveBadHTML.rst
+% LTXE-SLIDE-REFERENCE: Deprecation-76104-Deprecated-Single-Slash-Comments-In-TypoScript.rst
+% LTXE-SLIDE-REFERENCE: Important-77411-RemovedExtbaseTableColumnCache.rst
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Zastarele/izbacene funkcije}
+	\framesubtitle{Razno (2)}
+
+	\begin{itemize}
+
+		\item Komentari od jedne linije u TypoScript-u moraju poceti sa dve kose crte i razmakom. 
+			Jedna kosa crta kao komentar je \textbf{zastarela}.
+
+		\item Kes kolona Extbase tabela (koja se koristila za cuvanje svih polja baze podataka od svih tabela)
+			je uklonjena:\newline
+			\texttt{extbase\_typo3dbbackend\_tablecolumns}
+
+		\item Njoj saglasna konfiguraciona promenljiva se moze ukloniti:
+			\smaller
+				\texttt{\$TYPO3\_CONF\_VARS[SYS][caching][cacheConfigurations]}\newline
+				\tabto{0.4cm}\texttt{[extbase\_typo3dbbackend\_tablecolumns]}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

@@ -1,0 +1,148 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.5 - What's New - Chapter "TypoScript" (German Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		3a9852ea-e2360d9d-1ff5eec1-a7de3f9f
+% LTXE-CHAPTER-NAME:	TypoScript
+% ------------------------------------------------------------------------------
+
+\section{TSconfig \& TypoScript}
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+
+	\begin{center}\huge{Kapitel 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{TSconfig \& TypoScript}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f575b338-0c068d79-b6a99543-e4723bf9
+% LTXE-SLIDE-ORIGIN:	aee7c947-a271d451-cb640e43-101a5543 English
+% LTXE-SLIDE-TITLE:		#78549: Override New Page Creation Wizard via page TSconfig
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Neuer Page Creation Wizard}
+
+	\begin{itemize}
+		\item In früheren TYPO3 CMS Versionen war es möglich, den "New Page Creation Wizard" über ein eigenes Script zu überschreiben:\newline
+			\small
+				\texttt{mod.web\_list.newPageWiz.overrideWithExtension = myextension}
+			\normalsize
+		\item Der neue Weg für das Handling der Entry-Points und eigener Skripte wurde nun via Modules/Routes implementiert (und die oben stehende Option entfernt).
+		\item Die folgende neue TSconfig-Option kann stattdessen verwendet werden:
+			\small
+				\texttt{mod.newPageWizard.override = my\_custom\_module}
+			\normalsize
+
+		\item Anstelle des Setzens der Option für einen Extension-Key wird ein eigenes Modul oder eine Route benötigt
+
+	\end{itemize}
+
+\end{frame}
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		078e907d-53df2157-34402be6-c9a09c0d
+% LTXE-SLIDE-ORIGIN:	c56cb2e8-f50d7eed-e93dcb9e-ab7be017 English
+% LTXE-SLIDE-TITLE:		#73626: Number of search results is configurable now
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Anzahl an Suchergebnissen}
+
+	\begin{itemize}
+		\item Die maximale Anzahl an Suchergebnissen kann nun per  TypoScript konfiguriert werden:\newline
+			\texttt{plugin.tx\_indexedsearch.settings.blind.numberOfResults}
+		\item Hier kann eine Liste an Werten angegeben werden
+		\item Wenn die Anzahl an Suchergebnissen im Request eines der Werte trifft, wird diese verwendet
+		\item Wenn die Anzahl an Suchergebnissen nicht im Request übergeben wird oder nicht zu einer der Nummern matcht, dann wird der erste Wert der Liste verwendent
+		\item Für die Rückwärstkompatibilität werden folgende Default-Werte verwendet:\newline
+			\texttt{10}, \texttt{25}, \texttt{50} and \texttt{100}
+	\end{itemize}
+
+\end{frame}
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		001d6c7a-f2b62b8f-b3707966-3d66612d
+% LTXE-SLIDE-ORIGIN:	d9b9e73b-db575400-8276f4dd-810f4f4e English
+% LTXE-SLIDE-TITLE:		#78672: Fluid data processor for menus (1)
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Fluid Data Processor für Menüs (1)}
+
+	\begin{itemize}
+		\item Ein Menü-Processor verwendet \texttt{HMENU} um einen JSON-String zu erzeugen, der dann wieder dekodiert und auf \texttt{FLUIDTEMPLATE} angewendet wird
+		\item Zusätzliches DataProcessing wird unterstützt und auf jeden Eintrag angewendet
+		\item Unterstützte Optionen: \texttt{as}, \texttt{levels}, \texttt{expandAll}, \texttt{includeSpacer},
+			\texttt{titleField}
+			(siehe \href{https://docs.typo3.org/typo3cms/TyposcriptReference/ContentObjects/Hmenu/Index.html}{TyposcriptReference} für eine weitere Beschreibung)
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		848654e2-e336a2a7-ebb1357c-80c2d98d
+% LTXE-SLIDE-ORIGIN:	03e756a0-07740056-a2009898-d6159f4b English
+% LTXE-SLIDE-TITLE:		#78672: Fluid data processor for menus (2)
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{Fluid Data Processor für Menüs (2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Beispielhafte TypoScript-Konfiguration:
+
+			\begin{lstlisting}
+				10 = TYPO3\CMS\Frontend\DataProcessing\MenuProcessor
+				10 {
+				  special = list
+				  special.value.field = pages
+				  levels = 7
+				  as = menu
+				  expandAll = 1
+				  includeSpacer = 1
+				  titleField = nav_title // title
+				  dataProcessing {
+				    10 = TYPO3\CMS\Frontend\DataProcessing\FilesProcessor
+				    10 {
+				      references.fieldName = media
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a69c482b-c515d4fa-778524d2-e8ae86b0
+% LTXE-SLIDE-ORIGIN:	4f6c99f3-cca1739f-205be2f4-3a0e3326 English
+% LTXE-SLIDE-TITLE:		#72050: encapsLines does not render duplicate paragraphs anymore
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{TSconfig \& TypoScript}
+	\framesubtitle{TypoScript Funktion \texttt{\_encapsLines}}
+
+	\begin{itemize}
+		\item Die TypoScript-Funktion \texttt{\_encapsLines} stellte eine nachfolgende Leerzeile für zwei Absätze im Content dar. Dies wurde nun repariert.
+
+		\item Die Veränderung hat eventuell Auswirkungen auf die Darstellung im Frontend wenn mehrere leere Absätze im RTE am Ende existieren. Der letzte Absatz wird nun nicht mehr zweimal gerendert seit TYPO3 CMS 8.5.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

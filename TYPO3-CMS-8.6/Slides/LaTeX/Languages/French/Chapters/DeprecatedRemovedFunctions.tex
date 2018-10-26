@@ -1,0 +1,365 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.6 - What's New - Chapter "Fonctions dépréciées" (French Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	French
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		3f842373-9262b8d3-f9c8de76-cf29ce17
+% LTXE-CHAPTER-NAME:	Fonctions dépréciées
+% ------------------------------------------------------------------------------
+
+\section{Fonctions dépréciées et retirées}
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+
+	\begin{center}\huge{Chapitre 5~:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Fonctions dépréciées et retirées}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d7687b20-b8f723c9-61671d12-c6049052
+% LTXE-SLIDE-ORIGIN:	f6dccaab-1b20a7cb-3b708187-74c96db9 English
+% LTXE-SLIDE-TITLE:		!Breaking: #78988 - Remove optional Fluid TypoScript template
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Gabarit TypoScript Fluid optionnel retiré}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Le fichier de gabarit statique «~Fluid: (Optional) default
+			ajax configuration (fluid)~» se voulait être un exemple/une démonstration de
+			l'usage des Widget Fluid en FE. Il est obsolète et donc retiré.
+		\item Plutôt, incluez les fichiers requis manuellement dans votre gabarit TypoScript~:
+
+			\begin{lstlisting}
+				page.includeJSLibs {
+				  jquery = https://code.jquery.com/jquery-3.1.1.slim.min.js
+				  jquery.external = 1
+				  jquery.integrity = sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=
+				  jqueryUi = https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
+				  jqueryUi.external = 1
+				  jqueryUi.integrity = sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=
+				}
+
+				page.includeCSSLibs {
+				  jqueryUI = https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css
+				  jqueryUi.external = 1
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4b1830df-9362ba09-39dd8d4b-302f8dde
+% LTXE-SLIDE-ORIGIN:	2f81893a-60617439-c59f6e53-1c79a41f English
+% LTXE-SLIDE-TITLE:		!Breaking: #79109 - Lowlevel VersionsCommand parameters changed
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Changement des paramètres de la commande lowlevel versions (1/2)}
+
+	\begin{itemize}
+		\item La commande CLI de \texttt{EXT:lowlevel} pour afficher et nettoyer les versions (de
+			\texttt{EXT:version} / \texttt{EXT:workspaces}) est migrée en commande Symfony Console.
+
+		\item La commande était précédemment \texttt{./typo3/cli\_dispatch.phpsh lowlevel\_cleaner versions}.
+			Elle est maintenant \texttt{./typo3/sysext/core/bin/typo3 cleanup:versions} et permet de spécifier
+			les options suivantes~:
+
+			\begin{itemize}
+				\item \texttt{-v} et \texttt{-vv} pour afficher des informations détaillées sur les
+					enregistrements affectés
+				\item \texttt{-}\texttt{-pid=23} ou \texttt{-p=23} pour les versions de la page d'identifiant 23
+					(sinon "0" est utilisé)
+			\end{itemize}
+
+	\end{itemize}
+
+	\small\textit{Suite diapositive suivante}\normalsize
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d6c50c43-77e73b8b-f3225dd8-8b47c930
+% LTXE-SLIDE-ORIGIN:	2104e84b-c80621c1-0774f43b-33d86b6b English
+% LTXE-SLIDE-TITLE:		!Breaking: #79109 - Lowlevel VersionsCommand parameters changed
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Changement des paramètres de la commande lowlevel versions (2/2)}
+
+	\small\textit{Suite}\normalsize
+
+	\begin{itemize}
+		\item ...
+			\begin{itemize}\vspace{-0.1cm}
+				\item \texttt{-}\texttt{-depth=4} ou \texttt{-d=4} pour spécifier le degré d'exploration de
+					l'arborescence des pages
+				\item \texttt{-}\texttt{-dry-run} pour afficher les changements qui seront effectués
+				\item \texttt{-}\texttt{-action=nameofaction} pour spécifier l'action de nettoyage.
+					L'une de ces actions est possible~:
+					\begin{itemize}
+						\item \texttt{versions\_in\_live}~: Supprimer les enregistrements versionnés dans l'espace live
+						\item \texttt{published\_versions}~: Suppr. les versions des enregistrements publiés
+						\item \texttt{invalid\_workspace}~: Déplacer les enregistrements associés à un espace non existant
+						dans l'espace de travail live
+						\item \texttt{unused\_placeholders}~: Retirer les enregistrements de substitution qui ne sont plus
+						utilisés dans la base
+					\end{itemize}
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		541a9fd3-c6cd647a-d23ef401-11096c22
+% LTXE-SLIDE-ORIGIN:	35714a8f-ad99f4e7-ccda0780-c0aa44aa English
+% LTXE-SLIDE-TITLE:		Default Layouts for Fluid Styled Content Changed
+% LTXE-SLIDE-REFERENCE:	!Breaking: #79622 - Default layouts for Fluid Styled Content changed
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Dispositions par défaut de Fluid Styled Content changées}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Les dispositions des éléments de contenu de Fluid Styled Content sont changées
+			afin d'être maintenables et davantage flexibles.
+
+		\item Les dispositions précédemment disponibles \texttt{ContentFooter}, \texttt{HeaderFooter}
+			et \texttt{HeaderContentFooter} sont retirées et remplacées par une seule disposition
+			\texttt{Default} qui est plus flexible.
+
+			\begin{lstlisting}
+				$GLOBALS['TCA']['tt_content']['columns']['CType']['config']['default'] = 'textmedia';
+				$GLOBALS['TCA']['tt_content']['columns']['CType']['config']['default'] = 'header';
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f32536bd-2a54aa6f-8987b01d-508b7a4d
+% LTXE-SLIDE-ORIGIN:	0e36fc45-799c2e27-3f058488-8173f554 English
+% LTXE-SLIDE-TITLE:		TypoScript Standard Header (1/2)
+% LTXE-SLIDE-REFERENCE:	!Breaking: #79622 - TypoScript Standard Header has been removed from Fluid Styled Content
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Ligne de titre TypoScript standard (1/2)}
+
+	\begin{itemize}
+		\item La définition standard du rendu TypoScript de la ligne de titre,
+			\texttt{lib.stdHeader}, avait été introduite dans CSS Styled Content
+			afin d'être référencée par les différents éléments de contenu pour
+			simplifier la maintenance.
+
+		\item Pour Fluid Styled Content, un contournement de compatibilité avec CMS 7
+			était introduit pour simplifier la migration. Cependant, seul le rendu du
+			titre est effectué et les cadres sont manquants. Des options supplémentaires
+			sont aussi nécessaires pour inclure le rendu d'un élément de contenu lorsque
+			sa disposition n'était pas implémentée correctement.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9eb70d6b-5b8ddf68-6016a37a-17d67d66
+% LTXE-SLIDE-ORIGIN:	ca67c35f-cf7489b1-dd2ae6a2-f3557c53 English
+% LTXE-SLIDE-TITLE:		TypoScript Standard Header (2/2)
+% LTXE-SLIDE-REFERENCE:	!Breaking: #79622 - TypoScript Standard Header has been removed from Fluid Styled Content
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Ligne de titre TypoScript standard (2/2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Nouvelle sortie~:
+
+			\begin{lstlisting}
+				tt_content.simple_content = COA
+				tt_content.simple_content {
+				  10 < lib.stdHeader
+				  20 = TEXT
+				  20.field = bodytext
+				}
+
+				<header>
+				  <h1>Nunc vel libero dignissim</h1>
+				</header>
+				<p>
+				  ...
+				</p>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		47e3eee0-2dba40e5-73c81ebb-296bd30c
+% LTXE-SLIDE-ORIGIN:	64df6081-eb1f0a13-7f8292d3-9c69a293 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (1/4)
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Divers (1/4)}
+
+	% !Breaking: #78477 - Remove method FlashMessage->getMessageAsMarkup()
+	% !Breaking: #79100 - ext:felogin: Remove default CSS
+	% !Breaking: #79201 - EXT:form: Split TypoScript Includes
+	% !Breaking: #79242 - Remove l10n_mode noCopy
+	% !Breaking: #79243 - Remove l10n_mode mergeIfNotBlank
+	% !Breaking: #79243 - Remove sys_language_softMergeIfNotBlank
+
+	\begin{itemize}
+		\item La méthode suivante est retirée~:\newline
+			\small\texttt{FlashMessage->getMessageAsMarkup()}\normalsize
+		\item \texttt{EXT:felogin} n'ajoute plus ses styles CSS par défaut car il
+			pourrait casser le rendu frontend. Ex. lorsqu'un framework CSS est utilisé.
+		\item La configuration TypoScript frontend spécifique de \texttt{EXT:form} n'est
+			plus chargée automatiquement et doit être ajoutée manuellement par les inclusions
+			statiques. Ce changement permet aux intégrateurs TYPO3 de décider plus facilement
+			où le TypoScript de l'extension est ajoutée.
+		\item L'option \texttt{noCopy} est retirée sans remplacement de la liste des valeurs
+			possibles de la propriété TCA de colonne \texttt{l10n\_mode}.
+		\item L'option \texttt{mergeIfNotBlank} est retirée sans remplacement de la liste des
+			valeurs possibles de la propriété TCA de colonne \texttt{l10n\_mode}.
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		791204e6-ff34f0a7-114b4b49-be08a66b
+% LTXE-SLIDE-ORIGIN:	9b7c4a92-17f663e5-b890e0b9-1b039f82 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (2/4)
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Divers (2/4)}
+
+	% !Breaking: #79302 - Moved pages.url_scheme to compatibility7 extension
+	% !Breaking: #79364 - Move page module function `QuickEdit` to compatibility7
+	% !Breaking: #79622 - CSS Styled Content and TypoScript
+
+	\begin{itemize}
+		\item La configuration TypoScript \texttt{config.sys\_language\_softMergeIfNotBlank}
+			est retirée sans remplacement. C'est un effet du retrait de l'option
+			\texttt{mergeIfNotBlank} des valeurs possibles de la propriété TCA
+			\texttt{l10n\_mode}.
+
+		\item La fonctionnalité fournie par le champ de base de données \texttt{pages.url\_scheme}
+			est déplacée dans l'extension \texttt{EXT:compatibility7}. Ce champ permet de forcer
+			le protocole HTTP ou HTTPS d'une page par un contributeur dans les propriétés de page
+			pour chaque page. Cependant, il est maintenant commun de s'assurer que l'ensemble
+			du site (si un certificat x509 est mis en place) ou qu'une section (avec sous-pages)
+			utilise le protocole HTTPS.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1140100a-5082ef88-b467deed-3246fa0e
+% LTXE-SLIDE-ORIGIN:	6b0c8695-0ad6167d-2eda453e-5b16dd49 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (3/4)
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #77934 - Deprecate tt_content field select_key
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #78477 - Refactoring of FlashMessage rendering
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #79316 - Deprecate ArrayUtility::inArray()
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #79622 - Deprecation of CSS Styled Content
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Divers (3/4)}
+
+	\begin{itemize}
+		\item La fonctionnalité \texttt{QuickEdit} du module page est déplacée dans
+			l'extension \texttt{EXT:compatibility7} et ne recevra pas d'évolution.\newline
+			Voir \href{https://typo3.org/extensions/repository}{le dépôt d'extensions TYPO3 (TER)}.
+
+		\item Afin de faire coïncider CSS Styled Content et Fluid Style Content, plusieurs
+			options de CSS Styled Content sont retirées sans remplacement~:
+			\texttt{TCA image\_compression}, \texttt{TCA image\_effects}, \texttt{TCA image\_noRows},
+			\texttt{TypoScript IMAGE noRows}, \texttt{TypoScript IMAGE noCols},
+			\texttt{TypoScript IMAGE noRowsStdWrap}, \texttt{TypoScript IMGTEXT captionAlign}
+
+		\item Le champ \texttt{select\_key} de la table \texttt{tt\_content} n'est pas utilisé
+			dans le noyau et donc retiré.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		6ca52ccc-787fc802-b1129e3b-0bded775
+% LTXE-SLIDE-ORIGIN:	3fe05cb6-a2648210-5486e0fa-93f0f02a English
+% LTXE-SLIDE-TITLE:		Miscellaneous (4/4)
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #77934 - Deprecate tt_content field select_key
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #78477 - Refactoring of FlashMessage rendering
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #79316 - Deprecate ArrayUtility::inArray()
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #79622 - Deprecation of CSS Styled Content
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Fonctions dépréciées et retirées}
+	\framesubtitle{Divers (4/4)}
+
+	\begin{itemize}
+
+		\item Les méthodes et propriétés suivantes de \texttt{FlashMessage::class} sont
+			marquées dépréciées~:
+
+			\begin{itemize}
+				\item \texttt{FlashMessage->classes}
+				\item \texttt{FlashMessage->icons}
+				\item \texttt{FlashMessage->getClass()}
+				\item \texttt{FlashMessage->getIconName()}
+			\end{itemize}
+
+		\item La méthode \texttt{ArrayUtility::inArray()} est marquée dépréciée
+
+		\item CSS Styled Content est déprécié\newline
+			\small(sera retiré de TYPO3 CMS version 9)\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

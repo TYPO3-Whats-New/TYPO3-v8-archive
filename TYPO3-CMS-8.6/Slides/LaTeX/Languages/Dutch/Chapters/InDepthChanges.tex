@@ -1,0 +1,749 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.6 - What's New - Chapter "In-Depth Changes" (Dutch Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		5ebcecbe-66abfa57-cf38bc00-aa637965
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+
+\section{Systeemwijzigingen}
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+
+	\begin{center}\huge{Hoofdstuk 3:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Systeemwijzigingen}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		25ed5c73-1f41669e-2c92c353-60d57f60
+% LTXE-SLIDE-ORIGIN:	5ae3ff92-e2f03af9-8f5caf79-b7e0aca1 English
+% LTXE-SLIDE-TITLE:		Page Browser for scheduler tasks
+% LTXE-SLIDE-REFERENCE:	!Feature: #12211 - Usability: Scheduler provide page browser to choose start page
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Paginaselector bij geplande taken}
+
+	\begin{itemize}
+		\item Taken in de taakplanner die een pagina \texttt{uid} nodig hebben kunnen een knop toevoegen
+			voor een paginaselectiepopup.
+
+		\item In de \texttt{ValidatorTaskAdditionalFieldProvider} zijn twee velden toegevoegd.
+
+		\item Als het extra veld \texttt{browser} de waarde \texttt{page} heeft dan voegt de
+			\texttt{SchedulerModuleController} een knop toe voor de paginaselectie bij het veld.
+
+			\begin{lstlisting}
+				'browser' => 'page',
+			\end{lstlisting}
+
+		\item De \texttt{pageTitle} bevat de titel van de pagina die naast de bladerknop getoond wordt.
+
+			\begin{lstlisting}
+				'pageTitle' => $pageTitle,
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e763052d-941b7def-24e74719-ee00d467
+% LTXE-SLIDE-ORIGIN:	02a7fe32-ae3fd901-b04372a2-7d3726f4 English
+% LTXE-SLIDE-TITLE:		Synchronized field values in localized records (1/2)
+% LTXE-SLIDE-REFERENCE:	!Feature: #51291 - Synchronized field values in localized records
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Velden in vertaalde records synchroniseren (1/2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Het gedrag van de vertalingsoverlay is gewijzigd om vertalingsrecords zelfstandig te maken.
+
+		\item Voorheen, als velden in \texttt{TCA} velden ingesteld waren op \texttt{l10n\_mode} \texttt{exclude}
+		 	of \texttt{mergeIfNotBlank}, bevatte het vertaalde record geen waarden en werden die waarden opgehaald
+		 	uit het onderliggende record voor de standaard taal.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		220961f5-f0c5f736-772ae4c3-4e0fcfa8
+% LTXE-SLIDE-ORIGIN:	cf030e7c-03fb0ac4-9b9ff848-ac69581b English
+% LTXE-SLIDE-TITLE:		Synchronized field values in localized records (2/2)
+% LTXE-SLIDE-REFERENCE:	!Feature: #51291 - Synchronized field values in localized records
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Velden in vertaalde records synchroniseren (2/2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Dit is gewijzigd. De \texttt{DataHandler} kopieert nu de waardes naar het vertaalde record
+		 	en synchroniseert ze als het record in de standaard taal gewijzigd wordt.
+
+			\begin{lstlisting}
+				'columns' => [
+				  ...
+				  'header' => [
+				    'label' => 'My header',
+				    'config' => [
+				      'type' => 'input',
+				      'behaviour' => [
+				        'allowLanguageSynchronization' => true,
+				      ],
+				    ],
+				  ],
+				],
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		362baa50-0e308936-e522e688-87cb70b6
+% LTXE-SLIDE-ORIGIN:	18c4f826-440f3e00-a854e8e8-ddc7cbc0 English
+% LTXE-SLIDE-TITLE:		Image Manipulation Tool (1/6)
+% LTXE-SLIDE-REFERENCE:	!Feature: #75880 - Implement multiple cropping variants in image manipulation tool
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Afbeeldingsmanipulatiehulp (1/6)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Het \texttt{imageManipulation} TCA-type kan nu meerdere cropvarianten aan als dit geconfigureerd is.
+
+		\item Ook kan een initieel cropgebied ingesteld worden. Als geen initieel cropgebied is ingesteld,
+		 	is standaard de hele afbeelding geselecteerd.
+		\item Cropgebieden worden relatief ingesteld met drijvende-kommagetallen. De coördinaten en
+		 	groottes moeten daarvoor gespecificeerd worden.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9bc1a82a-efbe5824-5f4832a3-2fdabcce
+% LTXE-SLIDE-ORIGIN:	36ea74c0-3b92dbf6-e35c9e25-af0a0abf English
+% LTXE-SLIDE-TITLE:		Image Manipulation Tool (2/6)
+% LTXE-SLIDE-REFERENCE:	!Feature: #75880 - Implement multiple cropping variants in image manipulation tool
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Afbeeldingsmanipulatiehulp (2/6)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Dit voorbeeld stelt twee cropvarianten in, een met
+		 	het ID "mobiel", de andere met het ID "desktop".
+		 	De arraysleutel bepaalt het ID dat wordt gebruikt bij
+		 	het maken van de afbeelding met de afbeeldingsviewhelper.
+
+			\begin{lstlisting}
+				'config' => [
+				  'type' => 'imageManipulation',
+				  'cropVariants' => [
+				    'mobiel' => [
+				      'title' => 'Mobiel',
+				      'allowedAspectRatios' => [
+				        '4:3' => [
+				          'title' => '4:3',
+				          'value' => 4 / 3
+				        ],
+				        ...
+				      ],
+				    ],
+				    'desktop' => [
+				      ...
+				    ],
+				  ],
+				]
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7af4a43b-22ceb13f-452f830c-da92cfc6
+% LTXE-SLIDE-ORIGIN:	27b20030-548f80c4-3540aabb-41a83498 English
+% LTXE-SLIDE-TITLE:		Image Manipulation Tool (3/6)
+% LTXE-SLIDE-REFERENCE:	!Feature: #75880 - Implement multiple cropping variants in image manipulation tool
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Afbeeldingsmanipulatiehulp (3/6)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+
+		\item Onderstaand voorbeeld heeft een intieel cropgebied ter
+		 	grootte van de standaard van de vorige crophulp.
+
+			\begin{lstlisting}
+				'config' => [
+				  'type' => 'imageManipulation',
+				  'cropVariants' => [
+				    'mobiel' => [
+				      'title' => 'LLL:EXT:ext_key/Resources/Private/Language/locallang.xlf:imageManipulation.mobile',
+				      'cropArea' => [
+				        'x' => 0.1,
+				        'y' => 0.1,
+				        'width' => 0.8,
+				        'height' => 0.8,
+				      ],
+				    ],
+				  ],
+				]
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		f2115dff-1c6dfffb-c78f3420-3d6ae448
+% LTXE-SLIDE-ORIGIN:	58cebeda-4ee109f4-5e9eb728-b7703b40 English
+% LTXE-SLIDE-TITLE:		Image Manipulation Tool (4/6)
+% LTXE-SLIDE-REFERENCE:	!Feature: #75880 - Implement multiple cropping variants in image manipulation tool
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Afbeeldingsmanipulatiehulp (4/6)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Gebruikers kunnen ook een focusgebied selecteren, indien geconfigureerd.
+		\item Het focusgebied valt altijd binnen het cropgebied en bepaalt het gebied dat
+		 	altijd zichtbaar moet blijven zodat de afbeelding z'n mening behoud.
+
+			\begin{lstlisting}
+				'config' => [
+				  'type' => 'imageManipulation',
+				  'cropVariants' => [
+				    'mobiel' => [
+				      'title' =>
+				        'LLL:EXT:ext_key/Resources/Private/Language/locallang.xlf:imageManipulation.mobile',
+				      'focusArea' => [
+				        'x' => 1 / 3,
+				        'y' => 1 / 3,
+				        'width' => 1 / 3,
+				        'height' => 1 / 3,
+				      ],
+				    ],
+				  ],
+				]
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		bb105611-574eaeca-216aa7ec-e83c5bf1
+% LTXE-SLIDE-ORIGIN:	94d809e0-3369bf18-616710ee-93f6a9da English
+% LTXE-SLIDE-TITLE:		Image Manipulation Tool (5/6)
+% LTXE-SLIDE-REFERENCE:	!Feature: #75880 - Implement multiple cropping variants in image manipulation tool
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Afbeeldingsmanipulatiehulp (5/6)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Vaak worden afbeeldingen gebruikt in een context waar andere elementen over de afbeelding vallen.
+		\item Om redacteuren een hint te geven over dit soort gebieden bij het kiezen van een cropgebied kan men
+		 	diverse bedekte gebieden vastlegeen.
+		\item Deze gebieden worden binnen het cropgebied getoond. Het focusgebied kan niet samenvallen met een van
+		 	de bedekte gebieden.
+
+			\begin{lstlisting}
+				'config' => [
+				  'type' => 'imageManipulation',
+				  'coverAreas' => [
+				    [
+				      'x' => 0.05, 'y' => 0.85,
+				      'width' => 0.9, 'height' => 0.1,
+				    ],
+				  ],
+				]
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		1a78012c-7dc19b83-0693dde2-740f1359
+% LTXE-SLIDE-ORIGIN:	c9df3305-35544e3c-6a073be7-1cec40f4 English
+% LTXE-SLIDE-TITLE:		Image Manipulation Tool (6/6)
+% LTXE-SLIDE-REFERENCE:	!Feature: #75880 - Implement multiple cropping variants in image manipulation tool
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Afbeeldingsmanipulatiehulp (6/6)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\smaller\ttfamily}
+
+	\begin{itemize}
+		\item Om cropvarianten weer te geven kunnen de varianten als argument aan de afbeeldings-viewhelper
+		 	meegegeven worden:
+
+			\begin{lstlisting}
+				<f:image image="{data.image}" cropVariant="mobiel" width="800" >
+				</f:image>
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c3402e6f-50716ce7-b0a9ec3a-8843c88d
+% LTXE-SLIDE-ORIGIN:	a71d77d1-6a419c8d-0fbb35d0-e1ce57e4 English
+% LTXE-SLIDE-TITLE:		Default Content Element Changed for Fluid Styled Content
+% LTXE-SLIDE-REFERENCE:	!Breaking: #79622 - Default content element changed for Fluid Styled Content
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Standaard inhoudselement gewijzigd voor Fluid Styled Content}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Het standaard inhoudselement voor CSS Styled Content is gewijzigd in "Tekst"
+		\item Om de configuratie terug te zetten moet het standaard inhoudselement handmatig op de voorkeur ingesteld worden.
+		 	Dit kan gedaan worden door het overschrijven van de configuratie in een
+		 	\texttt{Configuration/TCA/Overrides/tt\_content.php} bestand.
+
+			\begin{lstlisting}
+				$GLOBALS['TCA']['tt_content']['columns']['CType']['config']['default'] = 'textmedia';
+				$GLOBALS['TCA']['tt_content']['columns']['CType']['config']['default'] = 'header';
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4af80236-794860c3-0e5893a3-ca99a193
+% LTXE-SLIDE-ORIGIN:	035f6a19-9be2f793-bc0ebb3e-c6a4cca4 English
+% LTXE-SLIDE-TITLE:		TCA Changes (1/2)
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #79440 - TCA Changes
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{TCA wijzigingen (1/2)}
+
+	\begin{itemize}
+
+		\item De \texttt{TCA} is op veldniveau gewijzigd.
+
+		\item Dit betreft bijna alle kolomtypes.
+
+		\item In het kort is het onderdeel \texttt{wizards} verdwenen en vervangen door een combinatie
+		 	van nieuwe \texttt{renderType} en een nieuwe set configuratie-opties.
+
+		\item Assistenten (wizards) zijn onderverdeeld in drie soorten: \texttt{fieldInformation},
+		 	\texttt{fieldControl} en \texttt{fieldWizard}.
+
+	\end{itemize}
+
+\end{frame}
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		c54c0ce6-3866d42b-54944787-8cb2cecd
+% LTXE-SLIDE-ORIGIN:	55c8113e-b234daa0-e701f035-8e1b58d1 English
+% LTXE-SLIDE-TITLE:		TCA Changes (2/2)
+% LTXE-SLIDE-REFERENCE:	!Deprecation: #79440 - TCA Changes
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{TCA wijzigingen (2/2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Voorbeeld:
+
+			\begin{lstlisting}
+				'fieldControl' => [
+				  'editPopup' => [
+				    'disabled' => false,
+				  ],
+				  'addRecord' => [
+				    'disabled' => false,
+				    'options' => [
+				      'setValue' => 'prepend',
+				    ],
+				  ],
+				  'listModule' => [
+				    'disabled' => false,
+				  ],
+				],
+			\end{lstlisting}
+
+		\item Meer details:
+			\href{https://docs.typo3.org/typo3cms/extensions/core/8-dev/singlehtml/Index.html#deprecation-79440-formengine-element-expansion}{docs.typo3.org}
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		832c09ff-e22f2367-1f488aa3-800744df
+% LTXE-SLIDE-ORIGIN:	da922107-1604619b-66f713fe-9508d9d7 English
+% LTXE-SLIDE-TITLE:		Introduce Session Storage Framework
+% LTXE-SLIDE-REFERENCE:	!Feature: #70316 - Introduce Session Storage Framework
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Nieuw sessieopslagraamwerk}
+
+	\begin{itemize}
+		\item Er is een nieuw opslagraamwerk voor sessies
+		\item Het doel is samenwerking tussen diverse sessieopslagen ("backends" genoemd)
+			zoals database, bestandsopslag, Redis, etc.
+		\item De volgende sessie-backends zijn standaard beschikbaar:
+
+			\begin{itemize}
+				\item
+					\smaller\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Session\textbackslash
+						Backend\textbackslash
+						DatabaseSessionBackend}
+
+				\item
+					\texttt{\textbackslash
+						TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Session\textbackslash
+						Backend\textbackslash
+						RedisSessionBackend}
+			\end{itemize}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		093bd0fc-db9c4ea9-46425aa8-8625fef6
+% LTXE-SLIDE-ORIGIN:	2d65beca-277a2f35-a1bc5ae7-c71712aa English
+% LTXE-SLIDE-TITLE:		CLI Support for T3D Imports
+% LTXE-SLIDE-REFERENCE:	!Feature: #72749 - CLI support for T3D import
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{CLI ondersteuning voor T3D import}
+
+	\begin{itemize}
+		\item \texttt{EXT:impexp} kan nu bestanden (T3D of XML) importeren via de opdrachtregel
+			met een Symfony commando.
+
+		\item Gebruik:\newline
+			\smaller
+				\texttt{./typo3/sysext/core/bin/typo3 impexp:import [<options>] <file> <pageId>}
+			\normalsize
+
+		\item Opties:
+			\begin{itemize}
+				\item \texttt{-}\texttt{-updateRecords}: Bestaande records geforceerd bijwerken
+				\item \texttt{-}\texttt{-ignorePid}: Pagina ID's van bijgewerkte records niet corrigeren
+				\item \texttt{-}\texttt{-enableLog}: alle databasebewerkingen loggen
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		fcb3f6cd-a5660c94-8c4d196b-567d73d7
+% LTXE-SLIDE-ORIGIN:	38064844-53baa89a-7f73669e-2bb96cab English
+% LTXE-SLIDE-TITLE:		Hook in typolink for Modification of Page Params
+% LTXE-SLIDE-REFERENCE:	!Feature: #79121 - Implement hook in typolink for modification of page params
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Hook in \texttt{typolink} voor wijzigen paginaparameters}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Er is een nieuwe hook in \texttt{ContentObjectRenderer::typoLink} voor links naar pagina's.
+			Hiermee kan de linkconfiguratie aangepast worden, bijv. door het toevoegen van extra parameters
+			of metadata uit de pagina.
+
+		\item De hook is te registreren via:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typolinkProcessing']
+				  ['typolinkModifyParameterForPageLinks'][] = \Your\Namespace\Hooks\MyHook::class;
+			\end{lstlisting}
+
+		\item Gebruik:
+
+			\begin{lstlisting}
+				public function modifyPageLinkConfiguration(
+				  array $linkConfiguration, array $linkDetails, array $pageRow) : array
+				{
+				  $linkConfiguration['additionalParams'] .= $pageRow['myAdditionalParamsField'];
+				  return $linkConfiguration;
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e35c430d-b7ab8f47-7a33c57f-20e9a23c
+% LTXE-SLIDE-ORIGIN:	290e1c2e-e708ede1-82aaf127-e69b2338 English
+% LTXE-SLIDE-TITLE:		Hook to Add Custom TypoScript Templates (1/2)
+% LTXE-SLIDE-REFERENCE:	!Feature: #79140 - Add hook to add custom TypoScript templates
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Hook voor maatwerk TypoScript-sjablonen (1/2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item Een nieuwe hook in TemplateService kan TypoScript-sjablonen toevoegen of bestaande wijzigen.
+
+		\item De hook is te registreren met de volgende code in een \texttt{ext\_localconf.php} bestand:
+
+			\begin{lstlisting}
+				$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['Core/TypoScript/TemplateService']
+				  ['runThroughTemplatesPostProcessing']
+			\end{lstlisting}
+
+		\item \texttt{EXT:my\_site/Classes/Hooks/TypoScriptHook.php} (1/2)
+
+			\begin{lstlisting}
+				namespace MyVendor\MySite\Hooks;
+				class TypoScriptHook
+				{
+				  /**
+				   * Hooks into TemplateService after
+				   * @param array $parameters
+				   * @param \TYPO3\CMS\Core\TypoScript\TemplateService $parentObject
+				   * @return void
+				   */
+				...
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d1ac77d2-4f82fd3a-7711fe78-e3810d8a
+% LTXE-SLIDE-ORIGIN:	d64368f4-0f5c43e3-92a546bf-75d50a61 English
+% LTXE-SLIDE-TITLE:		Hook to Add Custom TypoScript Templates (2/2)
+% LTXE-SLIDE-REFERENCE:	!Feature: #79140 - Add hook to add custom TypoScript templates
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Hook voor maatwerk TypoScript-sjablonen (2/2)}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item \texttt{EXT:my\_site/Classes/Hooks/TypoScriptHook.php} (2/2)
+
+			\begin{lstlisting}
+				...
+				  public function addCustomTypoScriptTemplate($parameters, $parentObject)
+				  {
+				    // Disable the inclusion of default TypoScript set via TYPO3_CONF_VARS
+				    $parameters['isDefaultTypoScriptAdded'] = true;
+				    // Disable the inclusion of ext_typoscript_setup.txt of all extensions
+				    $parameters['processExtensionStatics'] = false;
+
+				    // No template was found in rootline so far, so a custom "fake" sys_template record is added
+				    if ($parentObject->outermostRootlineIndexWithTemplate === 0) {
+				      $row = [
+				        'uid' => 'my_site_template',
+				        'config' =>
+					      '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:my_site/Configuration/TypoScript/site_setup.t3s">',
+				        'root' => 1,
+				        'pid' => 0
+				      ];
+				      $parentObject->processTemplate($row, 'sys_' . $row['uid'], 0, 'sys_' . $row['uid']);
+				    }
+				  }
+				}
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		946400cc-06e4dc7f-bf61a573-6cb7d093
+% LTXE-SLIDE-ORIGIN:	ad9f66e3-bcd548f4-8e14e04c-de29a79c English
+% LTXE-SLIDE-TITLE:		Plugin Preview with Fluid
+% LTXE-SLIDE-REFERENCE:	!Feature: #79225 - Plugin preview with Fluid
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Plug-in-voorvertoning met Fluid}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item De pagina TSconfig voor een voorvertoning van een los inhoudselement in de backend is verbeterd
+		 	met het ook kunnen renderen van plug-ins via Fluid
+
+		\item Alle eigenschappen van het \texttt{tt\_content} record zijn direct beschikbaar (bij. UID via \{uid\})
+
+		\item Data van het flexformveld \texttt{pi\_flexform} is beschikbaar via de eigenschap
+			\texttt{pi\_flexform\_transformed} als een array.
+
+			\begin{lstlisting}
+				mod.web_layout.tt_content.preview.list.simpleblog_bloglisting =
+				  EXT:simpleblog/Resources/Private/Templates/Preview/SimpleblogPlugin.html
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		539cc20d-2a56ac7d-ca99c5d0-a5d70671
+% LTXE-SLIDE-ORIGIN:	245de018-04aed929-a3b3c380-6c822a14 English
+% LTXE-SLIDE-TITLE:		Template Paths in BackendTemplateView
+% LTXE-SLIDE-REFERENCE:	!Feature: #79124 - Allow overwriting of template paths in BackendTemplateView
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Sjabloonpaden in BackendTemplateView}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item BackendTemplateView ondersteunt nu het overschrijven van sjabloonpaden om eigen locaties
+			voor sjablonen, partials en layouts toe te voegen voor een backend module gebaseerd op
+			BackendTemplateView.
+
+			\begin{lstlisting}
+				$frameworkConfiguration =
+				  $this->configurationManager->getConfiguration(
+				    ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+				  );
+				$viewConfiguration = [
+				  'view' => [
+				    'templateRootPaths' => ['EXT:myext/Resources/Private/Backend/Templates'],
+				    'partialRootPaths' => ['EXT:myext/Resources/Private/Backend/Partials'],
+				    'layoutRootPaths' => ['EXT:myext/Resources/Private/Backend/Layouts'],
+				  ],
+				];
+				$this->configurationManager->setConfiguration(
+				  array_merge($frameworkConfiguration, $viewConfiguration)
+				);
+			\end{lstlisting}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5563ba29-eadeff00-4cbbc6b5-fb1f14b3
+% LTXE-SLIDE-ORIGIN:	82514d33-f6c72709-2052880d-4d753fe8 English
+% LTXE-SLIDE-TITLE:		Miscellaneous
+% LTXE-SLIDE-REFERENCE:	!Feature: #78899 - TCA maxitems optional
+% LTXE-SLIDE-REFERENCE:	!Feature: #79240 - Single cli user for cli commands
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Systeemwijzigingen}
+	\framesubtitle{Divers}
+
+	\begin{itemize}
+		\item De \texttt{TCA} optie \texttt{maxitems} voor \texttt{type=select} en \texttt{type=group}
+			velden is nu optioneel met standaard een hoge waarde (99999) i.p.v. 1 zoals eerder het geval was.
+
+		\item TYPO3 functionaliteit aanspreken van de opdrachtregel is versimpeld. Bepaalde commando's hebben nu
+		 	niet meer eigen gebruikers nodig in de database; alle CLI commando's gebruiken nu de gebruiker \texttt{\_cli\_}.
+			Deze gebruiker wordt aangemaakt indien nodig als het niet bestaat bij de eerst aanroep van een commando.
+			De \texttt{\_cli\_} gebruiker heeft admin rechten en hoeft niet meer specifieke rechten te krijgen om bepaalde
+			taken zoals databasebewerkingen via \texttt{DataHandler} uit te kunnen voeren.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

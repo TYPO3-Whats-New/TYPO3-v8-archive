@@ -1,0 +1,190 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.7 - What's New - Chapter "Deprecated Functions" (Dutch Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		3f842373-9262b8d3-f9c8de76-cf29ce17
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+
+\section{Deprecated/Removed Functions}
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+
+	\begin{center}\huge{Chapter 4:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Deprecated/Removed Functions}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7d6bf092-34979094-ddb79cd2-71b639dc
+% LTXE-SLIDE-ORIGIN:	78be0720-06911e38-6b76d0d4-be185105 English
+% LTXE-SLIDE-TITLE:		Breaking: #80149 - Remove $GLOBALS['TYPO3_CONF_VARS']['FE']['pageOverlayFields']
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Remove \texttt{pageOverlayFields}}
+
+	\begin{itemize}
+		\item The configuration \texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['FE']['pageOverlayFields']}
+			is removed from the default configuration as well as from the overlay handling in
+			PageRepository and RootlineUtility.
+
+		\item This setting has been used to determine overlay fields in the table
+			\texttt{pages\_language\_overlay} at a time in the runtime processing when the complete
+			TCA was not fully available.
+
+		\item Since the \texttt{allowLanguageSynchronization} possibility has been integrated into
+			TYPO3 v8 LTS, \texttt{l10n\_mode} was available already and the TCA is loaded as well, the
+			\texttt{pageOverlayFields} settings are superfluous.
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		099173f0-13f8cffe-18cd8f1f-30eacad4
+% LTXE-SLIDE-ORIGIN:	0a7f37d8-5b017502-874eb53f-5172b6a8 English
+% LTXE-SLIDE-TITLE:		Deprecation: #80047 - Deprecate jQuery and extJS for BE viewhelpers
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Deprecate jQuery and extJS for BE ViewHelpers}
+
+	\begin{itemize}
+		\item The BE related ViewHelpers \texttt{<f:be.container>} and \texttt{<f:be.pageRenderer>}
+			have properties to activate ExtJS and jQuery with various options. The usage of ExtJS
+			has been deprecated and jQuery is always loaded. Therefore, the following attributes
+			have been marked as deprecated.
+	\end{itemize}
+
+	\begin{columns}[T]
+		\begin{column}{0.5\textwidth}
+			\begin{itemize}
+				\item \texttt{<f:be.container>}
+					\begin{itemize}
+						\item \texttt{enableClickMenu}
+						\item \texttt{loadExtJs}
+						\item \texttt{loadExtJsTheme}
+						\item \texttt{enableExtJsDebug}
+						\item \texttt{loadJQuery}
+						\item \texttt{jQueryNamespace}
+					\end{itemize}
+			\end{itemize}
+		\end{column}
+
+		\begin{column}{0.5\textwidth}
+			\begin{itemize}
+				\item \texttt{<f:be.pageRenderer>}
+					\begin{itemize}
+						\item \texttt{loadExtJs}
+						\item \texttt{loadExtJsTheme}
+						\item \texttt{enableExtJsDebug}
+						\item \texttt{loadJQuery}
+						\item \texttt{jQueryNamespace}
+					\end{itemize}
+			\end{itemize}
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		96860dec-5340bc05-dc178c65-1d050014
+% LTXE-SLIDE-ORIGIN:	a23f0a28-3468b0bc-9ccbb972-3522cba3 English
+% LTXE-SLIDE-TITLE:		Deprecation: #79122 - Deprecate method getRecordsByField
+% ------------------------------------------------------------------------------
+% Deprecation: #79770 - Deprecate inline localizationMode
+% Deprecation: #80000 - InlineOverrideChildTca
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Miscellaneous (1/3)}
+
+	\begin{itemize}
+
+		\item Method
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Backend\textbackslash
+				Utility\textbackslash
+				BackendUtility::\newline getRecordsByField()}
+			has been deprecated and should not be used any longer.
+
+		\item The \texttt{localizationMode} for inline relational record editing types is deprecated.
+
+		\item These \texttt{TCA} \texttt{type=inline} properties have been deprecated and superseded
+			with the more general property \texttt{overrideChildTca}: \texttt{foreign\_types},
+			\texttt{foreign\_selector\_fieldTcaOverride}, \texttt{foreign\_record\_defaults}
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		34e5c53f-a8947180-b2fe2f8a-166afa22
+% LTXE-SLIDE-ORIGIN:	a23f0a28-3464b0bc-9ccbe972-3522db9a English
+% LTXE-SLIDE-TITLE:		Deprecation: #80048 - Mark ExtJS related API calls as deprecated
+% ------------------------------------------------------------------------------
+% Deprecation: #80317 - Deprecate BackendUtility::getRecordRaw()
+% Deprecation: #80451 - Deprecate GeneralUtility::csvValues
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Miscellaneous (2/3)}
+
+	\begin{itemize}
+
+		\item The usage of ExtJS has been marked as deprecated. Therefore, the following methods of
+			\texttt{ExtensionManagementUtility} have been marked as deprecated:
+			\texttt{addExtJSModule}, \texttt{registerExtDirectComponent}
+
+		\item Method \texttt{BackendUtility::getRecordRaw()} has been deprecated and should not
+			be used any longer.
+
+		\item The method \texttt{GeneralUtility::csvValues()} has been marked as deprecated.
+			Use the new method \texttt{CsvUtility::csvValues()}
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3f2ff05a-d5478d91-fd374d4f-bb02fecb
+% LTXE-SLIDE-ORIGIN:	33dd1e51-1ff0f21d-f73aff6f-1720b6ab English
+% LTXE-SLIDE-TITLE:		Deprecation: #80468 - Command Line Interface: cliKeys and cli_dispatch.phpsh
+% ------------------------------------------------------------------------------
+% Deprecation: #80527 - Marker-related methods in ContentObjectRenderer
+
+\begin{frame}[fragile]
+	\frametitle{Deprecated/Removed Functions}
+	\framesubtitle{Miscellaneous (3/3)}
+
+	\begin{itemize}
+		\item The functionality to register any command line script via PHP
+			\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['SC\_OPTIONS']['GLOBAL']\newline['cliKeys']['my\_extension']}
+			has been marked as deprecated.
+			The entrypoint \texttt{typo3/cli\_dispatch.phpsh} as well as the corresponding \texttt{Application}
+			class and the \texttt{CliRequestHandler} class have been marked as deprecated as well.
+
+		\item The following methods within \texttt{ContentObjectRenderer} PHP class have been marked
+			as deprecated: \texttt{getSubpart()}, \texttt{substituteSubpartArray()},
+			\texttt{substituteMarker...} and \texttt{fillInMarkerArray()}
+
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------

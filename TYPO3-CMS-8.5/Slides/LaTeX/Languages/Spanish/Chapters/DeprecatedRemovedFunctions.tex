@@ -1,0 +1,515 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.5 - What's New - Chapter "Deprecated Functions" (Spanish Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		3f842373-9262b8d3-f9c8de76-cf29ce17
+% LTXE-CHAPTER-NAME:	Deprecated Functions
+% ------------------------------------------------------------------------------
+
+\section{Funciones Obsoletas/Eliminadas}
+\begin{frame}[fragile]
+	\frametitle{Funciones Obsoletas/Eliminadas}
+
+	\begin{center}\huge{Capítulo 5:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{Funciones Obsoletas/Eliminadas}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9f15af64-c37bac11-d5dc1ffb-d53a92cd
+% LTXE-SLIDE-ORIGIN:	ab377e1e-884fa3e4-74a17b45-77aa66c0 English
+% LTXE-SLIDE-TITLE:		[ExtJS Removal 1] #78521: Drop unused JavaScript from backend.js
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Funciones Obsoletas/Eliminadas}
+	\framesubtitle{Eliminación de ExtJS (1)}
+
+	\begin{itemize}
+		\item Como parte del paquete de trabajo de eliminación de ExtJS, los siguientes métodos JavaScript han sido eliminados
+			del marco principal del Backend (definidos en fichero \texttt{backend.js}):
+
+		\begin{itemize}
+			\item \texttt{TYPO3.\_instances}
+			\item \texttt{TYPO3.addInstance}
+			\item \texttt{TYPO3.getInstance}
+			\item \texttt{TYPO3.helpers.split}
+		\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		78afb936-db3d3af3-3d10288b-e9905319
+% LTXE-SLIDE-ORIGIN:	58f2f5e1-778a1dff-969667d4-aa4c3e7b English
+% LTXE-SLIDE-TITLE:		[ExtJS Removal 2] #78468: Remove ExtDirect from EXT:workspaces
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Funciones Obsoletas/Eliminadas}
+	\framesubtitle{Eliminación de ExtJS (2)}
+
+	\begin{itemize}
+		\item Nueva clase
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Workspaces\textbackslash
+				Controller\textbackslash
+				AjaxDispatcher}
+			reemplaza la funcionalidad de enrutado ExtDirect en \texttt{EXT:workspaces}
+
+		\item Las siguientes clases han sido trasladadas:
+
+		\begin{itemize}
+			\item \smaller\texttt{Classes/ExtDirect/AbstractHandler.php}\newline
+				ahora como: \texttt{Classes/Controller/Remote/AbstractHandler.php}\normalsize
+
+			\item \smaller\texttt{Classes/ExtDirect/ActionHandler.php}\newline
+				ahora como: \texttt{Classes/Controller/Remote/ActionHandler.php}\normalsize
+
+			\item \smaller\texttt{Classes/ExtDirect/MassActionHandler.php}\newline
+				ahora como: \texttt{Classes/Controller/Remote/MassActionHandler.php}\normalsize
+
+			\item \smaller\texttt{Classes/ExtDirect/ExtDirectServer.php}\newline
+				ahora como: \texttt{Classes/Controller/Remote/RemoteServer.php}\normalsize
+
+		\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		9d0f649b-2eabdfcc-5f886a54-c877598a
+% LTXE-SLIDE-ORIGIN:	877e457d-ab15dfaa-85e46a57-335dc6a3 English
+% LTXE-SLIDE-TITLE:		#78244: TYPO3_DB and Prepared Statement classes are deprecated
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Fasunctions Obsoletas/Eliminadas}
+	\framesubtitle{Clases \texttt{DatabaseConnection} y \texttt{PreparedStatement}}
+
+	\begin{itemize}
+		\item Las siguientes clases han sido marcadas como \textit{obsoletas}:
+			\begin{itemize}
+				\item \texttt{TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Database\textbackslash
+						DatabaseConnection}
+				\item \texttt{TYPO3\textbackslash
+						CMS\textbackslash
+						Core\textbackslash
+						Database\textbackslash
+						PreparedStatement}
+			\end{itemize}
+		\item Use Doctrine DBAL en TYPO3 CMS 8 en su lugar\newline
+				(clases \texttt{ConnectionPool} y \texttt{QueryBuilder})
+		\item Estas dos clases serán eliminadas en TYPO3 CMS 9
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		778413d5-04e62bcb-40ae3e7c-5bc9299e
+% LTXE-SLIDE-ORIGIN:	70f29777-68968704-618a9b16-3bf2eea2 English
+% LTXE-SLIDE-TITLE:		#78522 and #78525: JavaScript settings under TYPO3.configuration
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Funciones Obsoletas/Eliminadas}
+	\framesubtitle{Ajustes JavaScript bajo \texttt{TYPO3.configuration}}
+
+	\begin{itemize}
+		\item Los siguientes ajustes JavaScript han sido eliminados:
+
+		\begin{itemize}
+			\item \texttt{TYPO3.configuration.debugInWindow}
+			\item \texttt{TYPO3.configuration.moduleMenuWidth}
+			\item \texttt{TYPO3.configuration.topBarHeight}
+		\end{itemize}
+
+		\item Estas opciones no fueron usadas por el núcleo TYPO3 de todos modos
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		2c14ab61-d17a42cb-73f8ca48-56ba54ea
+% LTXE-SLIDE-ORIGIN:	7e836e1e-3132a797-0f3a0c68-88037011 English
+% LTXE-SLIDE-TITLE:		#78581: FlexFormTools public properties dropped
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Funciones Obsoletas/Eliminadas}
+	\framesubtitle{Propiedades Públicas de \texttt{FlexFormTools}}
+
+	\begin{itemize}
+		\item Dos propiedades públicas han sido eliminadas de la clase
+			\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				Core\textbackslash
+				Configuration\textbackslash
+				FlexForm\textbackslash
+				FlexFormTools}:
+
+		\begin{itemize}
+			\item \texttt{public \$traverseFlexFormXMLData\_DS = array();}
+			\item \texttt{public \$traverseFlexFormXMLData\_Data = array();}
+		\end{itemize}
+
+		\item Acceder a dichas propiedades lanzará una advertencia ahora
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		70023fd9-0c15b1cd-36d7b1e4-3e5a5da2
+% LTXE-SLIDE-ORIGIN:	924b7751-ae8c107f-75d26e55-ee613aa2 English
+% LTXE-SLIDE-TITLE:		#78855: sys_action translations
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Funciones Obsoletas/Eliminadas}
+	\framesubtitle{Traducciones \texttt{sys\_action}}
+
+	\begin{itemize}
+		\item Las siguientes traducciones han sido eliminadas de
+			\smaller\texttt{EXT:sys\_action/Resources/Private/Language/locallang.xlf}:\normalsize
+
+		\begin{itemize}
+			\item \texttt{action\_BEu\_hidden}
+			\item \texttt{action\_BEu\_username}
+			\item \texttt{action\_BEu\_password}
+			\item \texttt{action\_BEu\_realName}
+			\item \texttt{action\_BEu\_email}
+			\item \texttt{action\_BEu\_usergroups}
+		\end{itemize}
+
+		\item La siguiente traducción ha sido eliminada de
+			\smaller\texttt{EXT:sys\_action/Resources/Private/Language/locallang\_tca.xlf}:\normalsize
+
+		\begin{itemize}
+			\item \texttt{tx\_sys\_action}
+		\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		8c0d4837-129c05e5-e8e0c100-def85e37
+% LTXE-SLIDE-ORIGIN:	a6486cc1-c592817c-635001f0-f5d75acd English
+% LTXE-SLIDE-TITLE:		#77732: Methods of Extbase's ArrayUtility class
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Funciones Obsoletas/Eliminadas}
+	\framesubtitle{Clase \texttt{ArrayUtility} de Extbase}
+
+	\begin{itemize}
+		\item Clase
+			\texttt{\textbackslash
+				TYPO3\textbackslash
+				CMS\textbackslash
+				Extbase\textbackslash
+				Utility\textbackslash
+				ArrayUtility} ha sido marcada como \textit{obsoleta}
+
+		\item Las alternativas están disponibles para los siguientes métodos:
+
+			\begin{itemize}
+				\item \texttt{integerExplode()}: ver \texttt{GeneralUtility::intExplode()}
+				\item \texttt{trimExplode()}: ver \texttt{GeneralUtility::trimExplode()}
+			\end{itemize}
+
+		\item Para reemplazar los siguientes métodos, chequee la clase del núcleo TYPO3
+			\texttt{\textbackslash
+				TYPO3\textbackslash
+				CMS\textbackslash
+				Core\textbackslash
+				Utility\textbackslash
+				ArrayUtility}:
+
+			\begin{itemize}
+				\item \texttt{arrayMergeRecursiveOverrule()}
+				\item \texttt{getValueByPath()}
+				\item \texttt{setValueByPath()}
+				\item \texttt{unsetValueByPath()}
+				\item \texttt{sortArrayWithIntegerKeys()}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		e2ce630a-b0d14a42-e690dc34-60867553
+% LTXE-SLIDE-ORIGIN:	82f525e3-eddc6639-96053da3-bc74d15b English
+% LTXE-SLIDE-TITLE:		#78217: frameset and frame
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Funciones Obsoletas/Eliminadas}
+	\framesubtitle{Conjunto de marcos y marco}
+
+	\begin{itemize}
+		\item \texttt{frameset} y \texttt{frame} no se soportan más en HTML5
+		\item Los siguientes objetos TypoScript han sido marcados como \textit{obsoletos}:
+
+			\begin{itemize}
+				\item \texttt{frameset}
+				\item \texttt{frame}
+			\end{itemize}
+
+		\item Las siguientes opciones TypoScript han sido marcadas como \textit{obsoletas}:
+
+			\begin{itemize}
+				\item \texttt{config.frameReloadIfNotInFrameset}
+				\item \texttt{config.doctype = xhtml\_frames}
+				\item \texttt{config.xhtmlDoctype = xhtml\_frames}
+				\item \texttt{frameSet} \tabto{1.8cm}\textit{(and its options)}
+				\item \texttt{FRAME} \tabto{1.8cm}\textit{(and its options)}
+				\item \texttt{FRAMESET} \tabto{1.8cm}\textit{(and its options)}
+			\end{itemize}
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		4d9b831b-38e0ac86-a0967709-4cb64ddc
+% LTXE-SLIDE-ORIGIN:	b8ee6fdb-cfe841e9-9acceeb2-958a42f5 English
+% LTXE-SLIDE-TITLE:		#78581: Flex form related parsing
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Funciones Obsoletas/Eliminadas}
+	\framesubtitle{Parseo Relacionado con FlexForm}
+
+	\begin{itemize}
+		\item Tres métodos de parseo relacionados con la estructura de datos FlexForm han sido marcados como \textit{obsoletos}:
+
+			\begin{itemize}
+				\item \texttt{BackendUtility::getFlexFormDS()}
+				\item \texttt{GeneralUtility::resolveSheetDefInDS()}
+				\item \texttt{GeneralUtility::resolveAllSheetsInDS()}
+			\end{itemize}
+
+		\item Use los siguientes métodos en su lugar:
+
+			\begin{itemize}
+				\item \texttt{FlexFormTools->getDataStructureIdentifier()}
+				\item \texttt{FlexFormTools->parseDataStructureByIdentifier()}
+			\end{itemize}
+
+		\small
+			\textit{(lea los comentarios de método para una descripción detallada)}
+		\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+
+
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		3a58a7ee-2f2645ad-0cc4f5c4-b28321f8
+% LTXE-SLIDE-ORIGIN:	6e9ed736-eff31008-71b8ef21-f935b336 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (1)
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Funciones Obsoletas/Eliminadas}
+	\framesubtitle{Miscelánea (1)}
+
+	% #57385: Parameter $caseSensitive of Extbase Query::like comparison
+	% #77296: Deprecate public member parentMenuArr in AbstractMenuContentObject
+	% #77524: Deprecated method fileResource of ContentObjectRenderer
+
+	\begin{itemize}
+
+		\item Argumento \texttt{\$caseSensitive} del método \texttt{Query::like}
+			ha sido marcado como \textit{obsoleto}\newline
+			\smaller
+				(cambie la colación de los campos apropiados para ser almacenados de una manera sensible a mayúsculas
+				o use un tipo de columna binario)
+			\normalsize
+
+		\item Previamente indefinido miembro \texttt{parentMenuArr} en AbstractMenuContentObject
+			ha sido añadido como miembro público y marcado como \textit{obsoleto}\newline
+			\smaller
+				(use la función API \texttt{getParentMenuArr()} en su lugar)
+			\normalsize
+
+		\item Método \texttt{ContentObjectRenderer::fileResource()}
+			ha sido marcado como \textit{obsoleto}\newline
+			\smaller
+				(migre su código para usar \texttt{file\_get\_contents()})
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		a9fd4b69-4e2826e1-625a4470-f79960a6
+% LTXE-SLIDE-ORIGIN:	aeba1cf0-b5bd06b1-42cd7f34-72cd5e03 English
+% LTXE-SLIDE-TITLE:		Miscellaneous (2)
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Funciones Obsoletas/Eliminadas}
+	\framesubtitle{Miscelánea (2)}
+
+	% #78279: Deprecate top.TYPO3.Backend.ContentContainer.iframe
+	% #78134: Deprecate TypoScript option config.noScaleUp
+	% #78314: AbstractFunctionModule->getBackPath
+
+	\begin{itemize}
+
+		\item La siguiente propiedad JavaScript ha sido marcada como \textit{obsoleta}:\newline
+			\texttt{top.TYPO3.Backend.ContentContainer.iframe}\newline
+			\smaller
+				(use método accesible \texttt{top.TYPO3.Backend.ContentContainer.get()} en su lugar)
+			\normalsize
+
+		\item El ajuste TypoScript \texttt{config.noScaleUp} ha sido marcado como \textit{obsoleto}\newline
+			\smaller
+				(use la siguiente configuración global TYPO3 en su lugar:\newline
+				\texttt{\$GLOBALS['TYPO3\_CONF\_VARS']['GFX']['processor\_allowUpscaling']})
+			\normalsize
+
+		\item El siguiente método (no utilizado) ha sido marcado como \textit{obsoleto}:\newline
+			\texttt{AbstractFunctionModule->getBackPath()}
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		7b59e14a-d814418b-32d11234-bc424f25
+% LTXE-SLIDE-ORIGIN:	e9bd05a6-e4bff973-742f35ac-bb5a483c English
+% LTXE-SLIDE-TITLE:		Miscellaneous (3)
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Funciones Obsoletas/Eliminadas}
+	\framesubtitle{Miscelánea (3)}
+
+	% #78279: Deprecate top.TYPO3.Backend.ContentContainer.iframe
+	% #78628: TCA tree pageTsConfig addItems icon path
+	% #78647: (EXT:lang) language files moved to Resources/Private/Language/
+
+	\begin{itemize}
+
+		\item La siguiente opción de TCA ha sido eliminada:\newline
+			\texttt{\$TCA[\$table][ctrl][versioning\_followPages]}
+
+		\item Añadir ítems al árbol TCA con pageTsConfig \texttt{addItems} requiere un icono identificador
+			del registro de iconos ahora (no se soportan rutas más):\newline
+			\smaller
+				\texttt{TCEFORM.pages.category.addItems.12345.icon = my-registered-icon}
+			\normalsize
+
+		\item \underline{Todos} los ficheros de Lenguaje XLIF de EXT:lang han sido movidos a\newline
+			\texttt{Resources/Private/Language/}\newline
+			Esto afecta todas las extensiones que usen etiquetas de EXT:lang!\newline
+			\smaller
+				VIEJO: \texttt{EXT:lang/locallang\_alt\_doc.xlf}\newline
+				NUEVO: \texttt{EXT:lang/Resources/Private/Language/locallang\_alt\_doc.xlf}
+			\normalsize
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+
+
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		8d8e84c1-725508d7-f5d41388-6176385b
+% LTXE-SLIDE-ORIGIN:	f1c7c4ca-f1657fca-0ef8a9f0-191b314f English
+% LTXE-SLIDE-TITLE:		Miscellaneous (4)
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Funciones Obsoletas/Eliminadas}
+	\framesubtitle{Miscelánea (4)}
+
+	% #78668: TypoScript option config.mainScript
+	% #78670: Deprecated CharsetConverter methods
+	% #78679: Crawler inclusion via require_once in Indexed Search
+	% #78733: CallUserFunction "&" token for singleton objects
+	% #78872: Deprecate method getRecordUidsToCopy
+
+	\begin{itemize}
+
+		\item La siguiente opción TypoScript ha sido marcada como \textit{obsoleta}:\newline
+			\texttt{config.mainScript}
+
+		\item Varios métodos CharsetConverter han sido marcados como \textit{obsoletos}\newline
+			\small
+				(use la funcionalidad \texttt{mb\_string} del paquete \texttt{symfony/polyfill-mbstring}
+				en su lugar)
+			\normalsize
+
+		\item La siguiente llamada de método no se requiere más y lanza una entrada del registro de depreciación ahora:
+			\small\texttt{TYPO3\textbackslash
+				CMS\textbackslash
+				IndexedSearch\textbackslash
+				Indexer->includeCrawlerClass()}
+			\normalsize
+
+		\item La siguiente llamada de método con un símbolo "\&" lanza una entrada del registro de depreciación ahora:
+			\small\texttt{GeneralUtility::callUserFunction()}\normalsize
+
+		\item El método \texttt{getRecordUidsToCopy()} ha sido marcado como \textit{obsoleto}
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+
+
+
+
+
+
+% ------------------------------------------------------------------------------

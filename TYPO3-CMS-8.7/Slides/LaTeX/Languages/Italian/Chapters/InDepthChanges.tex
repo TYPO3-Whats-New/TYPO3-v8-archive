@@ -1,0 +1,183 @@
+% ------------------------------------------------------------------------------
+% TYPO3 CMS 8.7 - What's New - Chapter "In-Depth Changes" (Italian Version)
+%
+% @author	Michael Schams <schams.net>
+% @license	Creative Commons BY-NC-SA 3.0
+% @link		http://typo3.org/download/release-notes/whats-new/
+% @language	English
+% ------------------------------------------------------------------------------
+% LTXE-CHAPTER-UID:		5ebcecbe-66abfa57-cf38bc00-aa637965
+% LTXE-CHAPTER-NAME:	In-Depth Changes
+% ------------------------------------------------------------------------------
+
+\section{In-Depth Changes}
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+
+	\begin{center}\huge{Chapter 2:}\end{center}
+	\begin{center}\huge{\color{typo3darkgrey}\textbf{In-Depth Changes}}\end{center}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		5a53a0fb-1dfa4c90-6822735c-081a260c
+% LTXE-SLIDE-ORIGIN:	4af511c0-37c8bba2-c0e9fecc-290510c4 English
+% LTXE-SLIDE-TITLE:		Feature: #79343 - Allow overriding PATH_site via environment variable
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Allow overriding \texttt{PATH\_site} via environment variable}
+
+	\begin{itemize}
+		\item It is now possible to define the \texttt{PATH\_site} constant, which acts as a basis
+			for any entry point running a TYPO3 system, via the environment variable
+			\texttt{TYPO3\_PATH\_ROOT}.
+
+		\item This variable is automatically calculated and set for any TYPO3 installation set up
+			via composer, making it possible to run the TYPO3 command line interface from any
+			location of the system.
+
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		8cd3345d-84eb0a9e-3c59779e-3922c32e
+% LTXE-SLIDE-ORIGIN:	276f9224-49ac8cf7-840470f3-8e32c0a1 English
+% LTXE-SLIDE-TITLE:		Feature: #80126 maximum field length not set as attribute "maxlength"
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{Maximum field length not set as attribute \texttt{maxlength}}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{itemize}
+		\item If a form element is set to be using the \texttt{String length} server side validation through
+			the form editor, the client side validation properties \texttt{minlength} and
+			\texttt{maxlength} will be rendered.
+
+			\begin{lstlisting}
+				renderables:
+				    -
+				        type: <formElementType>
+				        ...
+				        properties:
+				            fluidAdditionalAttributes:
+				            minlength: 2
+				            maxlength: 3
+				            ...
+				        validators:
+				            -
+				                identifier: StringLength
+				                options:
+				                    minimum: 2
+				                    maximum: 3
+			\end{lstlisting}
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		fdb08712-bc1a66d4-084c6c5c-92c88aa6
+% LTXE-SLIDE-ORIGIN:	0fcb1156-153ae841-291c74a1-cda5af0d English
+% LTXE-SLIDE-TITLE:		Feature: #80196 - EXT:form - support multiple form elements per row
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{EXT:form - support multiple form elements per row}
+
+	% decrease font size for code listing
+	\lstset{basicstyle=\tiny\ttfamily}
+
+	\begin{columns}[T]
+		\begin{column}{0.5\textwidth}
+			\begin{itemize}
+				\item Two new form element types have been added to the form framework: \texttt{GridContainer}
+					and \texttt{GridRow}
+
+				\item Using these "container" form elements will enable you to define multiple form elements per row.
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{lstlisting}
+				type: Form
+				identifier: example-form-gridcontainer
+				label: 'Form Grid Container'
+				prototypeName: standard
+				renderables:
+				    -
+				        type: Page
+				        identifier: page-1
+				        label: Page
+				        renderables:
+				            -
+				                type: GridContainer
+				                identifier: gridcontainer-2
+				                label: 'Grid: Container'
+				                renderables:
+				                    -
+				                        type: GridRow
+				                        identifier: gridrow-2
+				                        label: 'Grid: Row'
+				                        renderables:
+				                        ...
+			\end{lstlisting}
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		d6f441f0-be5f6eae-ad6e285c-00bcb97b
+% LTXE-SLIDE-ORIGIN:	5eaa97c2-1f92b65e-ab668373-6bf97c43 English
+% LTXE-SLIDE-TITLE:		Feature: #80196 - EXT:form - support multiple form elements per row
+% ------------------------------------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{EXT:form - support multiple form elements per row}
+
+	\begin{itemize}
+		\item Any Extbase Command Controller can now be accessed via the new Symfony Console
+			CLI entrypoint by simply calling
+			\texttt{typo3/sysext/core/bin/typo3 controller:command}.
+
+		\item Using the existing CLI entrypoint via
+			\texttt{typo3/cli\_dispatch.phpsh extbase controller:command} still works as expected.
+	\end{itemize}
+
+\end{frame}
+
+
+% ------------------------------------------------------------------------------
+% LTXE-SLIDE-START
+% LTXE-SLIDE-UID:		ad7d64c4-47f6c7dc-21d6b55c-a473fb9c
+% LTXE-SLIDE-ORIGIN:	bc5412de-1c7420ab-56b21fac-20d39822 English
+% LTXE-SLIDE-TITLE:		Important: #80391 - Css Styled Content will not reset TypoScript Constants
+% ------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{In-Depth Changes}
+	\framesubtitle{CSS Styled Content will not reset TypoScript Constants}
+
+	\begin{itemize}
+		\item Previously the TypoScript definition from CSS Styled Content resetted all constants
+			that were set before the static template was included to preserve the namespace
+			\texttt{styles.content}.
+
+		\item Since there is no need to reset the constants, this behaviour is removed.
+	\end{itemize}
+
+\end{frame}
+
+% ------------------------------------------------------------------------------
